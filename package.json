@@ -5,7 +5,8 @@
   "main": "src/index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\"",
-    "lint": "eslint src/*"
+    "lint": "eslint src/*",
+    "flow": "flow"
   },
   "keywords": [
     "react-native pdf viewer"
@@ -24,6 +25,7 @@
     "eslint-plugin-import": "^2.9.0",
     "eslint-plugin-jsx-a11y": "^6.0.3",
     "eslint-plugin-react": "^7.7.0",
+    "flow-bin": "^0.67.1",
     "react": "^16.2.0",
     "react-native": "^0.54.0"
   },

@@ -1,6 +1,7 @@
 import { requireNativeComponent, ViewPropTypes } from 'react-native';
 import PropTypes from 'prop-types';
 
+
 const componentInterface = {
   name: 'PdfView',
   propTypes: {
@@ -8,10 +9,12 @@ const componentInterface = {
      * A Function. Invoked on load error with {nativeEvent: {error}}.
      */
     onError: PropTypes.func,
+
     /**
      * A Function. Invoked when load completes successfully.
      */
     onLoad: PropTypes.func,
+
     /**
      * A String value. Defines the resource to render. Can be one of:
      *   - url. Example: http://www.pdf995.com/samples/pdf.pdf
@@ -19,6 +22,7 @@ const componentInterface = {
      *   - fileName - Not implemented
      */
     resource: PropTypes.string,
+
     /**
      * A String value. Defines the resource type. Can be one of:
      *   - "url", for url
@@ -26,6 +30,7 @@ const componentInterface = {
      *   - "file", for local files
      */
     resourceType: PropTypes.string,
+
     /**
      * A String value. Defines encoding type. Can be one of:
      *   - "utf-8", default
@@ -35,5 +40,6 @@ const componentInterface = {
     ...ViewPropTypes,
   },
 };
+
 
 export default requireNativeComponent('PdfView', componentInterface);
