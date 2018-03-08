@@ -14,12 +14,12 @@ import com.facebook.react.uimanager.SimpleViewManager;
 import com.facebook.react.uimanager.ThemedReactContext;
 import java.util.Map;
 
-public class PdfViewManager extends SimpleViewManager<PdfView> {
-    private static final String REACT_CLASS = "PdfView";
+public class ViewPdfManager extends SimpleViewManager<ViewPdf> {
+    private static final String REACT_CLASS = "ViewPdf";
     private Context context;
-    private PdfView pdfView = null;
+    private ViewPdf viewPdf = null;
 
-    public PdfViewManager(ReactApplicationContext context) {
+    public ViewPdfManager(ReactApplicationContext context) {
         this.context = context;
     }
 
@@ -49,28 +49,28 @@ public class PdfViewManager extends SimpleViewManager<PdfView> {
     }
 
     @Override
-    public PdfView createViewInstance(ThemedReactContext context) {
-        if (pdfView != null) {
-          pdfView.onDrop();
+    public ViewPdf createViewInstance(ThemedReactContext context) {
+        if (viewPdf != null) {
+          viewPdf.onDrop();
         }
-        pdfView = new PdfView(context);
-        return pdfView;
+        viewPdf = new ViewPdf(context);
+        return viewPdf;
     }
 
     @Override
-    public void onDropViewInstance(PdfView pdfView) {
-        pdfView.onDrop();
+    public void onDropViewInstance(ViewPdf viewPdf) {
+        viewPdf.onDrop();
     }
 
     @ReactProp(name = "resource")
-    public void setResource(PdfView pdfView, String resource) {
-        pdfView.setResource(resource);
+    public void setResource(ViewPdf viewPdf, String resource) {
+        viewPdf.setResource(resource);
     }
 
     @Override
-    public void onAfterUpdateTransaction(PdfView pdfView) {
-        super.onAfterUpdateTransaction(pdfView);
+    public void onAfterUpdateTransaction(ViewPdf viewPdf) {
+        super.onAfterUpdateTransaction(viewPdf);
 
-        pdfView.renderPdf();
+        viewPdf.renderPdf();
     }
 }

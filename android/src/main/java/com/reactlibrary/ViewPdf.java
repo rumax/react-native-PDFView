@@ -27,18 +27,18 @@ import java.io.InputStream;
 
 import static java.lang.String.format;
 
-public class PdfView extends PDFView implements
+public class ViewPdf extends PDFView implements
         OnLoadCompleteListener,
         OnErrorListener,
         AsyncTaskCompleted {
-    private static String TAG = "PdfView";
+    private static String TAG = "ViewPdf";
     private ThemedReactContext context;
     private String resource;
 
     private File pdfFile;
     private AsyncDownload asyncDownload = null;
 
-    public PdfView(ThemedReactContext context) {
+    public ViewPdf(ThemedReactContext context) {
         super(context, null);
         this.context = context;
     }

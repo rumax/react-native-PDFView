@@ -14,13 +14,13 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
-public class PdfViewPackage implements ReactPackage {
+public class ViewPdfPackage implements ReactPackage {
     @Override
     public List<NativeModule> createNativeModules(ReactApplicationContext reactContext) {
         return Collections.emptyList();
     }
 
     public List<ViewManager> createViewManagers(ReactApplicationContext reactContext) {
-        return Arrays.<ViewManager>asList(new PdfViewManager(reactContext));
+        return Arrays.<ViewManager>asList(new ViewPdfManager(reactContext));
     }
 }
