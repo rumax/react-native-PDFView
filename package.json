@@ -35,7 +35,7 @@
     "url": "git+ssh://git@github.com/rumax/react-native-view-pdf.git"
   },
   "bugs": {
-    "url": "https://github.com/rumax/react-native-PDFView/issues"
+    "url": "https://github.com/rumax/react-native-view-pdf/issues"
   },
-  "homepage": "https://github.com/rumax/react-native-PDFView#readme"
+  "homepage": "https://github.com/rumax/react-native-view-pdf#readme"
 }
