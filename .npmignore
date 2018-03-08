@@ -1,0 +1,7 @@
+__tests__
+.DS_Store
+.editorconfig
+.eslintrc.json
+coverage
+demo
+node_modules
