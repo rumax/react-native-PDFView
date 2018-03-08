@@ -1,9 +1,9 @@
+ViewPdf
+# react-native-view-pdf
 
-# react-native-pdfview
-
-[![CircleCI](https://circleci.com/gh/rumax/react-native-PDFView.svg?style=shield)](https://circleci.com/gh/rumax/react-native-PDFView)
-[![codecov](https://codecov.io/gh/rumax/react-native-PDFView/branch/master/graph/badge.svg)](https://codecov.io/gh/rumax/react-native-PDFView)
-[![npm version](https://badge.fury.io/js/react-native-PDFView.svg)](https://badge.fury.io/js/react-native-PDFView)
+[![CircleCI](https://circleci.com/gh/rumax/react-native-view-pdf.svg?style=shield)](https://circleci.com/gh/rumax/react-native-view-pdf)
+[![codecov](https://codecov.io/gh/rumax/react-native-view-pdf/branch/master/graph/badge.svg)](https://codecov.io/gh/rumax/react-native-view-pdf)
+[![npm version](https://badge.fury.io/js/react-native-view-pdf.svg)](https://badge.fury.io/js/react-native-view-pdf)
 
 Library for displaying [PDF documents](https://acrobat.adobe.com/us/en/acrobat/about-adobe-pdf.html) in [react-native](http://facebook.github.io/react-native/)
 
@@ -13,10 +13,10 @@ Library for displaying [PDF documents](https://acrobat.adobe.com/us/en/acrobat/a
 ## Example
 
 ```js
-import PdfView from 'react-native-pdfview';
+import ViewPdf from 'react-native-view-pdf';
 
 <View>
-  <PdfView
+  <ViewPdf
     style={{
       height: 360,
       width: Dimensions.get('window').width,
@@ -34,11 +34,11 @@ import PdfView from 'react-native-pdfview';
 
 ## Getting started
 
-`$ npm install react-native-pdfview --save`
+`$ npm install react-native-view-pdf --save`
 
 ### Mostly automatic installation
 
-`$ react-native link react-native-pdfview`
+`$ react-native link react-native-view-pdf`
 
 ### Manual installation
 
@@ -74,4 +74,4 @@ N/A
 ### Other information
 
 - Generated with [react-native-create-library](https://github.com/frostney/react-native-create-library)
-- Alternatives: [react-native-pdf](https://www.npmjs.com/package/react-native-pdf) has full implementation of [PDFView](https://github.com/barteksc/AndroidPdfViewer) but requires other dependencies and some functionality that is superfluous if you only need to display pdf (using url or base64)
+- Alternatives: [react-native-pdf](https://www.npmjs.com/package/react-native-pdf) has full implementation of [PDFView](https://github.com/barteksc/AndroidPdfViewer) but requires other dependencies and some functionality that is superfluous if you only need to display pdf (using url or base64). Or any other [npm](www.npmjs.com) package

@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 
 
 const componentInterface = {
-  name: 'PdfView',
+  name: 'ViewPdf',
   propTypes: {
     /**
      * A Function. Invoked on load error with {nativeEvent: {error}}.
@@ -42,4 +42,4 @@ const componentInterface = {
 };
 
 
-export default requireNativeComponent('PdfView', componentInterface);
+export default requireNativeComponent('ViewPdf', componentInterface);

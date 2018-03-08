@@ -1,7 +1,7 @@
 /* @flow */
 import React from 'react';
 
-import RNPdfView from './RNPdfView';
+import RNViewPdf from './RNViewPdf';
 
 
 type Props = {
@@ -39,7 +39,7 @@ type Props = {
   textEncoding: 'utf-8' | 'utf-16',
 };
 
-class PdfView extends React.Component<Props, *> {
+class ViewPdf extends React.Component<Props, *> {
   static defaultProps = {
     onError: () => {},
     onLoad: () => {},
@@ -62,9 +62,9 @@ class PdfView extends React.Component<Props, *> {
 
   render() {
     const { onError, ...otherProps } = this.props;
-    return <RNPdfView {...otherProps} onError={onError} />;
+    return <RNViewPdf {...otherProps} onError={onError} />;
   }
 }
 
 
-export default PdfView;
+export default ViewPdf;
