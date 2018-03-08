@@ -5,3 +5,7 @@ __tests__
 coverage
 demo
 node_modules
+react-native-view-pdf-*.tgz
+.flowconfig
+package
+.circleci
