@@ -7,8 +7,6 @@ package com.reactlibrary;
  */
 
 import android.util.Base64;
-import android.util.Log;
-
 import com.facebook.react.bridge.Arguments;
 import com.facebook.react.bridge.ReactContext;
 import com.facebook.react.bridge.WritableMap;
@@ -18,20 +16,16 @@ import com.github.barteksc.pdfviewer.PDFView;
 import com.github.barteksc.pdfviewer.listener.OnErrorListener;
 import com.github.barteksc.pdfviewer.listener.OnLoadCompleteListener;
 import com.github.barteksc.pdfviewer.util.FitPolicy;
-
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 
-import static java.lang.String.format;
-
 public class ViewPdf extends PDFView implements
         OnLoadCompleteListener,
         OnErrorListener,
         AsyncTaskCompleted {
-    private static String TAG = "ViewPdf";
     private ThemedReactContext context;
     private String resource;
 
@@ -64,7 +58,6 @@ public class ViewPdf extends PDFView implements
 
     @Override
     public void downloadTaskFailed(IOException e) {
-        Log.e(TAG, "Failed to download file");
         pdfFile.delete();
         pdfFile = null;
         onError(e);
@@ -112,7 +105,6 @@ public class ViewPdf extends PDFView implements
     }
 
     public void renderPdf() {
-        Log.i(TAG, format("renderPdf resource: %s", this.resource));
         cleanup();
 
         if (resource == null) {

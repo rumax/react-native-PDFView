@@ -70,7 +70,6 @@ public class ViewPdfManager extends SimpleViewManager<ViewPdf> {
     @Override
     public void onAfterUpdateTransaction(ViewPdf viewPdf) {
         super.onAfterUpdateTransaction(viewPdf);
-
         viewPdf.renderPdf();
     }
 }

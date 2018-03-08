@@ -7,18 +7,16 @@ package com.reactlibrary;
  */
 
 import android.os.AsyncTask;
-import android.util.Log;
 import java.io.BufferedInputStream;
 import java.io.File;
 import java.io.FileOutputStream;
-import java.io.InputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.URL;
 import java.net.URLConnection;
 
 class AsyncDownload extends AsyncTask<Void, Void, Void> {
-    private static String TAG = "AsyncDownload";
     private static int BUFF_SIZE = 8192;
     private AsyncTaskCompleted listener;
     private File file = null;
@@ -35,7 +33,6 @@ class AsyncDownload extends AsyncTask<Void, Void, Void> {
     protected void onPreExecute() {
         super.onPreExecute();
         exception = null;
-        Log.i(TAG, "onPreExecute");
     }
 
     @Override
@@ -54,20 +51,14 @@ class AsyncDownload extends AsyncTask<Void, Void, Void> {
                 InputStream input = new BufferedInputStream(url.openStream(), BUFF_SIZE);
                 OutputStream output = new FileOutputStream(file);
         ) {
-            long total = 0;
             int count;
-            Log.d(TAG, "Downloading");
-            int lengthOfFile = connection.getContentLength();
-            Log.d(TAG, "length of the file: " + lengthOfFile);
             byte data[] = new byte[BUFF_SIZE];
 
             while ((count = input.read(data)) != -1) {
-                total += count;
                 output.write(data, 0, count);
             }
 
             output.flush();
-            Log.d(TAG, "total: " + total);
         } catch (IOException e) {
             exception = e;
         }
@@ -77,7 +68,6 @@ class AsyncDownload extends AsyncTask<Void, Void, Void> {
 
     @Override
     protected void onPostExecute(Void param) {
-        Log.d(TAG, "onPostExecute");
         if (exception == null) {
             listener.downloadTaskCompleted();
         } else {
