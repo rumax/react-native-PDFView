@@ -1,0 +1,39 @@
+{
+  "name": "react-native-pdfview",
+  "version": "0.1.0",
+  "description": "React native Pdf viewer implementation",
+  "main": "src/index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\"",
+    "lint": "eslint src/*"
+  },
+  "keywords": [
+    "react-native pdf viewer"
+  ],
+  "author": "Maksym Rusynyk <m.rusynyk@gmail.com>",
+  "license": "MIT",
+  "peerDependencies": {
+    "react": "^16.2.0",
+    "react-native": "^0.54.0",
+    "prop-types": "^15.6.1"
+  },
+  "devDependencies": {
+    "babel-eslint": "^8.2.2",
+    "eslint": "^4.18.2",
+    "eslint-config-airbnb": "^16.1.0",
+    "eslint-plugin-import": "^2.9.0",
+    "eslint-plugin-jsx-a11y": "^6.0.3",
+    "eslint-plugin-react": "^7.7.0",
+    "react": "^16.2.0",
+    "react-native": "^0.54.0"
+  },
+  "dependencies": {},
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/rumax/react-native-PDFView.git"
+  },
+  "bugs": {
+    "url": "https://github.com/rumax/react-native-PDFView/issues"
+  },
+  "homepage": "https://github.com/rumax/react-native-PDFView#readme"
+}
