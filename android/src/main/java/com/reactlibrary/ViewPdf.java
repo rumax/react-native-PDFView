@@ -32,6 +32,8 @@ public class ViewPdf extends PDFView implements
     private AsyncDownload asyncDownload = null;
     private String textEncoding = null;
     private String resourceType = null;
+    private Configurator configurator = null;
+    private boolean sourceChanged = true;
 
     public ViewPdf(ThemedReactContext context) {
         super(context, null);
@@ -64,7 +66,7 @@ public class ViewPdf extends PDFView implements
         onError(e);
     }
 
-    private void setupAndLoad(Configurator configurator) {
+    private void setupAndLoad() {
         configurator
                 .defaultPage(0)
                 .swipeHorizontal(false)
@@ -73,6 +75,7 @@ public class ViewPdf extends PDFView implements
                 .spacing(10)
                 .pageFitPolicy(FitPolicy.WIDTH)
                 .load();
+        sourceChanged = false;
     }
 
     @Override
@@ -80,7 +83,8 @@ public class ViewPdf extends PDFView implements
         InputStream input;
         try {
             input = new FileInputStream(pdfFile);
-            setupAndLoad(this.fromStream(input));
+            configurator = this.fromStream(input);
+            setupAndLoad();
         } catch (FileNotFoundException e) {
             onError(e);
         }
@@ -89,7 +93,8 @@ public class ViewPdf extends PDFView implements
 
     public void renderFromBase64() {
         byte[] bytes = Base64.decode(resource.replace("base64:", ""), 0);
-        setupAndLoad(this.fromBytes(bytes));
+        configurator = this.fromBytes(bytes);
+        setupAndLoad();
     }
 
     public void renderFromUrl() {
@@ -118,6 +123,10 @@ public class ViewPdf extends PDFView implements
             return;
         }
 
+        if (!sourceChanged) {
+            return;
+        }
+
         if (resourceType.equals("url")) {
             renderFromUrl();
         } else if (resourceType.equals("base64")) {
@@ -130,10 +139,6 @@ public class ViewPdf extends PDFView implements
         }
     }
 
-    public void setResource(String resource) {
-        this.resource = resource;
-    }
-
     private void cleanup() {
         if (asyncDownload != null) {
             asyncDownload.cancel(true);
@@ -144,15 +149,37 @@ public class ViewPdf extends PDFView implements
         }
     }
 
-    public void onDrop() {
-        cleanup();
+    public void setResource(String resource) {
+        if (isDifferent(resource, this.resource)) {
+            sourceChanged = true;
+        }
+        this.resource = resource;
     }
 
     public void setResourceType(String resourceType) {
+        if (isDifferent(resourceType, this.resourceType)) {
+            sourceChanged = true;
+        }
         this.resourceType = resourceType;
     }
 
     public void setTextEncoding(String textEncoding) {
+        if (isDifferent(resourceType, this.resourceType)) {
+            sourceChanged = true;
+        }
         this.textEncoding = textEncoding;
+    }
+
+    public void onDrop() {
+        cleanup();
+        sourceChanged = true;
+    }
+
+    private static boolean isDifferent(String str1, String str2) {
+        if (str1 == null || str2 == null) {
+            return true;
+        }
+
+        return !str1.equals(str2);
     }
 }

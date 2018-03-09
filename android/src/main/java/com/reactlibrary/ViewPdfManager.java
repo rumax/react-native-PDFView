@@ -50,10 +50,10 @@ public class ViewPdfManager extends SimpleViewManager<ViewPdf> {
 
     @Override
     public ViewPdf createViewInstance(ThemedReactContext context) {
-        if (viewPdf != null) {
-          viewPdf.onDrop();
+        if (viewPdf == null) {
+            viewPdf = new ViewPdf(context);
         }
-        viewPdf = new ViewPdf(context);
+
         return viewPdf;
     }
 
