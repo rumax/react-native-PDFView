@@ -61,8 +61,7 @@ class ViewPdf extends React.Component<Props, *> {
 
 
   render() {
-    const { onError, ...otherProps } = this.props;
-    return <RNViewPdf {...otherProps} onError={onError} />;
+    return <RNViewPdf {...this.props} onError={this.onError} />;
   }
 }
 

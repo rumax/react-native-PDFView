@@ -28,9 +28,10 @@ public class ViewPdf extends PDFView implements
         AsyncTaskCompleted {
     private ThemedReactContext context;
     private String resource;
-
     private File pdfFile;
     private AsyncDownload asyncDownload = null;
+    private String textEncoding = null;
+    private String resourceType = null;
 
     public ViewPdf(ThemedReactContext context) {
         super(context, null);
@@ -104,7 +105,7 @@ public class ViewPdf extends PDFView implements
         asyncDownload.execute();
     }
 
-    public void renderPdf() {
+    public void render() {
         cleanup();
 
         if (resource == null) {
@@ -112,12 +113,21 @@ public class ViewPdf extends PDFView implements
             return;
         }
 
-        if (resource.startsWith("base64")) {
-            renderFromBase64();
+        if (resourceType == null) {
+            onError(new IOException("Cannot render PDF, resourceType is undefined"));
             return;
         }
 
-        renderFromUrl();
+        if (resourceType.equals("url")) {
+            renderFromUrl();
+        } else if (resourceType.equals("base64")) {
+            renderFromBase64();
+        } else if (resourceType.equals("file")) {
+            // TODO: Implement file resource
+            onError(new IOException("file resource type is not supported yet"));
+        } else {
+            onError(new IOException("Invalid resource type" + resourceType));
+        }
     }
 
     public void setResource(String resource) {
@@ -136,5 +146,13 @@ public class ViewPdf extends PDFView implements
 
     public void onDrop() {
         cleanup();
+    }
+
+    public void setResourceType(String resourceType) {
+        this.resourceType = resourceType;
+    }
+
+    public void setTextEncoding(String textEncoding) {
+        this.textEncoding = textEncoding;
     }
 }
