@@ -8,7 +8,7 @@ ViewPdf
 Library for displaying [PDF documents](https://acrobat.adobe.com/us/en/acrobat/about-adobe-pdf.html) in [react-native](http://facebook.github.io/react-native/)
 
 - android - uses implementation of [Android PdfViewer](https://github.com/barteksc/AndroidPdfViewer)
-- ios - To be implemented
+- ios - uses UIWebView native implementation to loadRequest and loadData [UIWebView](https://developer.apple.com/documentation/uikit/uiwebview)
 
 ## Example
 
@@ -45,7 +45,9 @@ import ViewPdf from 'react-native-view-pdf';
 
 #### iOS
 
-TBI
+1. Add ReactNativeViewPDF project to your project
+2. Under your build target general settings, add the library to your Linked Frameworks and Libraries
+3. If you run into any issues, confirm that under Build Phases -> Link Binary With Libraries the library is present
 
 #### Android
 
