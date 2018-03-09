@@ -14,12 +14,12 @@ import com.facebook.react.uimanager.SimpleViewManager;
 import com.facebook.react.uimanager.ThemedReactContext;
 import java.util.Map;
 
-public class ViewPdfManager extends SimpleViewManager<ViewPdf> {
-    private static final String REACT_CLASS = "ViewPdf";
+public class PDFViewManager extends SimpleViewManager<PDFView> {
+    private static final String REACT_CLASS = "PDFView";
     private Context context;
-    private ViewPdf viewPdf = null;
+    private PDFView pdfView = null;
 
-    public ViewPdfManager(ReactApplicationContext context) {
+    public PDFViewManager(ReactApplicationContext context) {
         this.context = context;
     }
 
@@ -49,37 +49,37 @@ public class ViewPdfManager extends SimpleViewManager<ViewPdf> {
     }
 
     @Override
-    public ViewPdf createViewInstance(ThemedReactContext context) {
-        if (viewPdf == null) {
-            viewPdf = new ViewPdf(context);
+    public PDFView createViewInstance(ThemedReactContext context) {
+        if (pdfView == null) {
+            pdfView = new PDFView(context);
         }
 
-        return viewPdf;
+        return pdfView;
     }
 
     @Override
-    public void onDropViewInstance(ViewPdf viewPdf) {
-        viewPdf.onDrop();
+    public void onDropViewInstance(PDFView pdfView) {
+        pdfView.onDrop();
     }
 
     @ReactProp(name = "resource")
-    public void setResource(ViewPdf viewPdf, String resource) {
-        viewPdf.setResource(resource);
+    public void setResource(PDFView pdfView, String resource) {
+        pdfView.setResource(resource);
     }
 
     @ReactProp(name = "resourceType")
-    public void setResourceType(ViewPdf viewPdf, String resourceType) {
-        viewPdf.setResourceType(resourceType);
+    public void setResourceType(PDFView pdfView, String resourceType) {
+        pdfView.setResourceType(resourceType);
     }
 
     @ReactProp(name = "textEncoding")
-    public void setTextEncoding(ViewPdf viewPdf, String textEncoding) {
-        viewPdf.setTextEncoding(textEncoding);
+    public void setTextEncoding(PDFView pdfView, String textEncoding) {
+        pdfView.setTextEncoding(textEncoding);
     }
 
     @Override
-    public void onAfterUpdateTransaction(ViewPdf viewPdf) {
-        super.onAfterUpdateTransaction(viewPdf);
-        viewPdf.render();
+    public void onAfterUpdateTransaction(PDFView pdfView) {
+        super.onAfterUpdateTransaction(pdfView);
+        pdfView.render();
     }
 }

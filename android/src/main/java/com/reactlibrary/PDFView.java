@@ -12,7 +12,6 @@ import com.facebook.react.bridge.ReactContext;
 import com.facebook.react.bridge.WritableMap;
 import com.facebook.react.uimanager.ThemedReactContext;
 import com.facebook.react.uimanager.events.RCTEventEmitter;
-import com.github.barteksc.pdfviewer.PDFView;
 import com.github.barteksc.pdfviewer.listener.OnErrorListener;
 import com.github.barteksc.pdfviewer.listener.OnLoadCompleteListener;
 import com.github.barteksc.pdfviewer.util.FitPolicy;
@@ -22,7 +21,7 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 
-public class ViewPdf extends PDFView implements
+public class PDFView extends com.github.barteksc.pdfviewer.PDFView implements
         OnLoadCompleteListener,
         OnErrorListener,
         AsyncTaskCompleted {
@@ -35,7 +34,7 @@ public class ViewPdf extends PDFView implements
     private Configurator configurator = null;
     private boolean sourceChanged = true;
 
-    public ViewPdf(ThemedReactContext context) {
+    public PDFView(ThemedReactContext context) {
         super(context, null);
         this.context = context;
     }

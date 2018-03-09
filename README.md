@@ -1,4 +1,3 @@
-ViewPdf
 # react-native-view-pdf
 
 [![CircleCI](https://circleci.com/gh/rumax/react-native-view-pdf.svg?style=shield)](https://circleci.com/gh/rumax/react-native-view-pdf)
@@ -13,10 +12,10 @@ Library for displaying [PDF documents](https://acrobat.adobe.com/us/en/acrobat/a
 ## Example
 
 ```js
-import ViewPdf from 'react-native-view-pdf';
+import PDFView from 'react-native-view-pdf';
 
 <View>
-  <ViewPdf
+  <PDFView
     style={{
       height: 360,
       width: Dimensions.get('window').width,
@@ -52,7 +51,7 @@ import ViewPdf from 'react-native-view-pdf';
 #### Android
 
 1. Open up `android/app/src/main/java/[...]/MainActivity.java`
-  - Add `import com.reactlibrary.PdfViewPackage;` to the imports at the top of the file
+  - Add `import com.reactlibrary.PDFViewPackage;` to the imports at the top of the file
   - Add `new RNReactNativePdfViewPackage()` to the list returned by the `getPackages()` method
 2. Append the following lines to `android/settings.gradle`:
     ```
