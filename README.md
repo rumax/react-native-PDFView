@@ -78,7 +78,7 @@ Don't blame this demo for UX or code. The goal of it is to:
 - show error state
 - measure rendering time
 
-![Demo](https://github.com/rumax/react-native-PDFView/blob/demo/demo/res/pdf.gif)
+![Demo](https://github.com/rumax/react-native-PDFView/raw/master/demo/res/pdf.gif)
 
 - android [demo](https://github.com/rumax/react-native-PDFView/tree/master/demo)
 - ios (TODO)
