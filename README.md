@@ -70,6 +70,16 @@ N/A
 
 ## Demo
 
+Don't blame this demo for UX or code. The goal of it is to:
+
+- show how to use the PDFView
+- render PDF using URL
+- render PDF using BASE64 data
+- show error state
+- measure rendering time
+
+![Demo](https://github.com/rumax/react-native-PDFView/blob/demo/demo/res/pdf.gif)
+
 - android [demo](https://github.com/rumax/react-native-PDFView/tree/master/demo)
 - ios (TODO)
 
