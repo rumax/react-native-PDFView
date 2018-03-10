@@ -1,12 +1,17 @@
 /* eslint-disable react/prop-types */
 import React from 'react';
 import {
+  Alert,
   Button,
   Platform,
   StyleSheet,
   Text,
   View,
 } from 'react-native';
+
+import PDFView from 'react-native-view-pdf';
+
+import base64Data from './base64.json';
 
 // const cError = '##d9534f';
 const cWhite = '#f9f9f9';
@@ -34,31 +39,30 @@ const styles = StyleSheet.create({
   content: {
     flex: 1,
     backgroundColor: cGreen,
-    alignItems: 'center',
-    justifyContent: 'center',
+    // alignItems: 'center',
+    // justifyContent: 'center',
+  },
+  pdfView: {
+    flex: 1,
   },
 });
 
-const base64Data = [
-  'JVBERi0xLjcKCjEgMCBvYmogICUgZW50cnkgcG9pbnQKPDwKICAvVHlwZSAvQ2F0YWxvZwog',
-  'IC9QYWdlcyAyIDAgUgo+PgplbmRvYmoKCjIgMCBvYmoKPDwKICAvVHlwZSAvUGFnZXMKICAv',
-  'TWVkaWFCb3ggWyAwIDAgMjAwIDIwMCBdCiAgL0NvdW50IDEKICAvS2lkcyBbIDMgMCBSIF0K',
-  'Pj4KZW5kb2JqCgozIDAgb2JqCjw8CiAgL1R5cGUgL1BhZ2UKICAvUGFyZW50IDIgMCBSCiAg',
-  'L1Jlc291cmNlcyA8PAogICAgL0ZvbnQgPDwKICAgICAgL0YxIDQgMCBSIAogICAgPj4KICA+',
-  'PgogIC9Db250ZW50cyA1IDAgUgo+PgplbmRvYmoKCjQgMCBvYmoKPDwKICAvVHlwZSAvRm9u',
-  'dAogIC9TdWJ0eXBlIC9UeXBlMQogIC9CYXNlRm9udCAvVGltZXMtUm9tYW4KPj4KZW5kb2Jq',
-  'Cgo1IDAgb2JqICAlIHBhZ2UgY29udGVudAo8PAogIC9MZW5ndGggNDQKPj4Kc3RyZWFtCkJU',
-  'CjcwIDUwIFRECi9GMSAxMiBUZgooSGVsbG8sIHdvcmxkISkgVGoKRVQKZW5kc3RyZWFtCmVu',
-  'ZG9iagoKeHJlZgowIDYKMDAwMDAwMDAwMCA2NTUzNSBmIAowMDAwMDAwMDEwIDAwMDAwIG4g',
-  'CjAwMDAwMDAwNzkgMDAwMDAgbiAKMDAwMDAwMDE3MyAwMDAwMCBuIAowMDAwMDAwMzAxIDAw',
-  'MDAwIG4gCjAwMDAwMDAzODAgMDAwMDAgbiAKdHJhaWxlcgo8PAogIC9TaXplIDYKICAvUm9v',
-  'dCAxIDAgUgo+PgpzdGFydHhyZWYKNDkyCiUlRU9G',
-].join('');
-
-const PdfContent = ({ resource, resourceType }) => {
+const PdfContent = ({
+  resource,
+  resourceType,
+  onLoad,
+  onError,
+}) => {
   const content = resourceType ?
-    <Text>TODO: render type {resourceType} data: {resource}</Text> :
-    <Text>No resource, tap one of buttons above</Text>;
+    (
+      <PDFView
+        style={styles.pdfView}
+        resource={resource}
+        resourceType={resourceType}
+        onLoad={onLoad}
+        onError={onError}
+      />
+    ) : <Text>No resource, tap one of buttons above</Text>;
 
   return (
     <View style={styles.content}>
@@ -74,19 +78,27 @@ export default class App extends React.Component {
       resource: undefined,
       resourceType: undefined,
     };
+    this.renderStarted = 0;
   }
 
   setUrl = () => {
     this.setState({
-      resource: 'http://www.pdf995.com/samples/pdf.pdf',
+      resource: 'http://gahp.net/wp-content/uploads/2017/09/sample.pdf',
       resourceType: 'url',
     });
   }
 
   setBase64 = () => {
     this.setState({
-      resource: base64Data,
+      resource: base64Data.document,
       resourceType: 'base64',
+    });
+  }
+
+  dataWithError = () => {
+    this.setState({
+      resource: 'https://www.npmjs.com/package/react-native-view-pdf',
+      resourceType: 'url',
     });
   }
 
@@ -97,8 +109,43 @@ export default class App extends React.Component {
     });
   }
 
+  handleLoad = () => {
+    Alert.alert(
+      'Document loaded',
+      `Time: ${((new Date()).getTime() - this.renderStarted)}`,
+      [
+        {
+          text: 'Cancel',
+          style: 'cancel',
+        },
+        {
+          text: 'OK',
+        },
+      ],
+    );
+  }
+
+  handleError = (error) => {
+    Alert.alert(
+      'Document loaded failed',
+      error.message,
+      [
+        {
+          text: 'Cancel',
+          style: 'cancel',
+        },
+        {
+          text: 'OK',
+        },
+      ],
+    );
+  }
+
   render() {
     const { resource, resourceType } = this.state;
+    if (resource) {
+      this.renderStarted = (new Date()).getTime();
+    }
     return (
       <View style={styles.container}>
         <View style={styles.tabs}>
@@ -109,10 +156,18 @@ export default class App extends React.Component {
             <Button onPress={this.setBase64} title="Base64" accessibilityLabel="Base64" />
           </View>
           <View style={styles.tab}>
+            <Button onPress={this.dataWithError} title="Error" accessibilityLabel="Error" />
+          </View>
+          <View style={styles.tab}>
             <Button onPress={this.resetData} title="Reset" accessibilityLabel="Reset" />
           </View>
         </View>
-        <PdfContent resource={resource} resourceType={resourceType} />
+        <PdfContent
+          resource={resource}
+          resourceType={resourceType}
+          onLoad={this.handleLoad}
+          onError={this.handleError}
+        />
       </View>
     );
   }

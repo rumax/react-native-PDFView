@@ -50,7 +50,7 @@ import PDFView from 'react-native-view-pdf';
 
 #### Android
 
-1. Open up `android/app/src/main/java/[...]/MainActivity.java`
+1. Open up `android/app/src/main/java/[...]/MainApplication.java`
   - Add `import com.reactlibrary.PDFViewPackage;` to the imports at the top of the file
   - Add `new RNReactNativePdfViewPackage()` to the list returned by the `getPackages()` method
 2. Append the following lines to `android/settings.gradle`:
@@ -67,6 +67,11 @@ import PDFView from 'react-native-view-pdf';
 [ReactWindows](https://github.com/ReactWindows/react-native)
 
 N/A
+
+## Demo
+
+- android [demo](https://github.com/rumax/react-native-PDFView/demo)
+- ios (TODO)
 
 ## License
 
