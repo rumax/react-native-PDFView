@@ -1,7 +1,7 @@
-# react-native-view-pdf
+# react-native-PDFView
 
-[![CircleCI](https://circleci.com/gh/rumax/react-native-view-pdf.svg?style=shield)](https://circleci.com/gh/rumax/react-native-view-pdf)
-[![codecov](https://codecov.io/gh/rumax/react-native-view-pdf/branch/master/graph/badge.svg)](https://codecov.io/gh/rumax/react-native-view-pdf)
+[![CircleCI](https://circleci.com/gh/rumax/react-native-PDFView.svg?style=shield)](https://circleci.com/gh/rumax/react-native-PDFView)
+[![codecov](https://codecov.io/gh/rumax/react-native-PDFView/branch/master/graph/badge.svg)](https://codecov.io/gh/rumax/react-native-PDFView)
 [![npm version](https://badge.fury.io/js/react-native-view-pdf.svg)](https://badge.fury.io/js/react-native-view-pdf)
 
 Library for displaying [PDF documents](https://acrobat.adobe.com/us/en/acrobat/about-adobe-pdf.html) in [react-native](http://facebook.github.io/react-native/)
