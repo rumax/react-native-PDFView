@@ -70,7 +70,7 @@ N/A
 
 ## Demo
 
-- android [demo](https://github.com/rumax/react-native-PDFView/demo)
+- android [demo](https://github.com/rumax/react-native-PDFView/tree/master/demo)
 - ios (TODO)
 
 ## License
