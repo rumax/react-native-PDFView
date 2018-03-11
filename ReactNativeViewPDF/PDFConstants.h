@@ -7,7 +7,6 @@ extern NSString * const RESOURCE_TYPE_BASE64;
 extern NSString * const MIMETYPE_PDF;
 
 extern NSString * const MESSAGE_UNSUPPORTED_TYPE;
-extern NSString * const MESSAGE_REQUIRED_INPUT_NOT_SET;
 extern NSString * const MESSAGE_ERROR_ONLOADING;
 
 extern NSString * const MESSAGE_KEY_RESOURCE;

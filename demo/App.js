@@ -13,11 +13,12 @@ import PDFView from 'react-native-view-pdf';
 
 import base64Data from './base64.json';
 
-// const cError = '##d9534f';
 const cWhite = '#f9f9f9';
 const cLightBlue = '#5bc0de';
 const cGreen = '#5cb85c';
 const cBlue = '#428bca';
+
+const PDF_URL = 'https://www.ets.org/Media/Tests/TOEFL/pdf/SampleQuestions.pdf';
 
 const styles = StyleSheet.create({
   container: {
@@ -39,8 +40,6 @@ const styles = StyleSheet.create({
   content: {
     flex: 1,
     backgroundColor: cGreen,
-    // alignItems: 'center',
-    // justifyContent: 'center',
   },
   pdfView: {
     flex: 1,
@@ -83,7 +82,7 @@ export default class App extends React.Component {
 
   setUrl = () => {
     this.setState({
-      resource: 'http://gahp.net/wp-content/uploads/2017/09/sample.pdf',
+      resource: PDF_URL,
       resourceType: 'url',
     });
   }
@@ -97,8 +96,8 @@ export default class App extends React.Component {
 
   dataWithError = () => {
     this.setState({
-      resource: 'https://www.npmjs.com/package/react-native-view-pdf',
-      resourceType: 'url',
+      resource: '**invalid base 64**',
+      resourceType: 'base64',
     });
   }
 
@@ -127,7 +126,7 @@ export default class App extends React.Component {
 
   handleError = (error) => {
     Alert.alert(
-      'Document loaded failed',
+      'Document loading failed',
       error.message,
       [
         {

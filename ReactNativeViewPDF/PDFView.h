@@ -14,6 +14,6 @@
 - (BOOL) isSupportedResourceType;
 - (BOOL) isURLResource;
 - (BOOL) isBase64Resource;
-- (BOOL) isValidInput;
 
 @end
+
