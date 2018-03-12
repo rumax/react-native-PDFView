@@ -4,6 +4,14 @@
 {
     UIWebView *webview;
     NSString *currentResource;
+    NSString *currentResourceType;
+    bool didLoadOnce; // Needed as on init, didSetProps is called as well, leading to layoutSubviews being called twice
+}
+
+- (void)didSetProps:(NSArray<NSString *> *)changedProps {
+    if (didLoadOnce) {
+        [self layoutSubviews];
+    }
 }
 
 - (instancetype)init {
@@ -17,11 +25,14 @@
 
 - (void)layoutSubviews {
     [super layoutSubviews];
-    if (![self isRequiredInputSet]) {
+    webview.frame = self.bounds;
+    didLoadOnce = true;
+    
+    if (![self isNewInput]) {
         return;
     }
     
-    if (![self isNewInput]) {
+    if (![self isRequiredInputSet]) {
         return;
     }
     
@@ -36,7 +47,7 @@
         return;
     }
     
-    webview.frame = self.bounds;
+    
     if ([self isURLResource]) {
         NSURLRequest *request = [NSURLRequest requestWithURL:[NSURL URLWithString: _resource]];
         [webview loadRequest: request];
@@ -48,7 +59,6 @@
     
     [webview setScalesPageToFit: YES];
     [webview setDelegate: self];
-    currentResource = _resource;
 }
 
 - (void)webViewDidFinishLoad:(UIWebView *)webView {
@@ -68,11 +78,22 @@
 }
 
 - (BOOL) isRequiredInputSet {
-    return [_resource length] != 0 && [_resourceType length] != 0;
+    if ([_resource length] == 0 || [_resourceType length] == 0) {
+        if (_onError) {
+            _onError(@{
+                       MESSAGE_REQUIRED_INPUT_NOT_SET: @{
+                               MESSAGE_KEY_RESOURCE: _resource == nil ? @"" : _resource,
+                               MESSAGE_KEY_RESOURCETYPE: _resourceType == nil ? @"" : _resourceType,
+                               }
+                       });
+        }
+        return NO;
+    }
+    return YES;
 }
 
 - (BOOL) isNewInput {
-    return ![_resource isEqualToString: currentResource];
+    return ![_resource isEqualToString: currentResource] || ![_resourceType isEqualToString: currentResourceType];
 }
 
 - (BOOL) isSupportedResourceType {
@@ -88,3 +109,4 @@
 }
 
 @end
+

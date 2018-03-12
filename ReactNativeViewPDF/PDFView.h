@@ -16,4 +16,3 @@
 - (BOOL) isBase64Resource;
 
 @end
-
