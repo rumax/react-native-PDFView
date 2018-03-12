@@ -19,6 +19,10 @@
     if ( self ) {
         webview = [[UIWebView alloc] initWithFrame: self.frame];
         [self addSubview: webview];
+        [webview setDelegate: self];
+        [webview setScalesPageToFit: YES];
+        [webview setOpaque: NO];
+        [webview setBackgroundColor: [UIColor clearColor]];
     }
     return self;
 }
@@ -35,6 +39,7 @@
     if (![self isRequiredInputSet]) {
         return;
     }
+    [self updateInput];
     
     if (![self isSupportedResourceType]) {
         if (_onError) {
@@ -47,7 +52,6 @@
         return;
     }
     
-    
     if ([self isURLResource]) {
         NSURLRequest *request = [NSURLRequest requestWithURL:[NSURL URLWithString: _resource]];
         [webview loadRequest: request];
@@ -56,9 +60,11 @@
         NSData *base64Decoded = [[NSData alloc] initWithBase64EncodedString: _resource options: NSDataBase64DecodingIgnoreUnknownCharacters];
         [webview loadData: base64Decoded MIMEType: MIMETYPE_PDF textEncodingName: textEncodingName baseURL: [[NSURL alloc] init]];
     }
-    
-    [webview setScalesPageToFit: YES];
-    [webview setDelegate: self];
+}
+
+- (void)updateInput {
+    currentResourceType = _resourceType;
+    currentResource = _resource;
 }
 
 - (void)webViewDidFinishLoad:(UIWebView *)webView {
@@ -77,7 +83,7 @@
     }
 }
 
-- (BOOL) isRequiredInputSet {
+- (BOOL)isRequiredInputSet {
     if ([_resource length] == 0 || [_resourceType length] == 0) {
         if (_onError) {
             _onError(@{
@@ -92,21 +98,20 @@
     return YES;
 }
 
-- (BOOL) isNewInput {
+- (BOOL)isNewInput {
     return ![_resource isEqualToString: currentResource] || ![_resourceType isEqualToString: currentResourceType];
 }
 
-- (BOOL) isSupportedResourceType {
+- (BOOL)isSupportedResourceType {
     return [self isURLResource] || [self isBase64Resource];
 }
 
-- (BOOL) isURLResource {
+- (BOOL)isURLResource {
     return [_resourceType  isEqualToString: RESOURCE_TYPE_URL];
 }
 
-- (BOOL) isBase64Resource {
+- (BOOL)isBase64Resource {
     return [_resourceType  isEqualToString: RESOURCE_TYPE_BASE64];
 }
 
 @end
-
