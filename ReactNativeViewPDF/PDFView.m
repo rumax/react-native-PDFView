@@ -4,6 +4,14 @@
 {
     UIWebView *webview;
     NSString *currentResource;
+    NSString *currentResourceType;
+    bool didLoadOnce; // Needed as on init, didSetProps is called as well, leading to layoutSubviews being called twice
+}
+
+- (void)didSetProps:(NSArray<NSString *> *)changedProps {
+    if (didLoadOnce) {
+        [self layoutSubviews];
+    }
 }
 
 - (instancetype)init {
@@ -11,19 +19,27 @@
     if ( self ) {
         webview = [[UIWebView alloc] initWithFrame: self.frame];
         [self addSubview: webview];
+        [webview setDelegate: self];
+        [webview setScalesPageToFit: YES];
+        [webview setOpaque: NO];
+        [webview setBackgroundColor: [UIColor clearColor]];
     }
     return self;
 }
 
 - (void)layoutSubviews {
     [super layoutSubviews];
-    if (![self isRequiredInputSet]) {
-        return;
-    }
+    webview.frame = self.bounds;
+    didLoadOnce = true;
     
     if (![self isNewInput]) {
         return;
     }
+    
+    if (![self isRequiredInputSet]) {
+        return;
+    }
+    [self updateInput];
     
     if (![self isSupportedResourceType]) {
         if (_onError) {
@@ -36,7 +52,6 @@
         return;
     }
     
-    webview.frame = self.bounds;
     if ([self isURLResource]) {
         NSURLRequest *request = [NSURLRequest requestWithURL:[NSURL URLWithString: _resource]];
         [webview loadRequest: request];
@@ -45,9 +60,10 @@
         NSData *base64Decoded = [[NSData alloc] initWithBase64EncodedString: _resource options: NSDataBase64DecodingIgnoreUnknownCharacters];
         [webview loadData: base64Decoded MIMEType: MIMETYPE_PDF textEncodingName: textEncodingName baseURL: [[NSURL alloc] init]];
     }
-    
-    [webview setScalesPageToFit: YES];
-    [webview setDelegate: self];
+}
+
+- (void)updateInput {
+    currentResourceType = _resourceType;
     currentResource = _resource;
 }
 
@@ -67,23 +83,34 @@
     }
 }
 
-- (BOOL) isRequiredInputSet {
-    return [_resource length] != 0 && [_resourceType length] != 0;
+- (BOOL)isRequiredInputSet {
+    if ([_resource length] == 0 || [_resourceType length] == 0) {
+        if (_onError) {
+            _onError(@{
+                       MESSAGE_REQUIRED_INPUT_NOT_SET: @{
+                               MESSAGE_KEY_RESOURCE: _resource == nil ? @"" : _resource,
+                               MESSAGE_KEY_RESOURCETYPE: _resourceType == nil ? @"" : _resourceType,
+                               }
+                       });
+        }
+        return NO;
+    }
+    return YES;
 }
 
-- (BOOL) isNewInput {
-    return ![_resource isEqualToString: currentResource];
+- (BOOL)isNewInput {
+    return ![_resource isEqualToString: currentResource] || ![_resourceType isEqualToString: currentResourceType];
 }
 
-- (BOOL) isSupportedResourceType {
+- (BOOL)isSupportedResourceType {
     return [self isURLResource] || [self isBase64Resource];
 }
 
-- (BOOL) isURLResource {
+- (BOOL)isURLResource {
     return [_resourceType  isEqualToString: RESOURCE_TYPE_URL];
 }
 
-- (BOOL) isBase64Resource {
+- (BOOL)isBase64Resource {
     return [_resourceType  isEqualToString: RESOURCE_TYPE_BASE64];
 }
 

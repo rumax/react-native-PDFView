@@ -10,10 +10,10 @@
 @property (nonatomic, copy) RCTDirectEventBlock onLoad;
 @property (nonatomic, copy) RCTDirectEventBlock onError;
 
-- (BOOL) isRequiredInputSet;
-- (BOOL) isSupportedResourceType;
-- (BOOL) isURLResource;
-- (BOOL) isBase64Resource;
+- (BOOL)isRequiredInputSet;
+- (BOOL)isSupportedResourceType;
+- (BOOL)isURLResource;
+- (BOOL)isBase64Resource;
 
 @end
 

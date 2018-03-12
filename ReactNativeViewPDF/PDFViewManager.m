@@ -22,13 +22,11 @@ RCT_EXPORT_VIEW_PROPERTY(onError, RCTDirectEventBlock)
 
 - (instancetype)init {
     self = [super init];
-    if ( self ) {
-        self.pdfView = [[PDFView alloc] init];
-    }
     return self;
 }
 
 - (UIView *)view {
+    self.pdfView = [[PDFView alloc] init];
     return self.pdfView;
 }
 

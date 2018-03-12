@@ -60,6 +60,7 @@ public class PDFViewManager extends SimpleViewManager<PDFView> {
     @Override
     public void onDropViewInstance(PDFView pdfView) {
         pdfView.onDrop();
+        this.pdfView = null;
     }
 
     @ReactProp(name = "resource")
