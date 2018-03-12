@@ -91,9 +91,14 @@ public class PDFView extends com.github.barteksc.pdfviewer.PDFView implements
     }
 
     public void renderFromBase64() {
-        byte[] bytes = Base64.decode(resource.replace("base64:", ""), 0);
-        configurator = this.fromBytes(bytes);
-        setupAndLoad();
+        try {
+            byte[] bytes = Base64.decode(resource, 0);
+            configurator = this.fromBytes(bytes);
+            setupAndLoad();
+        } catch (IllegalArgumentException e) {
+            onError(new IOException("Cannot render PDF, data is not in valid Base64 scheme"));
+            return;
+        }
     }
 
     public void renderFromUrl() {
