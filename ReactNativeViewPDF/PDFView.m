@@ -73,7 +73,7 @@
 }
 
 -(void)webView:(WKWebView *)webView didFinishNavigation:(WKNavigation *)navigation {
-    [UIView animateWithDuration: 0.5 animations: ^(void) {
+    [UIView animateWithDuration: _fadeInDuration animations: ^(void) {
         [webview setAlpha: 1.0];
     }];
     

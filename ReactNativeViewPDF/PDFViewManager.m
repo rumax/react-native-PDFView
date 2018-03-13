@@ -17,7 +17,7 @@ RCT_CUSTOM_VIEW_PROPERTY(textEncoding, NSString, PDFView) {
 }
 
 RCT_CUSTOM_VIEW_PROPERTY(fadeInDuration, NSTimeInterval, PDFView) {
-    [view setFadeInDuration: json ? [RCTConvert NSTimeInterval: json] : 0.5];
+    [view setFadeInDuration: json ? [RCTConvert NSTimeInterval: json] : 0.0];
 }
 
 RCT_EXPORT_VIEW_PROPERTY(onLoad, RCTDirectEventBlock)

@@ -39,7 +39,7 @@ const componentInterface = {
     textEncoding: PropTypes.string,
 
     /**
-     * A Number value. Fades in the webview on load successfully:
+     * A Number value. Fades in the webview (in ms) on load successfully:
      *   - 0.0, default
      */
     fadeInDuration: PropTypes.number,

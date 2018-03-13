@@ -55,6 +55,7 @@ const PdfContent = ({
   const content = resourceType ?
     (
       <PDFView
+        fadeInDuration={250.0}
         style={styles.pdfView}
         resource={resource}
         resourceType={resourceType}
