@@ -21,7 +21,6 @@
         
         webview = [[WKWebView alloc] initWithFrame: self.frame];
         [webview setNavigationDelegate: self];
-        [webview setUIDelegate: self];
         [self addSubview: webview];
     }
     return self;
