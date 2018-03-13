@@ -1,12 +1,13 @@
 #import <React/RCTView.h>
-#import <UIKit/UIKit.h>
 #import "PDFConstants.h"
+#import <WebKit/WebKit.h>
 
-@interface PDFView : RCTView <UIWebViewDelegate>
+@interface PDFView : RCTView <WKNavigationDelegate>
 
 @property (nonatomic, copy) NSString *resource;
 @property (nonatomic, copy) NSString *resourceType;
 @property (nonatomic, copy) NSString *textEncoding;
+@property (nonatomic) NSTimeInterval fadeInDuration;
 @property (nonatomic, copy) RCTDirectEventBlock onLoad;
 @property (nonatomic, copy) RCTDirectEventBlock onError;
 
@@ -16,4 +17,3 @@
 - (BOOL)isBase64Resource;
 
 @end
-

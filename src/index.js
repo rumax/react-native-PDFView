@@ -37,12 +37,19 @@ type Props = {
    *   - "utf-16"
    */
   textEncoding: 'utf-8' | 'utf-16',
+
+  /**
+   * A Number value. Fades in the webview (in ms) on load successfully:
+   *   - 0.0, default
+   */
+  fadeInDuration: number,
 };
 
 class PDFView extends React.Component<Props, *> {
   static defaultProps = {
     onError: () => {},
     onLoad: () => {},
+    fadeInDuration: 0.0,
     resourceType: 'url',
     textEncoding: 'utf-8',
   };

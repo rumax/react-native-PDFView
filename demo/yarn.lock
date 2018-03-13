@@ -2914,9 +2914,9 @@ react-devtools-core@3.0.0:
     shell-quote "^1.6.1"
     ws "^2.0.3"
 
-react-native-view-pdf@0.1.12:
-  version "0.1.12"
-  resolved "https://registry.yarnpkg.com/react-native-view-pdf/-/react-native-view-pdf-0.1.12.tgz#78320675eb5b7a6cae6f5dd34b0ac4797751e36c"
+react-native-view-pdf@0.1.15:
+  version "0.1.15"
+  resolved "https://registry.yarnpkg.com/react-native-view-pdf/-/react-native-view-pdf-0.1.15.tgz#b9cb13d897721615bc6eeb6762117a2aaff5c9db"
 
 react-native@0.52.0:
   version "0.52.0"
