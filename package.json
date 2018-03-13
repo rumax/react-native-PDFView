@@ -1,6 +1,6 @@
 {
   "name": "react-native-view-pdf",
-  "version": "0.1.17",
+  "version": "0.1.18",
   "description": "React native Pdf viewer implementation",
   "main": "src/index.js",
   "scripts": {
