@@ -39,7 +39,7 @@ type Props = {
   textEncoding: 'utf-8' | 'utf-16',
 
   /**
-   * A Number value. Fades in the webview (in ms) on load successfully:
+   * A Number value. Fades in the webview (in ms) on load successfully (iOS Only):
    *   - 0.0, default
    */
   fadeInDuration: number,
