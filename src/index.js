@@ -42,7 +42,7 @@ type Props = {
    * A Number value. Fades in the webview (in ms) on load successfully (iOS Only):
    *   - 0.0, default
    */
-  fadeInDuration?: number,
+  fadeInDuration: number,
 };
 
 class PDFView extends React.Component<Props, *> {
