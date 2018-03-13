@@ -2,7 +2,7 @@
 
 @implementation PDFView
 {
-    UIWebView *webview;
+    WKWebView *webview;
     NSString *currentResource;
     NSString *currentResourceType;
     bool didLoadOnce; // Needed as on init, didSetProps is called as well, leading to layoutSubviews being called twice
@@ -17,18 +17,19 @@
 - (instancetype)init {
     self = [super init];
     if ( self ) {
-        webview = [[UIWebView alloc] initWithFrame: self.frame];
+        [self setBackgroundColor: [UIColor clearColor]];
+        
+        webview = [[WKWebView alloc] initWithFrame: self.frame];
+        [webview setNavigationDelegate: self];
+        [webview setUIDelegate: self];
         [self addSubview: webview];
-        [webview setDelegate: self];
-        [webview setScalesPageToFit: YES];
-        [webview setOpaque: NO];
-        [webview setBackgroundColor: [UIColor clearColor]];
     }
     return self;
 }
 
 - (void)layoutSubviews {
     [super layoutSubviews];
+    [webview setAlpha: 0.0];
     webview.frame = self.bounds;
     didLoadOnce = true;
     
@@ -56,9 +57,13 @@
         NSURLRequest *request = [NSURLRequest requestWithURL:[NSURL URLWithString: _resource]];
         [webview loadRequest: request];
     } else {
-        NSString *textEncodingName = [_textEncoding isEqual: UTF_16] ? UTF_16 : UTF_8;
+        NSString *characterEncodingName = [_textEncoding isEqual: UTF_16] ? UTF_16 : UTF_8;
         NSData *base64Decoded = [[NSData alloc] initWithBase64EncodedString: _resource options: NSDataBase64DecodingIgnoreUnknownCharacters];
-        [webview loadData: base64Decoded MIMEType: MIMETYPE_PDF textEncodingName: textEncodingName baseURL: [[NSURL alloc] init]];
+        if (base64Decoded != nil) {
+            [webview loadData: base64Decoded MIMEType: MIMETYPE_PDF characterEncodingName: characterEncodingName baseURL: [[NSURL alloc] init]];
+        } else {
+            [self invalidBase64Error];
+        }
     }
 }
 
@@ -67,13 +72,27 @@
     currentResource = _resource;
 }
 
-- (void)webViewDidFinishLoad:(UIWebView *)webView {
+-(void)webView:(WKWebView *)webView didFinishNavigation:(WKNavigation *)navigation {
+    [UIView animateWithDuration: 0.5 animations: ^(void) {
+        [webview setAlpha: 1.0];
+    }];
+    
     if (_onLoad) {
         _onLoad(nil);
     }
 }
 
-- (void)webView:(UIWebView *)webView didFailLoadWithError:(NSError *)error {
+-(void)invalidBase64Error {
+    if (_onError) {
+        _onError(@{
+                   MESSAGE_ERROR_ONLOADING: @{
+                           MESSAGE_KEY_ERRORMESSAGE: MESSAGE_ERROR_BASE64,
+                           }
+                   });
+    }
+}
+
+-(void)webView:(WKWebView *)webView didFailNavigation:(WKNavigation *)navigation withError:(NSError *)error {
     if (_onError) {
         _onError(@{
                    MESSAGE_ERROR_ONLOADING: @{
