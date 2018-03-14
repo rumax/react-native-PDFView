@@ -11,7 +11,7 @@
   "keywords": [
     "react-native pdf viewer"
   ],
-  "author": "Maksym Rusynyk <m.rusynyk@gmail.com>",
+  "author": "Maksym Rusynyk <m.rusynyk@gmail.com>, Sander Frenken <sander.frenken@hotmail.com>",
   "license": "MIT",
   "peerDependencies": {
     "react": "^16.2.0",
@@ -32,10 +32,10 @@
   "dependencies": {},
   "repository": {
     "type": "git",
-    "url": "git+ssh://git@github.com/rumax/react-native-view-pdf.git"
+    "url": "git+ssh://git@github.com/rumax/react-native-PDFView.git"
   },
   "bugs": {
-    "url": "https://github.com/rumax/react-native-view-pdf/issues"
+    "url": "https://github.com/rumax/react-native-PDFView/issues"
   },
-  "homepage": "https://github.com/rumax/react-native-view-pdf#readme"
+  "homepage": "https://github.com/rumax/react-native-PDFView#readme"
 }
