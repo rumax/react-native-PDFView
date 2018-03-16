@@ -7,7 +7,8 @@
 Library for displaying [PDF documents](https://acrobat.adobe.com/us/en/acrobat/about-adobe-pdf.html) in [react-native](http://facebook.github.io/react-native/)
 
 - android - uses implementation of [Android PdfViewer](https://github.com/barteksc/AndroidPdfViewer)
-- ios - uses UIWebView native implementation to loadRequest and loadData [UIWebView](https://developer.apple.com/documentation/uikit/uiwebview)
+- ios - uses WKWebView native implementation to loadRequest and loadData [WKWebView](https://developer.apple.com/documentation/webkit/wkwebview).
+Targets iOS9.0 and above
 
 ## Example
 
