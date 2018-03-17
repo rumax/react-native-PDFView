@@ -4,7 +4,7 @@
   "description": "React native Pdf viewer implementation",
   "main": "src/index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\"",
+    "test": "jest",
     "lint": "eslint src/*",
     "flow": "flow"
   },
@@ -20,14 +20,17 @@
   },
   "devDependencies": {
     "babel-eslint": "^8.2.2",
+    "babel-jest": "^23.0.0-alpha.0",
     "eslint": "^4.18.2",
     "eslint-config-airbnb": "^16.1.0",
     "eslint-plugin-import": "^2.9.0",
     "eslint-plugin-jsx-a11y": "^6.0.3",
     "eslint-plugin-react": "^7.7.0",
     "flow-bin": "^0.67.1",
+    "jest": "^22.4.2",
     "react": "^16.2.0",
-    "react-native": "^0.54.0"
+    "react-native": "^0.54.0",
+    "react-test-renderer": "^16.2.0"
   },
   "dependencies": {},
   "repository": {

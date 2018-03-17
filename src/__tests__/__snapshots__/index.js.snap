@@ -1,0 +1,12 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`PDFView renders 1`] = `
+<RNPDFView
+  fadeInDuration={0}
+  onError={[Function]}
+  onLoad={[Function]}
+  resource="http://site.com/pdf"
+  resourceType="url"
+  textEncoding="utf-8"
+/>
+`;
