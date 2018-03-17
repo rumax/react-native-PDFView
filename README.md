@@ -3,6 +3,7 @@
 [![CircleCI](https://circleci.com/gh/rumax/react-native-PDFView.svg?style=shield)](https://circleci.com/gh/rumax/react-native-PDFView)
 [![codecov](https://codecov.io/gh/rumax/react-native-PDFView/branch/master/graph/badge.svg)](https://codecov.io/gh/rumax/react-native-PDFView)
 [![npm version](https://badge.fury.io/js/react-native-view-pdf.svg)](https://badge.fury.io/js/react-native-view-pdf)
+[![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=flat-square)](http://makeapullrequest.com)
 
 Library for displaying [PDF documents](https://acrobat.adobe.com/us/en/acrobat/about-adobe-pdf.html) in [react-native](http://facebook.github.io/react-native/)
 
@@ -71,18 +72,16 @@ N/A
 
 ## Demo
 
-Don't blame this demo for UX or code. The goal of it is to:
+You can check [demo project](https://github.com/rumax/react-native-PDFView/tree/master/demo). It allows you to:
 
-- show how to use the PDFView
-- render PDF using URL
-- render PDF using BASE64 data
-- show error state
+- use the PDFView component
+- render PDF document using URL
+- render PDF document using BASE64 data
+- check how to use error state
 - measure rendering time
+- test the component on android and ios
 
 ![Demo](https://github.com/rumax/react-native-PDFView/raw/master/demo/res/pdf.gif)
-
-- android [demo](https://github.com/rumax/react-native-PDFView/tree/master/demo)
-- ios (TODO)
 
 ## License
 
@@ -91,4 +90,5 @@ Don't blame this demo for UX or code. The goal of it is to:
 ### Other information
 
 - Generated with [react-native-create-library](https://github.com/frostney/react-native-create-library)
-- Alternatives: [react-native-pdf](https://www.npmjs.com/package/react-native-pdf) has full implementation of [PDFView](https://github.com/barteksc/AndroidPdfViewer) but requires other dependencies and some functionality that is superfluous if you only need to display pdf (using url or base64). Or any other [npm](https://www.npmjs.com/search?q=pdf+react+native) package
+- Zero JavaScript dependency. Which means that you do not bring other dependencies to your project
+- You can try other NPM packages [npm](https://www.npmjs.com/search?q=pdf+react+native) if you think that something is missing or, please, discuss it with the authors.
