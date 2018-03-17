@@ -63,7 +63,7 @@ class PDFView extends React.Component<Props, *> {
 
   onError: (error: Error) => void;
   onError(event: any) { // TODO: Proper type for RN event
-    this.props.onError(event && event.nativeEvent || new Error());
+    this.props.onError(event && event.nativeEvent || new Error('unknown error'));
   }
 
   render() {
