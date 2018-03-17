@@ -1,6 +1,35 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`PDFView renders 1`] = `
+exports[`PDFView invokes onError callback 1`] = `
+Array [
+  Array [
+    [Error: unknown error],
+  ],
+]
+`;
+
+exports[`PDFView invokes onError callback and provides native error 1`] = `
+Array [
+  Array [
+    Object {
+      "message": "native error",
+    },
+  ],
+]
+`;
+
+exports[`PDFView renders base64 1`] = `
+<RNPDFView
+  fadeInDuration={0}
+  onError={[Function]}
+  onLoad={[Function]}
+  resource="base64"
+  resourceType="base64"
+  textEncoding="utf-8"
+/>
+`;
+
+exports[`PDFView renders with default url source type 1`] = `
 <RNPDFView
   fadeInDuration={0}
   onError={[Function]}

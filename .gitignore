@@ -2,6 +2,9 @@
 react-native-view-pdf-*.tgz
 package/
 
+# jest
+coverage
+
 # OSX
 #
 .DS_Store
