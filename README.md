@@ -7,8 +7,9 @@
 
 Library for displaying [PDF documents](https://acrobat.adobe.com/us/en/acrobat/about-adobe-pdf.html) in [react-native](http://facebook.github.io/react-native/)
 
-- android - uses implementation of [Android PdfViewer](https://github.com/barteksc/AndroidPdfViewer)
-- ios - uses WKWebView native implementation to loadRequest and loadData [WKWebView](https://developer.apple.com/documentation/webkit/wkwebview).
+- android - uses [Android PdfViewer](https://github.com/barteksc/AndroidPdfViewer)
+
+- ios - uses [UIWebView](https://developer.apple.com/documentation/uikit/uiwebview).
 Targets iOS9.0 and above
 
 ## Example
@@ -18,16 +19,9 @@ import PDFView from 'react-native-view-pdf';
 
 <View>
   <PDFView
-    style={{
-      height: 360,
-      width: Dimensions.get('window').width,
-    }}
-    onError={(error) => {
-      console.log('onError', error);
-    }}
-    onLoad={() => {
-      console.log('onLoad');
-    }}
+    style={{height: 360, width: Dimensions.get('window').width}}
+    onError={(error) => console.log('onError', error)}
+    onLoad={() => console.log('onLoad')}
     resource="http://www.pdf995.com/samples/pdf.pdf"
   />
 </View>
@@ -72,16 +66,20 @@ N/A
 
 ## Demo
 
-You can check [demo project](https://github.com/rumax/react-native-PDFView/tree/master/demo). It allows you to:
+Check the  [demo](https://github.com/rumax/react-native-PDFView/tree/master/demo) to:
 
-- use the PDFView component
-- render PDF document using URL
-- render PDF document using BASE64 data
-- check how to use error state
-- measure rendering time
 - test the component on android and ios
+- render PDF using URL
+- render PDF using BASE64 data
+- handle error state
 
-![Demo](https://github.com/rumax/react-native-PDFView/raw/master/demo/res/pdf.gif)
+### android
+
+![Demo](https://github.com/rumax/react-native-PDFView/raw/master/demo/res/android_pdf.gif)
+
+### ios
+
+![Demo](https://github.com/rumax/react-native-PDFView/raw/master/demo/res/ios_pdf.gif)
 
 ## License
 
@@ -91,4 +89,4 @@ You can check [demo project](https://github.com/rumax/react-native-PDFView/tree/
 
 - Generated with [react-native-create-library](https://github.com/frostney/react-native-create-library)
 - Zero JavaScript dependency. Which means that you do not bring other dependencies to your project
-- You can try other NPM packages [npm](https://www.npmjs.com/search?q=pdf+react+native) if you think that something is missing or, please, discuss it with the authors.
+- You can try other [NPM packages](https://www.npmjs.com/search?q=pdf+react+native) if you think that something is missing or, please, discuss it with the authors.
