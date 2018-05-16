@@ -1,6 +1,6 @@
 {
   "name": "react-native-view-pdf",
-  "version": "0.1.22",
+  "version": "0.1.24",
   "description": "React native Pdf viewer implementation",
   "main": "src/index.js",
   "scripts": {
@@ -16,9 +16,9 @@
   "author": "Maksym Rusynyk <m.rusynyk@gmail.com>, Sander Frenken <sander.frenken@hotmail.com>",
   "license": "MIT",
   "peerDependencies": {
-    "react": "^16.2.0",
-    "react-native": "^0.54.0",
-    "prop-types": "^15.6.1"
+    "react": "16.*",
+    "react-native": "0.*",
+    "prop-types": "15.*"
   },
   "devDependencies": {
     "babel-eslint": "^8.2.2",

@@ -17,8 +17,8 @@
     "preset": "react-native"
   },
   "dependencies": {
-    "react": "16.2.0",
-    "react-native": "0.52.0",
-    "react-native-view-pdf": "0.1.20"
+    "react": "16.3.1",
+    "react-native": "0.55.4",
+    "react-native-view-pdf": "0.1.24"
   }
 }
