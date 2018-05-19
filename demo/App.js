@@ -44,6 +44,22 @@ const styles = StyleSheet.create({
   pdfView: {
     flex: 1,
   },
+  noContent: {
+    flex: 1,
+    alignItems: 'center',
+  },
+  noContentText: {
+    fontSize: 22,
+    fontWeight: 'bold',
+    marginTop: 60,
+    textAlign: 'center',
+  },
+  noContentSubText: {
+    fontSize: 16,
+    color: cBlue,
+    marginTop: 20,
+    textAlign: 'center',
+  },
 });
 
 const PdfContent = ({
@@ -62,7 +78,12 @@ const PdfContent = ({
         onLoad={onLoad}
         onError={onError}
       />
-    ) : <Text>No resource, tap one of buttons above</Text>;
+    ) : (
+      <View style={styles.noContent}>
+        <Text style={styles.noContentText}>No resource{'\n'}tap one of buttons above</Text>
+        <Text style={styles.noContentSubText}>You run the app in {__DEV__ ? 'DEV' : 'RELEASE'} mode</Text>
+      </View>
+    );
 
   return (
     <View style={styles.content}>
