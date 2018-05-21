@@ -9,7 +9,7 @@ Library for displaying [PDF documents](https://acrobat.adobe.com/us/en/acrobat/a
 
 - android - uses [Android PdfViewer](https://github.com/barteksc/AndroidPdfViewer)
 
-- ios - uses [UIWebView](https://developer.apple.com/documentation/uikit/uiwebview).
+- ios - uses [WKWebView](https://developer.apple.com/documentation/webkit/wkwebview).
 Targets iOS9.0 and above
 
 ## Example
