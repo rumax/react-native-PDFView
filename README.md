@@ -26,6 +26,8 @@ import PDFView from 'react-native-view-pdf';
   />
 </View>
 ```
+#### iOS only
+You can set the additional property 'fadeInDuration' (in ms, defaults to 0.0) to smoothly fade the webview into view when pdf loading is completed.
 
 ## Getting started
 
@@ -73,11 +75,11 @@ Check the  [demo](https://github.com/rumax/react-native-PDFView/tree/master/demo
 - render PDF using BASE64 data
 - handle error state
 
-### android
+### Android
 
 ![Demo](https://github.com/rumax/react-native-PDFView/raw/master/demo/res/android_pdf.gif)
 
-### ios
+### iOS
 
 ![Demo](https://github.com/rumax/react-native-PDFView/raw/master/demo/res/ios_pdf.gif)
 
