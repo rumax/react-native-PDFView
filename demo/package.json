@@ -19,6 +19,6 @@
   "dependencies": {
     "react": "16.3.1",
     "react-native": "0.55.4",
-    "react-native-view-pdf": "0.1.24"
+    "react-native-view-pdf": "0.2.2"
   }
 }
