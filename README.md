@@ -1,4 +1,4 @@
-# react-native-PDFView
+# react-native-view-pdf
 
 [![CircleCI](https://circleci.com/gh/rumax/react-native-PDFView.svg?style=shield)](https://circleci.com/gh/rumax/react-native-PDFView)
 [![codecov](https://codecov.io/gh/rumax/react-native-PDFView/branch/master/graph/badge.svg)](https://codecov.io/gh/rumax/react-native-PDFView)
@@ -17,9 +17,9 @@ Targets iOS9.0 and above
 ```js
 import PDFView from 'react-native-view-pdf';
 
-<View>
+<View style={{ flex: 1 }}>
   <PDFView
-    style={{height: 360, width: Dimensions.get('window').width}}
+    style={{ flex: 1 }}
     onError={(error) => console.log('onError', error)}
     onLoad={() => console.log('onLoad')}
     resource="http://www.pdf995.com/samples/pdf.pdf"
@@ -50,15 +50,15 @@ You can set the additional property 'fadeInDuration' (in ms, defaults to 0.0) to
 
 1. Open up `android/app/src/main/java/[...]/MainApplication.java`
   - Add `import com.reactlibrary.PDFViewPackage;` to the imports at the top of the file
-  - Add `new RNReactNativePdfViewPackage()` to the list returned by the `getPackages()` method
+  - Add `new PDFViewPackage()` to the list returned by the `getPackages()` method
 2. Append the following lines to `android/settings.gradle`:
     ```
-    include ':react-native-pdf-view'
-    project(':react-native-pdf-view').projectDir = new File(rootProject.projectDir, '../node_modules/react-native-pdf-view/android')
+    include ':react-native-view-pdf'
+    project(':react-native-view-pdf').projectDir = new File(rootProject.projectDir, '../node_modules/react-native-view-pdf/android')
     ```
 3. Insert the following lines inside the dependencies block in `android/app/build.gradle`:
     ```
-      compile project(':react-native-pdf-view')
+      compile project(':react-native-view-pdf')
       ```
 
 #### Windows
