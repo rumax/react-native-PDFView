@@ -14,7 +14,6 @@ import com.facebook.react.uimanager.ThemedReactContext;
 import com.facebook.react.uimanager.events.RCTEventEmitter;
 import com.github.barteksc.pdfviewer.listener.OnErrorListener;
 import com.github.barteksc.pdfviewer.listener.OnLoadCompleteListener;
-import com.github.barteksc.pdfviewer.util.FitPolicy;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -72,7 +71,6 @@ public class PDFView extends com.github.barteksc.pdfviewer.PDFView implements
                 .onLoad(this)
                 .onError(this)
                 .spacing(10)
-                .pageFitPolicy(FitPolicy.WIDTH)
                 .load();
         sourceChanged = false;
     }
