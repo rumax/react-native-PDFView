@@ -18,8 +18,11 @@ const cLightBlue = '#5bc0de';
 const cGreen = '#5cb85c';
 const cBlue = '#428bca';
 
-const PDF_FILE = 'test-pdf.pdf';
-const PDF_URL = 'https://www.ets.org/Media/Tests/TOEFL/pdf/SampleQuestions.pdf';
+const resources = {
+  file: Platform.OS === 'ios' ? 'test-pdf.pdf' : '/sdcard/Download/test-pdf.pdf',
+  url: 'https://www.ets.org/Media/Tests/TOEFL/pdf/SampleQuestions.pdf',
+  base64: base64Data.document,
+};
 
 const styles = StyleSheet.create({
   container: {
@@ -27,9 +30,7 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: cWhite,
   },
-  tabs: {
-    flexDirection: 'row',
-  },
+  tabs: { flexDirection: 'row' },
   tab: {
     flex: 1,
     alignItems: 'center',
@@ -38,17 +39,9 @@ const styles = StyleSheet.create({
     borderColor: cBlue,
     borderWidth: 2,
   },
-  content: {
-    flex: 1,
-    backgroundColor: cGreen,
-  },
-  pdfView: {
-    flex: 1,
-  },
-  noContent: {
-    flex: 1,
-    alignItems: 'center',
-  },
+  content: { flex: 1, backgroundColor: cGreen },
+  pdfView: { flex: 1 },
+  noContent: { flex: 1, alignItems: 'center' },
   noContentText: {
     fontSize: 22,
     fontWeight: 'bold',
@@ -86,56 +79,40 @@ const PdfContent = ({
       </View>
     );
 
-  return (
-    <View style={styles.content}>
-      {content}
-    </View>
-  );
+  return <View style={styles.content}>{content}</View>;
 };
+
+const TabButton = ({ title, onPress }) => (
+  <View style={styles.tab}>
+    <Button onPress={onPress} title={title} />
+  </View>
+);
 
 export default class App extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {
-      resource: undefined,
-      resourceType: undefined,
-    };
+    this.state = { resource: undefined, resourceType: undefined };
     this.renderStarted = 0;
   }
 
   setUrl = () => {
-    this.setState({
-      resource: PDF_URL,
-      resourceType: 'url',
-    });
+    this.setState({ resource: resources.url, resourceType: 'url' });
   }
 
   setBase64 = () => {
-    this.setState({
-      resource: base64Data.document,
-      resourceType: 'base64',
-    });
+    this.setState({ resource: resources.base64, resourceType: 'base64' });
   }
 
   setFile = () => {
-    this.setState({
-      resource: PDF_FILE,
-      resourceType: 'file',
-    });
+    this.setState({ resource: resources.file, resourceType: 'file' });
   }
 
   dataWithError = () => {
-    this.setState({
-      resource: '**invalid base 64**',
-      resourceType: 'base64',
-    });
+    this.setState({ resource: '**invalid base 64**', resourceType: 'base64' });
   }
 
   resetData = () => {
-    this.setState({
-      resource: undefined,
-      resourceType: undefined,
-    });
+    this.setState({ resource: undefined, resourceType: undefined });
   }
 
   handleLoad = () => {
@@ -143,13 +120,8 @@ export default class App extends React.Component {
       'Document loaded',
       `Time: ${((new Date()).getTime() - this.renderStarted)}`,
       [
-        {
-          text: 'Cancel',
-          style: 'cancel',
-        },
-        {
-          text: 'OK',
-        },
+        { text: 'Cancel', style: 'cancel' },
+        { text: 'OK' },
       ],
     );
   }
@@ -159,40 +131,24 @@ export default class App extends React.Component {
       'Document loading failed',
       error.message,
       [
-        {
-          text: 'Cancel',
-          style: 'cancel',
-        },
-        {
-          text: 'OK',
-        },
+        { text: 'Cancel', style: 'cancel' },
+        { text: 'OK' },
       ],
     );
   }
 
   render() {
     const { resource, resourceType } = this.state;
-    if (resource) {
-      this.renderStarted = (new Date()).getTime();
-    }
+    this.renderStarted = (new Date()).getTime();
+
     return (
       <View style={styles.container}>
         <View style={styles.tabs}>
-          <View style={styles.tab}>
-            <Button onPress={this.setUrl} title="Url" accessibilityLabel="Url" />
-          </View>
-          <View style={styles.tab}>
-            <Button onPress={this.setBase64} title="Base64" accessibilityLabel="Base64" />
-          </View>
-          <View style={styles.tab}>
-            <Button onPress={this.setFile} title="File" accessibilityLabel="File" />
-          </View>
-          <View style={styles.tab}>
-            <Button onPress={this.dataWithError} title="Error" accessibilityLabel="Error" />
-          </View>
-          <View style={styles.tab}>
-            <Button onPress={this.resetData} title="Reset" accessibilityLabel="Reset" />
-          </View>
+          <TabButton onPress={this.setUrl} title="Url" />
+          <TabButton onPress={this.setBase64} title="Base64" />
+          <TabButton onPress={this.setFile} title="File" />
+          <TabButton onPress={this.dataWithError} title="Error" />
+          <TabButton onPress={this.resetData} title="Reset" />
         </View>
         <PdfContent
           resource={resource}

@@ -6,6 +6,7 @@ package com.reactlibrary;
  * This source code is licensed under the MIT license
  */
 
+import android.os.Environment;
 import android.util.Base64;
 import com.facebook.react.bridge.Arguments;
 import com.facebook.react.bridge.ReactContext;
@@ -26,12 +27,16 @@ public class PDFView extends com.github.barteksc.pdfviewer.PDFView implements
         AsyncTaskCompleted {
     private ThemedReactContext context;
     private String resource;
-    private File pdfFile;
+    private File downloadedFile;
     private AsyncDownload asyncDownload = null;
     private String textEncoding = null;
     private String resourceType = null;
     private Configurator configurator = null;
     private boolean sourceChanged = true;
+    private static final String E_NO_RESOURCE = "source is not defined";
+    private static final String E_NO_RESOURCE_TYPE = "resourceType is not defined";
+    private static final String E_INVALID_RESOURCE_TYPE = "resourceType is Invalid";
+    private static final String E_INVALID_BASE64 = "data is not in valid Base64 scheme";
 
     public PDFView(ThemedReactContext context) {
         super(context, null);
@@ -59,8 +64,7 @@ public class PDFView extends com.github.barteksc.pdfviewer.PDFView implements
 
     @Override
     public void downloadTaskFailed(IOException e) {
-        pdfFile.delete();
-        pdfFile = null;
+        cleanDownloadedFile();
         onError(e);
     }
 
@@ -77,38 +81,41 @@ public class PDFView extends com.github.barteksc.pdfviewer.PDFView implements
 
     @Override
     public void downloadTaskCompleted() {
+        renderFromFile(downloadedFile);
+    }
+
+    private void renderFromFile(File file) {
         InputStream input;
         try {
-            input = new FileInputStream(pdfFile);
+            input = new FileInputStream(file);
             configurator = this.fromStream(input);
             setupAndLoad();
         } catch (FileNotFoundException e) {
             onError(e);
         }
-        asyncDownload = null;
     }
 
-    public void renderFromBase64() {
+    private void renderFromBase64() {
         try {
             byte[] bytes = Base64.decode(resource, 0);
             configurator = this.fromBytes(bytes);
             setupAndLoad();
         } catch (IllegalArgumentException e) {
-            onError(new IOException("Cannot render PDF, data is not in valid Base64 scheme"));
+            onError(new IOException(E_INVALID_BASE64));
             return;
         }
     }
 
-    public void renderFromUrl() {
+    private void renderFromUrl() {
         File dir = context.getCacheDir();
         try {
-            pdfFile = File.createTempFile("pdfDocument", "pdf", dir);
+            downloadedFile = File.createTempFile("pdfDocument", "pdf", dir);
         } catch (IOException e) {
             onError(e);
             return;
         }
 
-        asyncDownload = new AsyncDownload(resource, pdfFile, this);
+        asyncDownload = new AsyncDownload(resource, downloadedFile, this);
         asyncDownload.execute();
     }
 
@@ -116,12 +123,12 @@ public class PDFView extends com.github.barteksc.pdfviewer.PDFView implements
         cleanup();
 
         if (resource == null) {
-            onError(new IOException("Cannot render PDF, source is undefined"));
+            onError(new IOException(E_NO_RESOURCE));
             return;
         }
 
         if (resourceType == null) {
-            onError(new IOException("Cannot render PDF, resourceType is undefined"));
+            onError(new IOException(E_NO_RESOURCE_TYPE));
             return;
         }
 
@@ -134,10 +141,9 @@ public class PDFView extends com.github.barteksc.pdfviewer.PDFView implements
         } else if (resourceType.equals("base64")) {
             renderFromBase64();
         } else if (resourceType.equals("file")) {
-            // TODO: Implement file resource
-            onError(new IOException("file resource type is not supported yet"));
+            renderFromFile(new File(resource));
         } else {
-            onError(new IOException("Invalid resource type" + resourceType));
+            onError(new IOException(E_INVALID_RESOURCE_TYPE + resourceType));
         }
     }
 
@@ -145,9 +151,13 @@ public class PDFView extends com.github.barteksc.pdfviewer.PDFView implements
         if (asyncDownload != null) {
             asyncDownload.cancel(true);
         }
-        if (pdfFile != null) {
-            pdfFile.delete();
-            pdfFile = null;
+        cleanDownloadedFile();
+    }
+
+    private void cleanDownloadedFile() {
+        if (downloadedFile != null) {
+            downloadedFile.delete();
+            downloadedFile = null;
         }
     }
 
