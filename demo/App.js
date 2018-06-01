@@ -18,6 +18,7 @@ const cLightBlue = '#5bc0de';
 const cGreen = '#5cb85c';
 const cBlue = '#428bca';
 
+const PDF_FROM_FILE = 'test-pdf.pdf';
 const PDF_URL = 'https://www.ets.org/Media/Tests/TOEFL/pdf/SampleQuestions.pdf';
 
 const styles = StyleSheet.create({
@@ -116,6 +117,13 @@ export default class App extends React.Component {
     });
   }
 
+  setFile = () => {
+    this.setState({
+      resource: PDF_FROM_FILE,
+      resourceType: 'file',
+    });
+  }
+
   dataWithError = () => {
     this.setState({
       resource: '**invalid base 64**',
@@ -175,6 +183,9 @@ export default class App extends React.Component {
           </View>
           <View style={styles.tab}>
             <Button onPress={this.setBase64} title="Base64" accessibilityLabel="Base64" />
+          </View>
+          <View style={styles.tab}>
+            <Button onPress={this.setFile} title="File" accessibilityLabel="File" />
           </View>
           <View style={styles.tab}>
             <Button onPress={this.dataWithError} title="Error" accessibilityLabel="Error" />
