@@ -29,6 +29,12 @@ import PDFView from 'react-native-view-pdf';
 #### iOS only
 You can set the additional property 'fadeInDuration' (in ms, defaults to 0.0) to smoothly fade the webview into view when pdf loading is completed.
 
+#### local file support (Android todo)
+You can load local PDF files by using resourceType `file`.
+
+Currently, this is supported only for iOS. The implementation will first look in the MainBundle for the file.
+If this fails, the DocumentDirectory will be queried for the document.
+
 ## Getting started
 
 `$ npm install react-native-view-pdf --save`
@@ -45,9 +51,6 @@ You can set the additional property 'fadeInDuration' (in ms, defaults to 0.0) to
 1. Add ReactNativeViewPDF project to your project
 2. Under your build target general settings, add the library to your Linked Frameworks and Libraries
 3. If you run into any issues, confirm that under Build Phases -> Link Binary With Libraries the library is present
-
-You can load local PDF files by using resourceType `file`. On iOS, the implementation will first look in the MainBundle for the file.
-If this fails, the DocumentDirectory will be queried for the document.
 
 #### Android
 
