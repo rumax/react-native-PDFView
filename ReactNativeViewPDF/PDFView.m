@@ -42,18 +42,24 @@
     [self updateInput];
     
     if (![self isSupportedResourceType]) {
-        if (_onError) {
-            _onError(@{
-                       MESSAGE_UNSUPPORTED_TYPE: @{
-                               MESSAGE_KEY_RESOURCETYPE: _resourceType,
-                               }
-                       });
-        }
+        [self throwError: ERROR_UNSUPPORTED_TYPE withMessage: [NSString stringWithFormat:@"resourceType: %@ not recognized", _resourceType]];
         return;
     }
     
     if ([self isURLResource]) {
-        NSURLRequest *request = [NSURLRequest requestWithURL:[NSURL URLWithString: _resource]];
+        NSURLRequest *request = [NSURLRequest requestWithURL: [NSURL URLWithString: _resource]];
+        [webview loadRequest: request];
+    } else if ([self isFileResource]) {
+        NSURL *targetURL = [self fileFromBundleURL];
+        if (targetURL == nil) {
+            targetURL = [self fileFromDocumentsDirectoryURL];
+        }
+        if (targetURL == nil) {
+            [self throwError: ERROR_ONLOADING withMessage: ERROR_MESSAGE_FILENOTFOUND];
+            return;
+        }
+        
+        NSURLRequest *request = [NSURLRequest requestWithURL: targetURL];
         [webview loadRequest: request];
     } else {
         NSString *characterEncodingName = [_textEncoding isEqual: UTF_16] ? UTF_16 : UTF_8;
@@ -61,7 +67,7 @@
         if (base64Decoded != nil) {
             [webview loadData: base64Decoded MIMEType: MIMETYPE_PDF characterEncodingName: characterEncodingName baseURL: [[NSURL alloc] init]];
         } else {
-            [self invalidBase64Error];
+            [self throwError: ERROR_ONLOADING withMessage: ERROR_MESSAGE_BASE64_NIL];
         }
     }
 }
@@ -71,7 +77,7 @@
     currentResource = _resource;
 }
 
--(void)webView:(WKWebView *)webView didFinishNavigation:(WKNavigation *)navigation {
+- (void)webView:(WKWebView *)webView didFinishNavigation:(WKNavigation *)navigation {
     [UIView animateWithDuration: _fadeInDuration animations: ^(void) {
         [webview setAlpha: 1.0];
     }];
@@ -81,36 +87,35 @@
     }
 }
 
--(void)invalidBase64Error {
-    if (_onError) {
-        _onError(@{
-                   MESSAGE_ERROR_ONLOADING: @{
-                           MESSAGE_KEY_ERRORMESSAGE: MESSAGE_ERROR_BASE64,
-                           }
-                   });
+- (void)webView:(WKWebView *)webView didFailNavigation:(WKNavigation *)navigation withError:(NSError *)error {
+    [self throwError: ERROR_ONLOADING withMessage: error.localizedDescription];
+}
+
+- (NSURL *)fileFromBundleURL {
+    NSString *resourcePath = [_resource stringByReplacingOccurrencesOfString:@".pdf" withString: @""]; // Remove pdf extension from path if present
+    if (![[NSBundle mainBundle] pathForResource: resourcePath ofType: @"pdf"]) {
+        return nil;
+    } else {
+        return [NSURL fileURLWithPath: [[NSBundle mainBundle] pathForResource: resourcePath ofType: @"pdf"]];
     }
 }
 
--(void)webView:(WKWebView *)webView didFailNavigation:(WKNavigation *)navigation withError:(NSError *)error {
-    if (_onError) {
-        _onError(@{
-                   MESSAGE_ERROR_ONLOADING: @{
-                           MESSAGE_KEY_ERRORMESSAGE: error.localizedDescription,
-                           }
-                   });
+- (NSURL *)fileFromDocumentsDirectoryURL {
+    NSString *documentsDirectory = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) lastObject];
+    if (documentsDirectory == nil) {
+        return nil;
     }
+    NSString *filePath = [documentsDirectory stringByAppendingPathComponent: _resource];
+    if(![[NSFileManager defaultManager] fileExistsAtPath: filePath]) {
+        return nil;
+    }
+    return [NSURL fileURLWithPath:filePath];
 }
 
 - (BOOL)isRequiredInputSet {
     if ([_resource length] == 0 || [_resourceType length] == 0) {
-        if (_onError) {
-            _onError(@{
-                       MESSAGE_REQUIRED_INPUT_NOT_SET: @{
-                               MESSAGE_KEY_RESOURCE: _resource == nil ? @"" : _resource,
-                               MESSAGE_KEY_RESOURCETYPE: _resourceType == nil ? @"" : _resourceType,
-                               }
-                       });
-        }
+        NSString* errorMessage = [NSString stringWithFormat:@"resource: %@. resourceType: %@.", _resource, _resourceType];
+        [self throwError: ERROR_REQUIRED_INPUT_NOT_SET withMessage: errorMessage];
         return NO;
     }
     return YES;
@@ -121,7 +126,7 @@
 }
 
 - (BOOL)isSupportedResourceType {
-    return [self isURLResource] || [self isBase64Resource];
+    return [self isURLResource] || [self isBase64Resource] || [self isFileResource];
 }
 
 - (BOOL)isURLResource {
@@ -130,6 +135,20 @@
 
 - (BOOL)isBase64Resource {
     return [_resourceType  isEqualToString: RESOURCE_TYPE_BASE64];
+}
+
+- (BOOL)isFileResource {
+    return [_resourceType  isEqualToString: RESOURCE_TYPE_FILE];
+}
+
+- (void)throwError: (NSString *)title withMessage:(NSString *)message {
+    if (_onError) {
+        _onError(@{
+                   title: @{
+                           ERROR_MESSAGE_KEY: message,
+                           }
+                   });
+    }
 }
 
 @end
