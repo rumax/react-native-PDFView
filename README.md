@@ -46,6 +46,9 @@ You can set the additional property 'fadeInDuration' (in ms, defaults to 0.0) to
 2. Under your build target general settings, add the library to your Linked Frameworks and Libraries
 3. If you run into any issues, confirm that under Build Phases -> Link Binary With Libraries the library is present
 
+You can load local PDF files by using resourceType `file`. On iOS, the implementation will first look in the MainBundle for the file.
+If this fails, the DocumentDirectory will be queried for the document.
+
 #### Android
 
 1. Open up `android/app/src/main/java/[...]/MainApplication.java`
