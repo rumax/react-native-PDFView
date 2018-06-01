@@ -18,7 +18,7 @@ const cLightBlue = '#5bc0de';
 const cGreen = '#5cb85c';
 const cBlue = '#428bca';
 
-const PDF_FROM_FILE = 'test-pdf.pdf';
+const PDF_FILE = 'test-pdf.pdf';
 const PDF_URL = 'https://www.ets.org/Media/Tests/TOEFL/pdf/SampleQuestions.pdf';
 
 const styles = StyleSheet.create({
@@ -119,7 +119,7 @@ export default class App extends React.Component {
 
   setFile = () => {
     this.setState({
-      resource: PDF_FROM_FILE,
+      resource: PDF_FILE,
       resourceType: 'file',
     });
   }
