@@ -19,7 +19,8 @@ const componentInterface = {
      * A String value. Defines the resource to render. Can be one of:
      *   - url. Example: http://www.pdf995.com/samples/pdf.pdf
      *   - base64. Example: 'JVBERi0xLjcKCjEgMCBvYmogICUgZW50...'
-     *   - fileName - Not implemented
+     *   - fileName - Example: Platform.OS === 'ios' ?
+     *       'test-pdf.pdf' : '/sdcard/Download/test-pdf.pdf'
      */
     resource: PropTypes.string,
 
