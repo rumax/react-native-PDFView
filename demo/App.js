@@ -44,6 +44,7 @@ const styles = StyleSheet.create({
   noContent: { flex: 1, alignItems: 'center' },
   noContentText: {
     fontSize: 22,
+    lineHeight: 36,
     fontWeight: 'bold',
     marginTop: 60,
     textAlign: 'center',
@@ -74,8 +75,8 @@ const PdfContent = ({
       />
     ) : (
       <View style={styles.noContent}>
-        <Text style={styles.noContentText}>No resource{'\n'}tap one of buttons above</Text>
-        <Text style={styles.noContentSubText}>You run the app in {__DEV__ ? 'DEV' : 'RELEASE'} mode</Text>
+        <Text style={styles.noContentText}>No resource{'\n'}Press one of the buttons above</Text>
+        <Text style={styles.noContentSubText}>You are running the app in {__DEV__ ? 'DEV' : 'RELEASE'} mode</Text>
       </View>
     );
 
