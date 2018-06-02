@@ -12,7 +12,9 @@ Library for displaying [PDF documents](https://acrobat.adobe.com/us/en/acrobat/a
 - ios - uses [WKWebView](https://developer.apple.com/documentation/webkit/wkwebview).
 Targets iOS9.0 and above
 
-## Example
+## Examples
+
+### PDF from url
 
 ```js
 import PDFView from 'react-native-view-pdf';
@@ -21,19 +23,50 @@ import PDFView from 'react-native-view-pdf';
   <PDFView
     style={{ flex: 1 }}
     onError={(error) => console.log('onError', error)}
-    onLoad={() => console.log('onLoad')}
+    onLoad={() => console.log('PDF rendered from url')}
     resource="http://www.pdf995.com/samples/pdf.pdf"
+    resourceType="url"
+  />
+</View>
+```
+
+### PDF from base64
+
+```js
+import PDFView from 'react-native-view-pdf';
+
+<View style={{ flex: 1 }}>
+  <PDFView
+    style={{ flex: 1 }}
+    onError={(error) => console.log('onError', error)}
+    onLoad={() => console.log('PDF rendered from base 64 data')}
+    resource="JVBERi0xLjMKJcfs..."
+    resourceType: 'base64'
+  />
+</View>
+```
+
+### PDF from file
+
+On iOS the implementation will first look in the MainBundle for the file.
+If this fails, the DocumentDirectory will be queried for the document.
+
+```js
+import PDFView from 'react-native-view-pdf';
+
+<View style={{ flex: 1 }}>
+  <PDFView
+    style={{ flex: 1 }}
+    onError={(error) => console.log('onError', error)}
+    onLoad={() => console.log('PDF rendered from file')}
+    resource={Platform.OS === 'ios' ? 'test-pdf.pdf' : '/sdcard/Download/test-pdf.pdf'}
+    resourceType="file"
   />
 </View>
 ```
 #### iOS only
 You can set the additional property 'fadeInDuration' (in ms, defaults to 0.0) to smoothly fade the webview into view when pdf loading is completed.
 
-#### local file support (Android todo)
-You can load local PDF files by using resourceType `file`.
-
-Currently, this is supported only for iOS. The implementation will first look in the MainBundle for the file.
-If this fails, the DocumentDirectory will be queried for the document.
 
 ## Getting started
 
@@ -64,8 +97,8 @@ If this fails, the DocumentDirectory will be queried for the document.
     ```
 3. Insert the following lines inside the dependencies block in `android/app/build.gradle`:
     ```
-      compile project(':react-native-view-pdf')
-      ```
+    compile project(':react-native-view-pdf')
+    ```
 
 #### Windows
 [ReactWindows](https://github.com/ReactWindows/react-native)
@@ -92,6 +125,10 @@ Check the  [demo](https://github.com/rumax/react-native-PDFView/tree/master/demo
 ## License
 
 [MIT](https://opensource.org/licenses/MIT)
+
+## Authors
+- [sanderfrenken](https://github.com/sanderfrenken)
+- [rumax](https://github.com/rumax)
 
 ### Other information
 
