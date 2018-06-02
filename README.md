@@ -48,6 +48,9 @@ import PDFView from 'react-native-view-pdf';
 
 ### PDF from file
 
+On iOS the implementation will first look in the MainBundle for the file.
+If this fails, the DocumentDirectory will be queried for the document.
+
 ```js
 import PDFView from 'react-native-view-pdf';
 
@@ -56,7 +59,7 @@ import PDFView from 'react-native-view-pdf';
     style={{ flex: 1 }}
     onError={(error) => console.log('onError', error)}
     onLoad={() => console.log('PDF rendered from file')}
-    resource="/sdcard/Download/test-pdf.pdf"
+    resource={Platform.OS === 'ios' ? 'test-pdf.pdf' : '/sdcard/Download/test-pdf.pdf'}
     resourceType="file"
   />
 </View>
@@ -64,11 +67,6 @@ import PDFView from 'react-native-view-pdf';
 #### iOS only
 You can set the additional property 'fadeInDuration' (in ms, defaults to 0.0) to smoothly fade the webview into view when pdf loading is completed.
 
-#### local file support (Android todo)
-You can load local PDF files by using resourceType `file`.
-
-Currently, this is supported only for iOS. The implementation will first look in the MainBundle for the file.
-If this fails, the DocumentDirectory will be queried for the document.
 
 ## Getting started
 
@@ -127,6 +125,10 @@ Check the  [demo](https://github.com/rumax/react-native-PDFView/tree/master/demo
 ## License
 
 [MIT](https://opensource.org/licenses/MIT)
+
+## Authors
+- [sanderfrenken](https://github.com/sanderfrenken)
+- [rumax](https://github.com/rumax)
 
 ### Other information
 
