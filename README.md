@@ -12,7 +12,9 @@ Library for displaying [PDF documents](https://acrobat.adobe.com/us/en/acrobat/a
 - ios - uses [WKWebView](https://developer.apple.com/documentation/webkit/wkwebview).
 Targets iOS9.0 and above
 
-## Example
+## Examples
+
+### PDF from url
 
 ```js
 import PDFView from 'react-native-view-pdf';
@@ -21,8 +23,41 @@ import PDFView from 'react-native-view-pdf';
   <PDFView
     style={{ flex: 1 }}
     onError={(error) => console.log('onError', error)}
-    onLoad={() => console.log('onLoad')}
+    onLoad={() => console.log('PDF rendered from url')}
     resource="http://www.pdf995.com/samples/pdf.pdf"
+    resourceType="url"
+  />
+</View>
+```
+
+### PDF from base64
+
+```js
+import PDFView from 'react-native-view-pdf';
+
+<View style={{ flex: 1 }}>
+  <PDFView
+    style={{ flex: 1 }}
+    onError={(error) => console.log('onError', error)}
+    onLoad={() => console.log('PDF rendered from base 64 data')}
+    resource="JVBERi0xLjMKJcfs..."
+    resourceType: 'base64'
+  />
+</View>
+```
+
+### PDF from file
+
+```js
+import PDFView from 'react-native-view-pdf';
+
+<View style={{ flex: 1 }}>
+  <PDFView
+    style={{ flex: 1 }}
+    onError={(error) => console.log('onError', error)}
+    onLoad={() => console.log('PDF rendered from file')}
+    resource="/sdcard/Download/test-pdf.pdf"
+    resourceType="file"
   />
 </View>
 ```
@@ -64,8 +99,8 @@ If this fails, the DocumentDirectory will be queried for the document.
     ```
 3. Insert the following lines inside the dependencies block in `android/app/build.gradle`:
     ```
-      compile project(':react-native-view-pdf')
-      ```
+    compile project(':react-native-view-pdf')
+    ```
 
 #### Windows
 [ReactWindows](https://github.com/ReactWindows/react-native)
