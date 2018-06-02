@@ -1,8 +1,9 @@
 # react-native-view-pdf
 
+[![npm](https://img.shields.io/npm/l/express.svg)](https://github.com/rumax/react-native-PDFView)
+[![npm version](https://badge.fury.io/js/react-native-view-pdf.svg)](https://badge.fury.io/js/react-native-view-pdf)
 [![CircleCI](https://circleci.com/gh/rumax/react-native-PDFView.svg?style=shield)](https://circleci.com/gh/rumax/react-native-PDFView)
 [![codecov](https://codecov.io/gh/rumax/react-native-PDFView/branch/master/graph/badge.svg)](https://codecov.io/gh/rumax/react-native-PDFView)
-[![npm version](https://badge.fury.io/js/react-native-view-pdf.svg)](https://badge.fury.io/js/react-native-view-pdf)
 [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=flat-square)](http://makeapullrequest.com)
 
 Library for displaying [PDF documents](https://acrobat.adobe.com/us/en/acrobat/about-adobe-pdf.html) in [react-native](http://facebook.github.io/react-native/)
@@ -11,6 +12,8 @@ Library for displaying [PDF documents](https://acrobat.adobe.com/us/en/acrobat/a
 
 - ios - uses [WKWebView](https://developer.apple.com/documentation/webkit/wkwebview).
 Targets iOS9.0 and above
+
+- zero NPM dependencies
 
 ## Examples
 
@@ -64,8 +67,27 @@ import PDFView from 'react-native-view-pdf';
   />
 </View>
 ```
+
 #### iOS only
 You can set the additional property 'fadeInDuration' (in ms, defaults to 0.0) to smoothly fade the webview into view when pdf loading is completed.
+
+## Demo
+
+### Android
+
+![Demo](https://github.com/rumax/react-native-PDFView/raw/master/demo/res/android_pdf.gif)
+
+### iOS
+
+![Demo](https://github.com/rumax/react-native-PDFView/raw/master/demo/res/ios_pdf.gif)
+
+Use the  [demo](https://github.com/rumax/react-native-PDFView/tree/master/demo) project to:
+
+- test the component on android and ios
+- render PDF using URL
+- render PDF using BASE64 data
+- render PDF using local file
+- handle error state
 
 
 ## Getting started
@@ -104,23 +126,6 @@ You can set the additional property 'fadeInDuration' (in ms, defaults to 0.0) to
 [ReactWindows](https://github.com/ReactWindows/react-native)
 
 N/A
-
-## Demo
-
-Check the  [demo](https://github.com/rumax/react-native-PDFView/tree/master/demo) to:
-
-- test the component on android and ios
-- render PDF using URL
-- render PDF using BASE64 data
-- handle error state
-
-### Android
-
-![Demo](https://github.com/rumax/react-native-PDFView/raw/master/demo/res/android_pdf.gif)
-
-### iOS
-
-![Demo](https://github.com/rumax/react-native-PDFView/raw/master/demo/res/ios_pdf.gif)
 
 ## License
 
