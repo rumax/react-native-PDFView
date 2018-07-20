@@ -59,8 +59,7 @@
             return;
         }
         
-        NSURLRequest *request = [NSURLRequest requestWithURL: targetURL];
-        [webview loadRequest: request];
+        [webview loadFileURL: targetURL allowingReadAccessToURL: targetURL];
     } else {
         NSString *characterEncodingName = [_textEncoding isEqual: UTF_16] ? UTF_16 : UTF_8;
         NSData *base64Decoded = [[NSData alloc] initWithBase64EncodedString: _resource options: NSDataBase64DecodingIgnoreUnknownCharacters];
