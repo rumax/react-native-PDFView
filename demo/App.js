@@ -1,3 +1,4 @@
+/* @flow */
 /* eslint-disable react/prop-types */
 import React from 'react';
 import {
@@ -63,7 +64,7 @@ const PdfContent = ({
   onLoad,
   onError,
 }) => {
-  const content = resourceType ?
+  const content = resourceType && resource ?
     (
       <PDFView
         fadeInDuration={250.0}
@@ -75,8 +76,16 @@ const PdfContent = ({
       />
     ) : (
       <View style={styles.noContent}>
-        <Text style={styles.noContentText}>No resource{'\n'}Press one of the buttons above</Text>
-        <Text style={styles.noContentSubText}>You are running the app in {__DEV__ ? 'DEV' : 'RELEASE'} mode</Text>
+        <Text style={styles.noContentText}>
+          No resources
+          {'\n'}
+          Press one of the buttons above
+        </Text>
+        <Text style={styles.noContentSubText}>
+          You are running the app in
+          {__DEV__ ? 'DEV' : 'RELEASE'}
+          mode
+        </Text>
       </View>
     );
 
@@ -89,8 +98,11 @@ const TabButton = ({ title, onPress }) => (
   </View>
 );
 
-export default class App extends React.Component {
-  constructor(props) {
+export default class App extends React.Component<*, *> {
+  // eslint-disable-next-line react/sort-comp
+  renderStarted: number;
+
+  constructor(props: *) {
     super(props);
     this.state = { resource: undefined, resourceType: undefined };
     this.renderStarted = 0;
@@ -127,7 +139,7 @@ export default class App extends React.Component {
     );
   }
 
-  handleError = (error) => {
+  handleError = (error: Error) => {
     Alert.alert(
       'Document loading failed',
       error.message,

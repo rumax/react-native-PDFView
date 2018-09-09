@@ -37,6 +37,9 @@
 <PROJECT_ROOT>/node_modules/reqwest/.*
 <PROJECT_ROOT>/node_modules/metro-bundler/.*
 
+; Ignore demo project
+.*/demo/*
+
 [include]
 
 [libs]
