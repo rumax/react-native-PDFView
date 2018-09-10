@@ -28,7 +28,7 @@
 
 - (void)layoutSubviews {
     [super layoutSubviews];
-    [webview setAlpha: 0.0];
+    
     webview.frame = self.bounds;
     didLoadOnce = true;
     
@@ -45,6 +45,8 @@
         [self throwError: ERROR_UNSUPPORTED_TYPE withMessage: [NSString stringWithFormat:@"resourceType: %@ not recognized", _resourceType]];
         return;
     }
+    
+    [webview setAlpha: 0.0];
     
     if ([self isURLResource]) {
         NSURLRequest *request = [NSURLRequest requestWithURL: [NSURL URLWithString: _resource]];
