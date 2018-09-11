@@ -22,15 +22,13 @@ Targets iOS9.0 and above
 ```js
 import PDFView from 'react-native-view-pdf';
 
-<View style={{ flex: 1 }}>
-  <PDFView
-    style={{ flex: 1 }}
-    onError={(error) => console.log('onError', error)}
-    onLoad={() => console.log('PDF rendered from url')}
-    resource="http://www.pdf995.com/samples/pdf.pdf"
-    resourceType="url"
-  />
-</View>
+<PDFView
+  style={{ flex: 1 }}
+  onError={(error) => console.log('onError', error)}
+  onLoad={() => console.log('PDF rendered from url')}
+  resource="http://www.pdf995.com/samples/pdf.pdf"
+  resourceType="url"
+/>
 ```
 
 ### PDF from base64
@@ -38,15 +36,13 @@ import PDFView from 'react-native-view-pdf';
 ```js
 import PDFView from 'react-native-view-pdf';
 
-<View style={{ flex: 1 }}>
-  <PDFView
-    style={{ flex: 1 }}
-    onError={(error) => console.log('onError', error)}
-    onLoad={() => console.log('PDF rendered from base 64 data')}
-    resource="JVBERi0xLjMKJcfs..."
-    resourceType: 'base64'
-  />
-</View>
+<PDFView
+  style={{ flex: 1 }}
+  onError={(error) => console.log('onError', error)}
+  onLoad={() => console.log('PDF rendered from base 64 data')}
+  resource="JVBERi0xLjMKJcfs..."
+  resourceType: 'base64'
+/>
 ```
 
 ### PDF from file
@@ -57,15 +53,13 @@ If this fails, the DocumentDirectory will be queried for the document.
 ```js
 import PDFView from 'react-native-view-pdf';
 
-<View style={{ flex: 1 }}>
-  <PDFView
-    style={{ flex: 1 }}
-    onError={(error) => console.log('onError', error)}
-    onLoad={() => console.log('PDF rendered from file')}
-    resource={Platform.OS === 'ios' ? 'test-pdf.pdf' : '/sdcard/Download/test-pdf.pdf'}
-    resourceType="file"
-  />
-</View>
+<PDFView
+  style={{ flex: 1 }}
+  onError={(error) => console.log('onError', error)}
+  onLoad={() => console.log('PDF rendered from file')}
+  resource={Platform.OS === 'ios' ? 'test-pdf.pdf' : '/sdcard/Download/test-pdf.pdf'}
+  resourceType="file"
+/>
 ```
 
 #### iOS only
@@ -83,11 +77,9 @@ You can set the additional property 'fadeInDuration' (in ms, defaults to 0.0) to
 
 Use the  [demo](https://github.com/rumax/react-native-PDFView/tree/master/demo) project to:
 
-- test the component on android and iOS
-- render PDF using URL
-- render PDF using BASE64 data
-- render PDF using local file
-- handle error state
+- Test the component on both android and iOS
+- Render PDF using URL, BASE64 data or local file
+- Handle error state
 
 
 ## Getting started
@@ -140,6 +132,7 @@ N/A
 - Generated with [react-native-create-library](https://github.com/frostney/react-native-create-library)
 - Zero JavaScript dependency. Which means that you do not bring other dependencies to your project
 - If you think that something is missing or would like to propose new feature, please, discuss it with authors
+- Please, feel free to star the project. This gives us a confidence that you like it and we did a great job by publishing and supporting it
 - [If you are using ProGuard, add following rule to proguard config file:](https://github.com/barteksc/AndroidPdfViewer#proguard)
 
 ```
