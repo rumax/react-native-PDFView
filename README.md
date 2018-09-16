@@ -15,73 +15,6 @@ Targets iOS9.0 and above
 
 - zero NPM dependencies
 
-## Examples
-
-### PDF from url
-
-```js
-import PDFView from 'react-native-view-pdf';
-
-<PDFView
-  style={{ flex: 1 }}
-  onError={(error) => console.log('onError', error)}
-  onLoad={() => console.log('PDF rendered from url')}
-  resource="http://www.pdf995.com/samples/pdf.pdf"
-  resourceType="url"
-/>
-```
-
-### PDF from base64
-
-```js
-import PDFView from 'react-native-view-pdf';
-
-<PDFView
-  style={{ flex: 1 }}
-  onError={(error) => console.log('onError', error)}
-  onLoad={() => console.log('PDF rendered from base 64 data')}
-  resource="JVBERi0xLjMKJcfs..."
-  resourceType: 'base64'
-/>
-```
-
-### PDF from file
-
-On iOS the implementation will first look in the MainBundle for the file.
-If this fails, the DocumentDirectory will be queried for the document.
-
-```js
-import PDFView from 'react-native-view-pdf';
-
-<PDFView
-  style={{ flex: 1 }}
-  onError={(error) => console.log('onError', error)}
-  onLoad={() => console.log('PDF rendered from file')}
-  resource={Platform.OS === 'ios' ? 'test-pdf.pdf' : '/sdcard/Download/test-pdf.pdf'}
-  resourceType="file"
-/>
-```
-
-#### iOS only
-You can set the additional property 'fadeInDuration' (in ms, defaults to 0.0) to smoothly fade the webview into view when pdf loading is completed.
-
-## Demo
-
-### Android
-
-![Demo](https://github.com/rumax/react-native-PDFView/raw/master/demo/res/android_pdf.gif)
-
-### iOS
-
-![Demo](https://github.com/rumax/react-native-PDFView/raw/master/demo/res/ios_pdf.gif)
-
-Use the  [demo](https://github.com/rumax/react-native-PDFView/tree/master/demo) project to:
-
-- Test the component on both android and iOS
-- Render PDF using URL, BASE64 data or local file
-- Handle error state
-
-
 ## Getting started
 
 `$ npm install react-native-view-pdf --save`
@@ -118,6 +51,62 @@ Use the  [demo](https://github.com/rumax/react-native-PDFView/tree/master/demo) 
 [ReactWindows](https://github.com/ReactWindows/react-native)
 
 N/A
+
+## Demo
+
+Android | iOS
+------- | ---
+![Android](https://github.com/rumax/react-native-PDFView/raw/master/demo/res/android_pdf.gif) | ![iOS](https://github.com/rumax/react-native-PDFView/raw/master/demo/res/ios_pdf.gif)
+
+
+### Quick Start
+
+```
+import PDFView from 'react-native-view-pdf';
+
+const resources = {
+  file: Platform.OS === 'ios' ? 'test-pdf.pdf' : '/sdcard/Download/test-pdf.pdf',
+  url: 'https://www.ets.org/Media/Tests/TOEFL/pdf/SampleQuestions.pdf',
+  base64: 'JVBERi0xLjMKJcfs...',
+};
+
+export default class App extends React.Component {
+  render() {
+    const resourceType = 'base64';
+
+    return (
+      <View style={{ flex: 1 }}>
+        {/* Some Controls to change PDF resource */}
+        <PDFView
+          fadeInDuration={250.0}
+          style={{ flex: 1 }}
+          resource={resources[resourceType]}
+          resourceType={resourceType}
+          onLoad={() => console.log(`PDF rendered from ${resourceType}`);}
+          onError={() => console.log('Cannot render PDF', error)}
+        />
+      </View>
+    );
+  }
+}
+```
+
+Use the  [demo](https://github.com/rumax/react-native-PDFView/tree/master/demo) project to:
+
+- Test the component on both android and iOS
+- Render PDF using URL, BASE64 data or local file
+- Handle error state
+
+### Props
+
+Name | Android | iOS | Description
+---- | ------- | --- | -----------
+resource | ✓ | ✓ | A resource to render. It's possible to render PDF from `file`, `url` or `base64`
+resourceType | ✓ | ✓ | Should correspond to resource and can be: `file`, `url` or `base64`
+onLoad | ✓ | ✓ | Callback that is triggered when loading is completed
+onError | ✓ | ✓ | Callback that is triggered when loading has failed. And error is provided as a function parameter
+style | ✓ | ✓ | A [style](https://facebook.github.io/react-native/docs/style)
+fadeInDuration | ✗ | ✓ | Fade in duration (in ms, defaults to 0.0) to smoothly fade the webview into view when pdf loading is completed
 
 ## License
 
