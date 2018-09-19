@@ -32,6 +32,20 @@ Targets iOS9.0 and above
 2. Under your build target general settings, add the library to your Linked Frameworks and Libraries
 3. If you run into any issues, confirm that under Build Phases -> Link Binary With Libraries the library is present
 
+##### Using CocoaPods
+
+In your Xcode project directory open Podfile and add the following line:
+
+```
+pod 'RNPDF', :path => '../node_modules/react-native-view-pdf'
+```
+
+And install:
+
+```
+pod install
+```
+
 #### Android
 
 1. Open up `android/app/src/main/java/[...]/MainApplication.java`
