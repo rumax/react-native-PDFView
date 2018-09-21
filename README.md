@@ -61,6 +61,15 @@ pod install
     compile project(':react-native-view-pdf')
     ```
 
+##### Note for Android
+  The Android project tries to retrieve the following properties:
+   - compileSdkVersion
+   - buildToolsVersion
+   - minSdkVersion
+   - targetSdkVersion
+
+  from the `ext` object if you have one defined in your Android's project root (you can read more about it [here](https://docs.gradle.org/current/userguide/writing_build_scripts.html#example_using_extra_properties)). If not, it falls back to its current versions (check [the gradle file](./android/build.gradle) for additional information).
+
 #### Windows
 [ReactWindows](https://github.com/ReactWindows/react-native)
 
