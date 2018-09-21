@@ -7,6 +7,8 @@ package com.reactlibrary;
  */
 
 import android.content.Context;
+import android.view.ViewGroup;
+
 import com.facebook.react.bridge.ReactApplicationContext;
 import com.facebook.react.common.MapBuilder;
 import com.facebook.react.uimanager.annotations.ReactProp;
@@ -50,9 +52,15 @@ public class PDFViewManager extends SimpleViewManager<PDFView> {
 
     @Override
     public PDFView createViewInstance(ThemedReactContext context) {
-        if (pdfView == null) {
-            pdfView = new PDFView(context);
+        if (pdfView != null) {
+            ViewGroup parentView = (ViewGroup) pdfView.getParent();
+            if (parentView != null) {
+                pdfView.onDrop();
+                parentView.removeView(pdfView);
+            }
         }
+
+        pdfView = new PDFView(context);
 
         return pdfView;
     }
