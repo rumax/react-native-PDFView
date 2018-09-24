@@ -114,7 +114,7 @@ export default class App extends React.Component {
 }
 ```
 
-Use the  [demo](https://github.com/rumax/react-native-PDFView/tree/master/demo) project to:
+Use the [demo](https://github.com/rumax/react-native-PDFView/tree/master/demo) project to:
 
 - Test the component on both android and iOS
 - Render PDF using URL, BASE64 data or local file
@@ -131,6 +131,16 @@ onError | ✓ | ✓ | Callback that is triggered when loading has failed. And er
 style | ✓ | ✓ | A [style](https://facebook.github.io/react-native/docs/style)
 fadeInDuration | ✗ | ✓ | Fade in duration (in ms, defaults to 0.0) to smoothly fade the webview into view when pdf loading is completed
 
+### Development tips
+
+On android for the `file` type it is required to request permissions to
+read/write. You can get more information in [PermissionsAndroid](https://facebook.github.io/react-native/docs/permissionsandroid)
+section from react native or [Request App Permissions ](https://developer.android.com/training/permissions/requesting) from android
+documentation. [Demo](https://github.com/rumax/react-native-PDFView/tree/master/demo)
+project provides an example how to implement it using Java, check the [MainActivity.java](https://github.com/rumax/react-native-PDFView/blob/b84913df174d3b638d2d820a66ed4e6605d56860/demo/android/app/src/main/java/com/demo/MainActivity.java#L12) and [AndroidManifest.xml](https://github.com/rumax/react-native-PDFView/blob/b84913df174d3b638d2d820a66ed4e6605d56860/demo/android/app/src/main/AndroidManifest.xml#L6) files.
+
+Before trying `file` type in demo project, open `sdcard/Download` folder in `Device File Explorer` and store the `test-pdf.pdf` document that you want to render (you can find an example in demo/ios/test-pdf.pdf).
+
 ## License
 
 [MIT](https://opensource.org/licenses/MIT)
@@ -144,7 +154,7 @@ fadeInDuration | ✗ | ✓ | Fade in duration (in ms, defaults to 0.0) to smooth
 - Generated with [react-native-create-library](https://github.com/frostney/react-native-create-library)
 - Zero JavaScript dependency. Which means that you do not bring other dependencies to your project
 - If you think that something is missing or would like to propose new feature, please, discuss it with authors
-- Please, feel free to star the project. This gives us a confidence that you like it and we did a great job by publishing and supporting it
+- Please, feel free to ⭐️ the project. This gives us a confidence that you like it and we did a great job by publishing and supporting it 🤩
 - [If you are using ProGuard, add following rule to proguard config file:](https://github.com/barteksc/AndroidPdfViewer#proguard)
 
 ```
