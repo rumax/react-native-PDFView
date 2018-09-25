@@ -10,6 +10,7 @@ import android.content.Context;
 import android.view.ViewGroup;
 
 import com.facebook.react.bridge.ReactApplicationContext;
+import com.facebook.react.bridge.ReadableMap;
 import com.facebook.react.common.MapBuilder;
 import com.facebook.react.uimanager.annotations.ReactProp;
 import com.facebook.react.uimanager.SimpleViewManager;
@@ -84,6 +85,11 @@ public class PDFViewManager extends SimpleViewManager<PDFView> {
     @ReactProp(name = "textEncoding")
     public void setTextEncoding(PDFView pdfView, String textEncoding) {
         pdfView.setTextEncoding(textEncoding);
+    }
+
+    @ReactProp(name = "urlProps")
+    public void setUrlProps(PDFView pdfView, final ReadableMap props) {
+        pdfView.setUrlProps(props);
     }
 
     @Override

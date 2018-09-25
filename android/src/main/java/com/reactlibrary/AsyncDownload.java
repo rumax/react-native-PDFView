@@ -7,26 +7,40 @@ package com.reactlibrary;
  */
 
 import android.os.AsyncTask;
+
+import com.facebook.react.bridge.ReadableMap;
+import com.facebook.react.bridge.ReadableMapKeySetIterator;
+import com.facebook.react.bridge.ReadableType;
+
 import java.io.BufferedInputStream;
+import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.io.OutputStream;
+import java.net.HttpURLConnection;
 import java.net.URL;
-import java.net.URLConnection;
+
+import okhttp3.Request;
 
 class AsyncDownload extends AsyncTask<Void, Void, Void> {
     private static int BUFF_SIZE = 8192;
+    private final ReadableMap urlProps;
     private AsyncTaskCompleted listener;
-    private File file = null;
-    private String resource = null;
+    private File file;
+    private String resource;
     private IOException exception;
+    static final String PROP_METHOD = "method";
+    static final String PROP_BODY = "body";
+    static final String PROP_HEADERS = "headers";
 
-    public AsyncDownload(String resource, File file, AsyncTaskCompleted listener) {
+    public AsyncDownload(String resource, File file, AsyncTaskCompleted listener, ReadableMap urlProps) {
         this.listener = listener;
         this.file = file;
         this.resource = resource;
+        this.urlProps = urlProps;
     }
 
     @Override
@@ -36,19 +50,26 @@ class AsyncDownload extends AsyncTask<Void, Void, Void> {
     }
 
     @Override
-    protected Void doInBackground(Void... params)  {
+    protected Void doInBackground(Void... params) {
         URL url;
-        URLConnection connection = null;
+        HttpURLConnection connection;
+
         try {
             url = new URL(resource);
-            connection = url.openConnection();
+            connection = (HttpURLConnection) url.openConnection();
+            connection.setDoOutput(true);
+            connection.setDoInput(true);
+            setRequestMethod(connection);
+            setRequestHeaders(connection);
+            setRequestBody(connection);
             connection.connect();
         } catch (IOException e) {
             exception = e;
             return null;
         }
+
         try (
-                InputStream input = new BufferedInputStream(url.openStream(), BUFF_SIZE);
+                InputStream input = new BufferedInputStream(connection.getInputStream(), BUFF_SIZE);
                 OutputStream output = new FileOutputStream(file);
         ) {
             int count;
@@ -64,6 +85,65 @@ class AsyncDownload extends AsyncTask<Void, Void, Void> {
         }
 
         return null;
+    }
+
+    private void setRequestMethod(HttpURLConnection connection) throws IOException {
+        String method = "GET";
+
+        if (urlProps.hasKey(PROP_METHOD)) {
+            if (urlProps.getType(PROP_METHOD) != ReadableType.String) {
+                throw new IOException("Invalid method type. String is expected");
+            }
+            method = urlProps.getString(PROP_METHOD);
+        }
+
+        connection.setRequestMethod(method);
+    }
+
+    private void setRequestHeaders(HttpURLConnection connection) throws IOException {
+        if (!urlProps.hasKey(PROP_HEADERS)) {
+            return;
+        }
+
+        ReadableMap headers = urlProps.getMap(PROP_HEADERS);
+
+        if (headers == null) {
+            return;
+        }
+
+        ReadableMapKeySetIterator iterator = headers.keySetIterator();
+
+        while (iterator.hasNextKey()) {
+            String key = iterator.nextKey();
+
+            if (headers.getType(key) == ReadableType.String) {
+                connection.setRequestProperty(key, headers.getString(key));
+            } else {
+                throw new IOException("Invalid header key type. String is expected for " + key);
+            }
+        }
+    }
+
+    private void setRequestBody(HttpURLConnection connection) throws IOException {
+        if (!urlProps.hasKey(PROP_BODY)) {
+            return;
+        }
+
+        if (urlProps.getType(PROP_BODY) != ReadableType.String) {
+            throw new IOException("Invalid body type. String is expected");
+        }
+
+        String body = urlProps.getString(PROP_BODY);
+
+        if (body != null && body.getBytes().length > 0) {
+            connection.setRequestProperty("Content-Length", "" + body.getBytes().length);
+            try (OutputStream writer = connection.getOutputStream()) {
+                writer.write(body.getBytes());
+                writer.flush();
+            } catch (IOException e) {
+                throw e;
+            }
+        }
     }
 
     @Override
