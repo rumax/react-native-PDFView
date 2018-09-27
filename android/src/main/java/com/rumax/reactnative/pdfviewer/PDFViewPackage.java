@@ -1,4 +1,4 @@
-package com.reactlibrary;
+package com.rumax.reactnative.pdfviewer;
 
 /**
  * Copyright (c) <2018> <Maksym Rusynyk>

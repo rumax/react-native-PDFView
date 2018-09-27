@@ -1,4 +1,4 @@
-package com.reactlibrary;
+package com.rumax.reactnative.pdfviewer;
 
 import com.facebook.react.bridge.Dynamic;
 import com.facebook.react.bridge.ReadableArray;
