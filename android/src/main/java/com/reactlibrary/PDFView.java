@@ -6,15 +6,17 @@ package com.reactlibrary;
  * This source code is licensed under the MIT license
  */
 
-import android.os.Environment;
 import android.util.Base64;
+
 import com.facebook.react.bridge.Arguments;
 import com.facebook.react.bridge.ReactContext;
+import com.facebook.react.bridge.ReadableMap;
 import com.facebook.react.bridge.WritableMap;
 import com.facebook.react.uimanager.ThemedReactContext;
 import com.facebook.react.uimanager.events.RCTEventEmitter;
 import com.github.barteksc.pdfviewer.listener.OnErrorListener;
 import com.github.barteksc.pdfviewer.listener.OnLoadCompleteListener;
+
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -37,6 +39,7 @@ public class PDFView extends com.github.barteksc.pdfviewer.PDFView implements
     private static final String E_NO_RESOURCE_TYPE = "resourceType is not defined";
     private static final String E_INVALID_RESOURCE_TYPE = "resourceType is Invalid";
     private static final String E_INVALID_BASE64 = "data is not in valid Base64 scheme";
+    private ReadableMap urlProps;
 
     public PDFView(ThemedReactContext context) {
         super(context, null);
@@ -115,7 +118,7 @@ public class PDFView extends com.github.barteksc.pdfviewer.PDFView implements
             return;
         }
 
-        asyncDownload = new AsyncDownload(resource, downloadedFile, this);
+        asyncDownload = new AsyncDownload(resource, downloadedFile, this, urlProps);
         asyncDownload.execute();
     }
 
@@ -193,5 +196,9 @@ public class PDFView extends com.github.barteksc.pdfviewer.PDFView implements
         }
 
         return !str1.equals(str2);
+    }
+
+    public void setUrlProps(ReadableMap props) {
+        this.urlProps = props == null ? new EmptyReadableMap() : props;
     }
 }

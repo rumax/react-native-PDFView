@@ -130,6 +130,7 @@ onLoad | ✓ | ✓ | Callback that is triggered when loading is completed
 onError | ✓ | ✓ | Callback that is triggered when loading has failed. And error is provided as a function parameter
 style | ✓ | ✓ | A [style](https://facebook.github.io/react-native/docs/style)
 fadeInDuration | ✗ | ✓ | Fade in duration (in ms, defaults to 0.0) to smoothly fade the webview into view when pdf loading is completed
+urlProps | ✓ | ✗ | Extended properties for `url` type that allows to specify HTTP Method, HTTP headers and HTTP body
 
 ### Development tips
 
@@ -140,6 +141,10 @@ documentation. [Demo](https://github.com/rumax/react-native-PDFView/tree/master/
 project provides an example how to implement it using Java, check the [MainActivity.java](https://github.com/rumax/react-native-PDFView/blob/b84913df174d3b638d2d820a66ed4e6605d56860/demo/android/app/src/main/java/com/demo/MainActivity.java#L12) and [AndroidManifest.xml](https://github.com/rumax/react-native-PDFView/blob/b84913df174d3b638d2d820a66ed4e6605d56860/demo/android/app/src/main/AndroidManifest.xml#L6) files.
 
 Before trying `file` type in demo project, open `sdcard/Download` folder in `Device File Explorer` and store the `test-pdf.pdf` document that you want to render (you can find an example in demo/ios/test-pdf.pdf).
+
+In [demo](https://github.com/rumax/react-native-PDFView/tree/master/demo) project you can also run the simple server to serve PDF file. To do this navigate to `demo/utils/` and start the server
+`node server.js`. (*Do not forget to set proper IP adress of the server
+in `demo/App.js`*)
 
 ## License
 

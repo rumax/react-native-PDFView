@@ -26,6 +26,7 @@ exports[`PDFView renders base64 1`] = `
   resource="base64"
   resourceType="base64"
   textEncoding="utf-8"
+  urlProps={Object {}}
 />
 `;
 
@@ -37,5 +38,6 @@ exports[`PDFView renders with default url source type 1`] = `
   resource="http://site.com/pdf"
   resourceType="url"
   textEncoding="utf-8"
+  urlProps={Object {}}
 />
 `;

@@ -2,7 +2,8 @@
     "extends": "airbnb",
     "rules": {
       "operator-linebreak": 0,
-      "react/jsx-filename-extension": 0
+      "react/jsx-filename-extension": 0,
+      "react/destructuring-assignment": 0
     },
     "globals": {
       "__DEV__": true

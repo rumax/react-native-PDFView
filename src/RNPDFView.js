@@ -33,6 +33,29 @@ const componentInterface = {
     resourceType: PropTypes.string,
 
     /**
+     * Extended props for "url" resource type
+     */
+    urlProps: {
+      /**
+       * `method` is the HTTP Method to use. Defaults to GET if not specified.
+       */
+      method: PropTypes.string,
+
+      /**
+       * `headers` is an object representing the HTTP headers to send along with the
+       * request for a remote image.
+       */
+      headers: PropTypes.objectOf(PropTypes.string),
+
+      /**
+       * `body` is the HTTP body to send with the request. This must be a valid
+       * UTF-8 string, and will be sent exactly as specified, with no
+       * additional encoding (e.g. URL-escaping or base64) applied.
+       */
+      body: PropTypes.string,
+    },
+
+    /**
      * A String value. Defines encoding type. Can be one of:
      *   - "utf-8", default
      *   - "utf-16"
