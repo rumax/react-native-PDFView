@@ -5,7 +5,6 @@
 - [ ] ios
 
 ### Can it be published to NPM?
-- [ ] NPM verion is changed
+- [ ] NPM version is changed
 - [ ] Breaking change
 - [ ] Documentation is updated
-- [ ] Tag has to be created
