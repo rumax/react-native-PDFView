@@ -4,8 +4,10 @@ __tests__
 .editorconfig
 .eslintrc.json
 .flowconfig
+.github
 **/__tests__/**/*
 build
+CONTRIBUTING.md
 coverage
 demo
 flow-typed
@@ -13,4 +15,6 @@ jest.config.js
 node_modules
 package
 package-lock.json
+PULL_REQUEST_TEMPLATE.md
 react-native-view-pdf-*.tgz
+utils/

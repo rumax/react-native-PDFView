@@ -4,6 +4,7 @@
   "description": "React native Pdf viewer implementation",
   "main": "src/index.js",
   "scripts": {
+    "prepublish": "./utils/deploy.sh",
     "test": "jest",
     "test-coverage": "jest --coverage",
     "test-coverage-report": "codecov",
@@ -30,6 +31,7 @@
     "eslint-plugin-jsx-a11y": "^6.0.3",
     "eslint-plugin-react": "^7.7.0",
     "flow-bin": "^0.67.1",
+    "flow-remove-types": "^1.2.3",
     "flow-typed": "^2.4.0",
     "jest": "^22.4.2",
     "react": "^16.2.0",
