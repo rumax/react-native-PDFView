@@ -3,6 +3,25 @@ import React from 'react';
 
 import RNPDFView from './RNPDFView';
 
+export type UrlProps = {
+  /**
+   * `method` is the HTTP Method to use. Defaults to GET if not specified.
+   */
+  method?: string,
+
+  /**
+   * `headers` is an object representing the HTTP headers to send along with the
+   * request for a remote image.
+   */
+  headers?: { [key: string]: string },
+
+  /**
+   * `body` is the HTTP body to send with the request. This must be a valid
+   * UTF-8 string, and will be sent exactly as specified, with no
+   * additional encoding (e.g. URL-escaping or base64) applied.
+   */
+  body?: string,
+};
 
 type Props = {
   /**
@@ -32,25 +51,7 @@ type Props = {
    */
   resourceType: 'url' | 'base64' | 'file',
 
-  urlProps?: {
-    /**
-     * `method` is the HTTP Method to use. Defaults to GET if not specified.
-     */
-    method?: string,
-
-    /**
-     * `headers` is an object representing the HTTP headers to send along with the
-     * request for a remote image.
-     */
-    headers?: { [key: string]: string },
-
-    /**
-     * `body` is the HTTP body to send with the request. This must be a valid
-     * UTF-8 string, and will be sent exactly as specified, with no
-     * additional encoding (e.g. URL-escaping or base64) applied.
-     */
-    body?: string,
-  },
+  urlProps?: UrlProps,
 
   /**
    * A String value. Defines encoding type. Can be one of:
