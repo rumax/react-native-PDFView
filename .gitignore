@@ -5,6 +5,9 @@ package/
 # jest
 coverage
 
+# generated
+lib/
+
 # OSX
 #
 .DS_Store

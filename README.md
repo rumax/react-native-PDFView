@@ -85,7 +85,10 @@ Android | iOS
 ### Quick Start
 
 ```
+// With Flow type annotations (https://flow.org/)
 import PDFView from 'react-native-view-pdf';
+// Without Flow type annotations
+// import PDFView from 'react-native-view-pdf/lib/index';
 
 const resources = {
   file: Platform.OS === 'ios' ? 'test-pdf.pdf' : '/sdcard/Download/test-pdf.pdf',
