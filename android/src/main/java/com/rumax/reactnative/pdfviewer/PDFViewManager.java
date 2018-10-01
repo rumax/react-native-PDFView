@@ -21,6 +21,7 @@ public class PDFViewManager extends SimpleViewManager<PDFView> {
     private static final String REACT_CLASS = "PDFView";
     private Context context;
     private PDFView pdfView = null;
+    private final static String EVENT_BUBBLED = "bubbled";
 
     public PDFViewManager(ReactApplicationContext context) {
         this.context = context;
@@ -30,17 +31,24 @@ public class PDFViewManager extends SimpleViewManager<PDFView> {
         return MapBuilder
                 .builder()
                 .put(
-                        "onLoad",
+                        PDFView.EVENT_ON_LOAD,
                         MapBuilder.of(
                                 "phasedRegistrationNames",
-                                MapBuilder.of("bubbled", "onLoad")
+                                MapBuilder.of(EVENT_BUBBLED, PDFView.EVENT_ON_LOAD)
                         )
                 )
                 .put(
-                        "onError",
+                        PDFView.EVENT_ON_ERROR,
                         MapBuilder.of(
                                 "phasedRegistrationNames",
-                                MapBuilder.of("bubbled", "onError")
+                                MapBuilder.of(EVENT_BUBBLED, PDFView.EVENT_ON_ERROR)
+                        )
+                )
+                .put(
+                        PDFView.EVENT_ON_PAGE_CHANGED,
+                        MapBuilder.of(
+                                "phasedRegistrationNames",
+                                MapBuilder.of(EVENT_BUBBLED, PDFView.EVENT_ON_PAGE_CHANGED)
                         )
                 )
                 .build();

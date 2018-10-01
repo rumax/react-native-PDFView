@@ -1,5 +1,5 @@
 /* @flow */
-/* eslint-disable react/prop-types */
+/* eslint-disable react/prop-types, no-console */
 import React from 'react';
 import {
   Alert,
@@ -10,6 +10,7 @@ import {
 } from 'react-native';
 
 import PDFView from 'react-native-view-pdf';
+
 import type { UrlProps } from 'react-native-view-pdf';
 
 import base64Data from './base64.json';
@@ -64,6 +65,7 @@ const PdfContent = (props) => {
         {...props.resource}
         onLoad={props.onLoad}
         onError={props.onError}
+        onPageChanged={props.onPageChanged}
       />
     );
   }
@@ -146,6 +148,10 @@ export default class App extends React.Component<*, State> {
     );
   }
 
+  handlePageChanged = (page: number, pageCount: number) => {
+    console.log(`page ${page + 1} out of ${pageCount}`);
+  }
+
   render() {
     const { state } = this;
     this.renderStarted = (new Date()).getTime();
@@ -164,6 +170,7 @@ export default class App extends React.Component<*, State> {
             resource={state.resource}
             onLoad={this.handleLoad}
             onError={this.handleError}
+            onPageChanged={this.handlePageChanged}
           />
         </View>
         <View style={styles.tabs}>

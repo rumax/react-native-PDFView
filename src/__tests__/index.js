@@ -60,7 +60,21 @@ describe('PDFView', () => {
     expect(onError.mock.calls).toMatchSnapshot();
   });
 
-  it('uses default onLoad and onError callbacks', () => {
+  it('invokes onPageChanged callback', () => {
+    const onPageChanged = jest.fn();
+    const tree = renderer.create(<PDFVIew
+      onPageChanged={onPageChanged}
+      resource="base64"
+      resourceType="base64"
+    />);
+
+    (tree.toJSON(): any).props.onPageChanged({ nativeEvent: { page: 2, pageCount: 10 } });
+
+    expect(onPageChanged).toHaveBeenCalledTimes(1);
+    expect(onPageChanged.mock.calls).toMatchSnapshot();
+  });
+
+  it('uses default callbacks', () => {
     const tree = renderer.create(<PDFVIew
       resource="base64"
       resourceType="base64"
@@ -68,5 +82,6 @@ describe('PDFView', () => {
 
     (tree.toJSON(): any).props.onError();
     (tree.toJSON(): any).props.onLoad();
+    (tree.toJSON(): any).props.onPageChanged();
   });
 });

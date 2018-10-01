@@ -16,6 +16,11 @@ const componentInterface = {
     onLoad: PropTypes.func,
 
     /**
+     * A Function. Invoked when page is changed.
+     */
+    onPageChanged: PropTypes.func,
+
+    /**
      * A String value. Defines the resource to render. Can be one of:
      *   - url. Example: http://www.pdf995.com/samples/pdf.pdf
      *   - base64. Example: 'JVBERi0xLjcKCjEgMCBvYmogICUgZW50...'

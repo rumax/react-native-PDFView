@@ -35,6 +35,13 @@ type Props = {
   onLoad: () => void,
 
   /**
+   * A Function. Invoked when page is changed.
+   * @param {Number} page - The active page.
+   * @param {Number} pageCount - Total pages.
+   */
+  onPageChanged: (page: number, pageCount: number) => void,
+
+  /**
    * A String value. Defines the resource to render. Can be one of:
    *   - url. Example: http://www.pdf995.com/samples/pdf.pdf
    *   - base64. Example: 'JVBERi0xLjcKCjEgMCBvYmogICUgZW50...'
@@ -71,6 +78,7 @@ class PDFView extends React.Component<Props, *> {
   static defaultProps = {
     onError: () => {},
     onLoad: () => {},
+    onPageChanged: () => {},
     fadeInDuration: 0.0,
     resourceType: 'url',
     textEncoding: 'utf-8',
@@ -81,20 +89,36 @@ class PDFView extends React.Component<Props, *> {
   constructor(props: Props) {
     super(props);
     this.onError = this.onError.bind(this);
+    this.onPageChanged = this.onPageChanged.bind(this);
   }
 
 
-  onError: (error: Error) => void;
-  onError(event: any) { // TODO: Proper type for RN event
-    this.props.onError(event && event.nativeEvent || new Error('unknown error'));
+  onError: (event: any) => void;
+  onError(event: any) {
+    const { nativeEvent } = event || {};
+    this.props.onError(nativeEvent || new Error('unknown error'));
+  }
+
+  onPageChanged: (event: any) => void;
+  onPageChanged(event: any) {
+    const { nativeEvent = {} } = event || {};
+    const { page = -1, pageCount = -1 } = nativeEvent;
+    this.props.onPageChanged(page, pageCount);
   }
 
   render() {
     const {
       onError,
+      onPageChanged,
       ...remainingProps
     } = this.props;
-    return <RNPDFView {...remainingProps} onError={this.onError} />;
+    return (
+      <RNPDFView
+        {...remainingProps}
+        onError={this.onError}
+        onPageChanged={this.onPageChanged}
+      />
+    );
   }
 }
 

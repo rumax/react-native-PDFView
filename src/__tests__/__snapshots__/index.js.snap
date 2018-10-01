@@ -18,11 +18,21 @@ Array [
 ]
 `;
 
+exports[`PDFView invokes onPageChanged callback 1`] = `
+Array [
+  Array [
+    2,
+    10,
+  ],
+]
+`;
+
 exports[`PDFView renders base64 1`] = `
 <RNPDFView
   fadeInDuration={0}
   onError={[Function]}
   onLoad={[Function]}
+  onPageChanged={[Function]}
   resource="base64"
   resourceType="base64"
   textEncoding="utf-8"
@@ -35,6 +45,7 @@ exports[`PDFView renders with default url source type 1`] = `
   fadeInDuration={0}
   onError={[Function]}
   onLoad={[Function]}
+  onPageChanged={[Function]}
   resource="http://site.com/pdf"
   resourceType="url"
   textEncoding="utf-8"
