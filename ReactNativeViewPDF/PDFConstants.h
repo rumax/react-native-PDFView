@@ -6,6 +6,12 @@ extern NSString * const RESOURCE_TYPE_URL;
 extern NSString * const RESOURCE_TYPE_BASE64;
 extern NSString * const RESOURCE_TYPE_FILE;
 extern NSString * const MIMETYPE_PDF;
+extern NSString *const HTTP_METHOD_GET;
+
+// Url Props
+extern NSString * const URL_PROPS_METHOD_KEY;
+extern NSString * const URL_PROPS_HEADERS_KEY;
+extern NSString * const URL_PROPS_BODY_KEY;
 
 // Error types
 extern NSString * const ERROR_UNSUPPORTED_TYPE;

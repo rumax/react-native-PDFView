@@ -6,6 +6,12 @@ NSString *const RESOURCE_TYPE_URL = @"url";
 NSString *const RESOURCE_TYPE_BASE64 = @"base64";
 NSString *const RESOURCE_TYPE_FILE = @"file";
 NSString *const MIMETYPE_PDF = @"application/pdf";
+NSString *const HTTP_METHOD_GET = @"GET";
+
+// Url Props
+NSString *const URL_PROPS_METHOD_KEY = @"method";
+NSString *const URL_PROPS_HEADERS_KEY = @"headers";
+NSString *const URL_PROPS_BODY_KEY = @"body";
 
 // Error types
 NSString *const ERROR_UNSUPPORTED_TYPE = @"Unsupported resourceType";

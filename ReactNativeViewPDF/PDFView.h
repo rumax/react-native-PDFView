@@ -7,6 +7,7 @@
 @property (nonatomic, copy) NSString *resource;
 @property (nonatomic, copy) NSString *resourceType;
 @property (nonatomic, copy) NSString *textEncoding;
+@property (nonatomic, copy) NSDictionary *urlProps;
 @property (nonatomic) NSTimeInterval fadeInDuration;
 @property (nonatomic, copy) RCTDirectEventBlock onLoad;
 @property (nonatomic, copy) RCTDirectEventBlock onError;

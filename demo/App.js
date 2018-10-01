@@ -40,7 +40,7 @@ const resources: {[key: string]: Resource } = {
       headers: {
         'Accept-Language': 'en-us,en;q=0.5',
         'Accept-encoding': 'application/pdf',
-        Referer: 'http://localhost/',
+        'Referer': 'http://localhost/',
       },
       body: 'Request PDF body',
     },
