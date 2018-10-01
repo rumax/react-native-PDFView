@@ -16,6 +16,7 @@ import com.facebook.react.uimanager.ThemedReactContext;
 import com.facebook.react.uimanager.events.RCTEventEmitter;
 import com.github.barteksc.pdfviewer.listener.OnErrorListener;
 import com.github.barteksc.pdfviewer.listener.OnLoadCompleteListener;
+import com.github.barteksc.pdfviewer.listener.OnPageChangeListener;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -26,7 +27,11 @@ import java.io.InputStream;
 public class PDFView extends com.github.barteksc.pdfviewer.PDFView implements
         OnLoadCompleteListener,
         OnErrorListener,
+        OnPageChangeListener,
         AsyncTaskCompleted {
+    public final static String EVENT_ON_LOAD = "onLoad";
+    public final static String EVENT_ON_ERROR = "onError";
+    public final static String EVENT_ON_PAGE_CHANGED = "onPageChanged";
     private ThemedReactContext context;
     private String resource;
     private File downloadedFile;
@@ -46,9 +51,13 @@ public class PDFView extends com.github.barteksc.pdfviewer.PDFView implements
         this.context = context;
     }
 
-    private void reactNativeEvent(String eventName, String message) {
+    private void reactNativeMessageEvent(String eventName, String message) {
         WritableMap event = Arguments.createMap();
         event.putString("message", message);
+        reactNativeEvent(eventName, event);
+    }
+
+    private void reactNativeEvent(String eventName, WritableMap event) {
         ReactContext reactContext = (ReactContext) this.getContext();
         reactContext
                 .getJSModule(RCTEventEmitter.class)
@@ -57,12 +66,12 @@ public class PDFView extends com.github.barteksc.pdfviewer.PDFView implements
 
     @Override
     public void loadComplete(int numberOfPages) {
-        reactNativeEvent("onLoad", null);
+        reactNativeMessageEvent(EVENT_ON_LOAD, null);
     }
 
     @Override
     public void onError(Throwable t) {
-        reactNativeEvent("onError", "error: " + t.getMessage());
+        reactNativeMessageEvent(EVENT_ON_ERROR, "error: " + t.getMessage());
     }
 
     @Override
@@ -77,6 +86,7 @@ public class PDFView extends com.github.barteksc.pdfviewer.PDFView implements
                 .swipeHorizontal(false)
                 .onLoad(this)
                 .onError(this)
+                .onPageChange(this)
                 .spacing(10)
                 .load();
         sourceChanged = false;
@@ -200,5 +210,13 @@ public class PDFView extends com.github.barteksc.pdfviewer.PDFView implements
 
     public void setUrlProps(ReadableMap props) {
         this.urlProps = props == null ? new EmptyReadableMap() : props;
+    }
+
+    @Override
+    public void onPageChanged(int page, int pageCount) {
+        WritableMap event = Arguments.createMap();
+        event.putInt("page", page);
+        event.putInt("pageCount", pageCount);
+        reactNativeEvent(EVENT_ON_PAGE_CHANGED, event);
     }
 }

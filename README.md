@@ -134,6 +134,7 @@ onError | ✓ | ✓ | Callback that is triggered when loading has failed. And er
 style | ✓ | ✓ | A [style](https://facebook.github.io/react-native/docs/style)
 fadeInDuration | ✗ | ✓ | Fade in duration (in ms, defaults to 0.0) to smoothly fade the webview into view when pdf loading is completed
 urlProps | ✓ | ✓ | Extended properties for `url` type that allows to specify HTTP Method, HTTP headers and HTTP body
+onPageChanged | ✓ | ✗ | Callback that is invoked when page is changed. Provides `active page` and `total pages` information.
 
 ### Development tips
 
