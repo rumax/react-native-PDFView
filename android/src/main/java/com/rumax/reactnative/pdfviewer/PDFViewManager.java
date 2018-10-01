@@ -100,6 +100,11 @@ public class PDFViewManager extends SimpleViewManager<PDFView> {
         pdfView.setUrlProps(props);
     }
 
+    @ReactProp(name = "fadeInDuration")
+    public void setFadeInDuration(PDFView pdfView, int duration) {
+        pdfView.setFadeInDuration(duration);
+    }
+
     @Override
     public void onAfterUpdateTransaction(PDFView pdfView) {
         super.onAfterUpdateTransaction(pdfView);

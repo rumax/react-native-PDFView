@@ -7,6 +7,9 @@ package com.rumax.reactnative.pdfviewer;
  */
 
 import android.util.Base64;
+import android.view.animation.AlphaAnimation;
+import android.view.animation.Animation;
+import android.view.animation.DecelerateInterpolator;
 
 import com.facebook.react.bridge.Arguments;
 import com.facebook.react.bridge.ReactContext;
@@ -45,6 +48,7 @@ public class PDFView extends com.github.barteksc.pdfviewer.PDFView implements
     private static final String E_INVALID_RESOURCE_TYPE = "resourceType is Invalid";
     private static final String E_INVALID_BASE64 = "data is not in valid Base64 scheme";
     private ReadableMap urlProps;
+    private int fadeInDuration = 0;
 
     public PDFView(ThemedReactContext context) {
         super(context, null);
@@ -66,6 +70,12 @@ public class PDFView extends com.github.barteksc.pdfviewer.PDFView implements
 
     @Override
     public void loadComplete(int numberOfPages) {
+        AlphaAnimation fadeIn = new AlphaAnimation(0, 1);
+        fadeIn.setInterpolator(new DecelerateInterpolator());
+        fadeIn.setDuration(fadeInDuration);
+        this.setAlpha(1);
+        this.startAnimation(fadeIn);
+
         reactNativeMessageEvent(EVENT_ON_LOAD, null);
     }
 
@@ -81,6 +91,7 @@ public class PDFView extends com.github.barteksc.pdfviewer.PDFView implements
     }
 
     private void setupAndLoad() {
+        this.setAlpha(0);
         configurator
                 .defaultPage(0)
                 .swipeHorizontal(false)
@@ -218,5 +229,9 @@ public class PDFView extends com.github.barteksc.pdfviewer.PDFView implements
         event.putInt("page", page);
         event.putInt("pageCount", pageCount);
         reactNativeEvent(EVENT_ON_PAGE_CHANGED, event);
+    }
+
+    public void setFadeInDuration(int duration) {
+        this.fadeInDuration = duration;
     }
 }
