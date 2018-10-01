@@ -16,6 +16,10 @@ RCT_CUSTOM_VIEW_PROPERTY(textEncoding, NSString, PDFView) {
     [view setTextEncoding: json ? [RCTConvert NSString: json] : UTF_8];
 }
 
+RCT_CUSTOM_VIEW_PROPERTY(urlProps, NSDictionary, PDFView) {
+    [view setUrlProps: json ? [RCTConvert NSDictionary: json] : nil];
+}
+
 RCT_CUSTOM_VIEW_PROPERTY(fadeInDuration, NSTimeInterval, PDFView) {
     [view setFadeInDuration: json ? [RCTConvert NSTimeInterval: json] : 0.0];
 }
