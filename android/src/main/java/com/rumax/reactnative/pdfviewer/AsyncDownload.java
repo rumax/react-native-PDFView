@@ -1,6 +1,6 @@
 package com.rumax.reactnative.pdfviewer;
 
-/**
+/*
  * Created by Maksym Rusynyk on 06/03/2018.
  *
  * This source code is licensed under the MIT license
@@ -13,30 +13,26 @@ import com.facebook.react.bridge.ReadableMapKeySetIterator;
 import com.facebook.react.bridge.ReadableType;
 
 import java.io.BufferedInputStream;
-import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
-import okhttp3.Request;
-
 class AsyncDownload extends AsyncTask<Void, Void, Void> {
-    private static int BUFF_SIZE = 8192;
+    private static final int BUFF_SIZE = 8192;
     private final ReadableMap urlProps;
     private AsyncTaskCompleted listener;
     private File file;
     private String resource;
     private IOException exception;
-    static final String PROP_METHOD = "method";
-    static final String PROP_BODY = "body";
-    static final String PROP_HEADERS = "headers";
+    private static final String PROP_METHOD = "method";
+    private static final String PROP_BODY = "body";
+    private static final String PROP_HEADERS = "headers";
 
-    public AsyncDownload(String resource, File file, AsyncTaskCompleted listener, ReadableMap urlProps) {
+    AsyncDownload(String resource, File file, AsyncTaskCompleted listener, ReadableMap urlProps) {
         this.listener = listener;
         this.file = file;
         this.resource = resource;
@@ -59,9 +55,7 @@ class AsyncDownload extends AsyncTask<Void, Void, Void> {
             connection = (HttpURLConnection) url.openConnection();
             connection.setDoOutput(true);
             connection.setDoInput(true);
-            setRequestMethod(connection);
-            setRequestHeaders(connection);
-            setRequestBody(connection);
+            enrichWithUrlProps(connection);
             connection.connect();
         } catch (IOException e) {
             exception = e;
@@ -70,7 +64,7 @@ class AsyncDownload extends AsyncTask<Void, Void, Void> {
 
         try (
                 InputStream input = new BufferedInputStream(connection.getInputStream(), BUFF_SIZE);
-                OutputStream output = new FileOutputStream(file);
+                OutputStream output = new FileOutputStream(file)
         ) {
             int count;
             byte data[] = new byte[BUFF_SIZE];
@@ -98,6 +92,15 @@ class AsyncDownload extends AsyncTask<Void, Void, Void> {
         }
 
         connection.setRequestMethod(method);
+    }
+
+    private void enrichWithUrlProps(HttpURLConnection connection) throws IOException {
+        if (urlProps == null) {
+            return;
+        }
+        setRequestMethod(connection);
+        setRequestHeaders(connection);
+        setRequestBody(connection);
     }
 
     private void setRequestHeaders(HttpURLConnection connection) throws IOException {
@@ -140,8 +143,6 @@ class AsyncDownload extends AsyncTask<Void, Void, Void> {
             try (OutputStream writer = connection.getOutputStream()) {
                 writer.write(body.getBytes());
                 writer.flush();
-            } catch (IOException e) {
-                throw e;
             }
         }
     }

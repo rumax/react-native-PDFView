@@ -1,35 +1,36 @@
 package com.rumax.reactnative.pdfviewer;
 
-/**
+/*
  * Created by Maksym Rusynyk on 06/03/2018.
  *
  * This source code is licensed under the MIT license
  */
 
-import android.content.Context;
 import android.view.ViewGroup;
 
 import com.facebook.react.bridge.ReactApplicationContext;
 import com.facebook.react.bridge.ReadableMap;
 import com.facebook.react.common.MapBuilder;
-import com.facebook.react.uimanager.annotations.ReactProp;
 import com.facebook.react.uimanager.SimpleViewManager;
 import com.facebook.react.uimanager.ThemedReactContext;
+import com.facebook.react.uimanager.annotations.ReactProp;
+
 import java.util.Map;
+
+import javax.annotation.Nullable;
 
 public class PDFViewManager extends SimpleViewManager<PDFView> {
     private static final String REACT_CLASS = "PDFView";
-    private Context context;
     private PDFView pdfView = null;
     private final static String EVENT_BUBBLED = "bubbled";
 
-    public PDFViewManager(ReactApplicationContext context) {
-        this.context = context;
-    }
+    @SuppressWarnings("unused")
+    PDFViewManager(ReactApplicationContext context) {}
 
-    public Map getExportedCustomBubblingEventTypeConstants() {
-        return MapBuilder
-                .builder()
+    @Nullable
+    @Override
+    public Map<String, Object> getExportedCustomBubblingEventTypeConstants() {
+        return MapBuilder.<String, Object>builder()
                 .put(
                         PDFView.EVENT_ON_LOAD,
                         MapBuilder.of(
@@ -92,7 +93,6 @@ public class PDFViewManager extends SimpleViewManager<PDFView> {
 
     @ReactProp(name = "textEncoding")
     public void setTextEncoding(PDFView pdfView, String textEncoding) {
-        pdfView.setTextEncoding(textEncoding);
     }
 
     @ReactProp(name = "urlProps")
