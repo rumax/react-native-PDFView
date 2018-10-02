@@ -1,5 +1,6 @@
 # react-native-view-pdf
 
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/c1c746575c124138936e9418865136ab)](https://app.codacy.com/app/rumax/react-native-PDFView?utm_source=github.com&utm_medium=referral&utm_content=rumax/react-native-PDFView&utm_campaign=Badge_Grade_Dashboard)
 [![npm](https://img.shields.io/npm/l/express.svg)](https://github.com/rumax/react-native-PDFView)
 [![npm version](https://badge.fury.io/js/react-native-view-pdf.svg)](https://badge.fury.io/js/react-native-view-pdf)
 [![CircleCI](https://circleci.com/gh/rumax/react-native-PDFView.svg?style=shield)](https://circleci.com/gh/rumax/react-native-PDFView)
