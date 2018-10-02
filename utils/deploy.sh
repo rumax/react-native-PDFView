@@ -1,3 +1,4 @@
+#!/bin/bash
 # Print a trace of commands
 set -x
 # Exit immediately if a command exits with a non-zero status

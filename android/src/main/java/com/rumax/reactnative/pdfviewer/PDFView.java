@@ -1,6 +1,6 @@
 package com.rumax.reactnative.pdfviewer;
 
-/**
+/*
  * Created by Maksym Rusynyk on 06/03/2018.
  *
  * This source code is licensed under the MIT license
@@ -8,7 +8,6 @@ package com.rumax.reactnative.pdfviewer;
 
 import android.util.Base64;
 import android.view.animation.AlphaAnimation;
-import android.view.animation.Animation;
 import android.view.animation.DecelerateInterpolator;
 
 import com.facebook.react.bridge.Arguments;
@@ -39,7 +38,6 @@ public class PDFView extends com.github.barteksc.pdfviewer.PDFView implements
     private String resource;
     private File downloadedFile;
     private AsyncDownload asyncDownload = null;
-    private String textEncoding = null;
     private String resourceType = null;
     private Configurator configurator = null;
     private boolean sourceChanged = true;
@@ -126,7 +124,6 @@ public class PDFView extends com.github.barteksc.pdfviewer.PDFView implements
             setupAndLoad();
         } catch (IllegalArgumentException e) {
             onError(new IOException(E_INVALID_BASE64));
-            return;
         }
     }
 
@@ -160,14 +157,19 @@ public class PDFView extends com.github.barteksc.pdfviewer.PDFView implements
             return;
         }
 
-        if (resourceType.equals("url")) {
-            renderFromUrl();
-        } else if (resourceType.equals("base64")) {
-            renderFromBase64();
-        } else if (resourceType.equals("file")) {
-            renderFromFile(new File(resource));
-        } else {
-            onError(new IOException(E_INVALID_RESOURCE_TYPE + resourceType));
+        switch (resourceType) {
+            case "url":
+                renderFromUrl();
+                break;
+            case "base64":
+                renderFromBase64();
+                break;
+            case "file":
+                renderFromFile(new File(resource));
+                break;
+            default:
+                onError(new IOException(E_INVALID_RESOURCE_TYPE + resourceType));
+                break;
         }
     }
 
@@ -180,7 +182,9 @@ public class PDFView extends com.github.barteksc.pdfviewer.PDFView implements
 
     private void cleanDownloadedFile() {
         if (downloadedFile != null) {
-            downloadedFile.delete();
+            if (!downloadedFile.delete()) {
+                onError(new IOException("Cannot delete downloaded file"));
+            }
             downloadedFile = null;
         }
     }
@@ -199,13 +203,6 @@ public class PDFView extends com.github.barteksc.pdfviewer.PDFView implements
         this.resourceType = resourceType;
     }
 
-    public void setTextEncoding(String textEncoding) {
-        if (isDifferent(resourceType, this.resourceType)) {
-            sourceChanged = true;
-        }
-        this.textEncoding = textEncoding;
-    }
-
     public void onDrop() {
         cleanup();
         sourceChanged = true;
@@ -220,7 +217,7 @@ public class PDFView extends com.github.barteksc.pdfviewer.PDFView implements
     }
 
     public void setUrlProps(ReadableMap props) {
-        this.urlProps = props == null ? new EmptyReadableMap() : props;
+        this.urlProps = props;
     }
 
     @Override
