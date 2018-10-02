@@ -22,9 +22,8 @@ export default StyleSheet.create({
     borderColor: cBlue,
     borderWidth: 2,
   },
-  content: { flex: 1, backgroundColor: cGreen },
   pdfView: { flex: 1 },
-  noContent: { flex: 1, alignItems: 'center' },
+  noContent: { flex: 1, alignItems: 'center', backgroundColor: cGreen },
   noContentText: {
     fontSize: 22,
     lineHeight: 36,

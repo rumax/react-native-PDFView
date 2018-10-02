@@ -3,58 +3,15 @@
 import React from 'react';
 import {
   Alert,
-  Button,
-  Platform,
   Text,
   View,
 } from 'react-native';
-
 import PDFView from 'react-native-view-pdf';
 
-import type { UrlProps } from 'react-native-view-pdf';
-
-import base64Data from './base64.json';
-import styles from './app.style';
-
-type Resource = {
-  resource: string,
-  resourceType: 'url' | 'base64' | 'file',
-  urlProps?: UrlProps,
-};
-type State = { resource?: Resource };
-
-const resources: {[key: string]: Resource } = {
-  file: {
-    resource: Platform.OS === 'ios' ? 'test-pdf.pdf' : '/sdcard/Download/test-pdf.pdf',
-    resourceType: 'file',
-  },
-  url: {
-    resource: 'https://www.ets.org/Media/Tests/TOEFL/pdf/SampleQuestions.pdf',
-    resourceType: 'url',
-  },
-  urlPost: {
-    // Run "node demo/utils/server.js" to start the local server. Put correct IP
-    resource: 'http://__SERVER__:8080',
-    resourceType: 'url',
-    urlProps: {
-      method: 'POST',
-      headers: {
-        'Accept-Language': 'en-us,en;q=0.5',
-        'Accept-encoding': 'application/pdf',
-        'Referer': 'http://localhost/',
-      },
-      body: 'Request PDF body',
-    },
-  },
-  base64: {
-    resource: base64Data.document,
-    resourceType: 'base64',
-  },
-  invalid: {
-    resource: '**invalid base 64**',
-    resourceType: 'base64',
-  },
-};
+import styles from './styles';
+import resources from './resources';
+import type { Resource } from './resources';
+import TabButton from './TabButton';
 
 const PdfContent = (props) => {
   if (props.resource) {
@@ -86,13 +43,7 @@ const PdfContent = (props) => {
   );
 };
 
-const TabButton = ({ title, onPress }) => (
-  <View style={styles.tab}>
-    <Button onPress={onPress} title={title} />
-  </View>
-);
-
-export default class App extends React.Component<*, State> {
+export default class App extends React.Component<*, { resource?: Resource }> {
   // eslint-disable-next-line react/sort-comp
   renderStarted: number;
 
@@ -165,14 +116,12 @@ export default class App extends React.Component<*, State> {
           <TabButton onPress={this.dataWithError} title="Error" />
           <TabButton onPress={this.resetData} title="Reset" />
         </View>
-        <View style={styles.content}>
-          <PdfContent
-            resource={state.resource}
-            onLoad={this.handleLoad}
-            onError={this.handleError}
-            onPageChanged={this.handlePageChanged}
-          />
-        </View>
+        <PdfContent
+          resource={state.resource}
+          onLoad={this.handleLoad}
+          onError={this.handleError}
+          onPageChanged={this.handlePageChanged}
+        />
         <View style={styles.tabs}>
           <TabButton onPress={this.setUrlPost} title="Url Post" />
           <TabButton onPress={this.resetData} title="Reset" />
