@@ -53,8 +53,6 @@ class AsyncDownload extends AsyncTask<Void, Void, Void> {
         try {
             url = new URL(resource);
             connection = (HttpURLConnection) url.openConnection();
-            connection.setDoOutput(true);
-            connection.setDoInput(true);
             enrichWithUrlProps(connection);
             connection.connect();
         } catch (IOException e) {
@@ -139,6 +137,7 @@ class AsyncDownload extends AsyncTask<Void, Void, Void> {
         String body = urlProps.getString(PROP_BODY);
 
         if (body != null && body.getBytes().length > 0) {
+            connection.setDoOutput(true);
             connection.setRequestProperty("Content-Length", "" + body.getBytes().length);
             try (OutputStream writer = connection.getOutputStream()) {
                 writer.write(body.getBytes());
