@@ -27,8 +27,7 @@ public class PDFViewManager extends SimpleViewManager<PDFView> {
     @SuppressWarnings("unused")
     PDFViewManager(ReactApplicationContext context) {}
 
-    @Nullable
-    @Override
+    @Nullable @Override
     public Map<String, Object> getExportedCustomBubblingEventTypeConstants() {
         return MapBuilder.<String, Object>builder()
                 .put(

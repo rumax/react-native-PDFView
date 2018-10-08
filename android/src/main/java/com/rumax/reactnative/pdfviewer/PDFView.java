@@ -34,6 +34,10 @@ public class PDFView extends com.github.barteksc.pdfviewer.PDFView implements
     public final static String EVENT_ON_LOAD = "onLoad";
     public final static String EVENT_ON_ERROR = "onError";
     public final static String EVENT_ON_PAGE_CHANGED = "onPageChanged";
+    private static final String E_NO_RESOURCE = "source is not defined";
+    private static final String E_NO_RESOURCE_TYPE = "resourceType is not defined";
+    private static final String E_INVALID_RESOURCE_TYPE = "resourceType is Invalid";
+    private static final String E_INVALID_BASE64 = "data is not in valid Base64 scheme";
     private ThemedReactContext context;
     private String resource;
     private File downloadedFile;
@@ -41,16 +45,53 @@ public class PDFView extends com.github.barteksc.pdfviewer.PDFView implements
     private String resourceType = null;
     private Configurator configurator = null;
     private boolean sourceChanged = true;
-    private static final String E_NO_RESOURCE = "source is not defined";
-    private static final String E_NO_RESOURCE_TYPE = "resourceType is not defined";
-    private static final String E_INVALID_RESOURCE_TYPE = "resourceType is Invalid";
-    private static final String E_INVALID_BASE64 = "data is not in valid Base64 scheme";
     private ReadableMap urlProps;
     private int fadeInDuration = 0;
 
     public PDFView(ThemedReactContext context) {
         super(context, null);
         this.context = context;
+    }
+
+    @Override
+    public void loadComplete(int numberOfPages) {
+        AlphaAnimation fadeIn = new AlphaAnimation(0, 1);
+        fadeIn.setInterpolator(new DecelerateInterpolator());
+        fadeIn.setDuration(fadeInDuration);
+        this.setAlpha(1);
+        this.startAnimation(fadeIn);
+
+        reactNativeMessageEvent(EVENT_ON_LOAD, null);
+    }
+
+    @Override
+    protected void onLayout(boolean changed, int left, int top, int right, int bottom) {
+        super.onLayout(changed, left, top, right, bottom);
+        this.setClipToOutline(true);
+    }
+
+    @Override
+    public void onError(Throwable t) {
+        reactNativeMessageEvent(EVENT_ON_ERROR, "error: " + t.getMessage());
+    }
+
+    @Override
+    public void downloadTaskFailed(IOException e) {
+        cleanDownloadedFile();
+        onError(e);
+    }
+
+    @Override
+    public void downloadTaskCompleted() {
+        renderFromFile(downloadedFile);
+    }
+
+    @Override
+    public void onPageChanged(int page, int pageCount) {
+        WritableMap event = Arguments.createMap();
+        event.putInt("page", page);
+        event.putInt("pageCount", pageCount);
+        reactNativeEvent(EVENT_ON_PAGE_CHANGED, event);
     }
 
     private void reactNativeMessageEvent(String eventName, String message) {
@@ -66,28 +107,6 @@ public class PDFView extends com.github.barteksc.pdfviewer.PDFView implements
                 .receiveEvent(this.getId(), eventName, event);
     }
 
-    @Override
-    public void loadComplete(int numberOfPages) {
-        AlphaAnimation fadeIn = new AlphaAnimation(0, 1);
-        fadeIn.setInterpolator(new DecelerateInterpolator());
-        fadeIn.setDuration(fadeInDuration);
-        this.setAlpha(1);
-        this.startAnimation(fadeIn);
-
-        reactNativeMessageEvent(EVENT_ON_LOAD, null);
-    }
-
-    @Override
-    public void onError(Throwable t) {
-        reactNativeMessageEvent(EVENT_ON_ERROR, "error: " + t.getMessage());
-    }
-
-    @Override
-    public void downloadTaskFailed(IOException e) {
-        cleanDownloadedFile();
-        onError(e);
-    }
-
     private void setupAndLoad() {
         this.setAlpha(0);
         configurator
@@ -99,11 +118,6 @@ public class PDFView extends com.github.barteksc.pdfviewer.PDFView implements
                 .spacing(10)
                 .load();
         sourceChanged = false;
-    }
-
-    @Override
-    public void downloadTaskCompleted() {
-        renderFromFile(downloadedFile);
     }
 
     private void renderFromFile(File file) {
@@ -189,6 +203,14 @@ public class PDFView extends com.github.barteksc.pdfviewer.PDFView implements
         }
     }
 
+    private static boolean isDifferent(String str1, String str2) {
+        if (str1 == null || str2 == null) {
+            return true;
+        }
+
+        return !str1.equals(str2);
+    }
+
     public void setResource(String resource) {
         if (isDifferent(resource, this.resource)) {
             sourceChanged = true;
@@ -208,24 +230,8 @@ public class PDFView extends com.github.barteksc.pdfviewer.PDFView implements
         sourceChanged = true;
     }
 
-    private static boolean isDifferent(String str1, String str2) {
-        if (str1 == null || str2 == null) {
-            return true;
-        }
-
-        return !str1.equals(str2);
-    }
-
     public void setUrlProps(ReadableMap props) {
         this.urlProps = props;
-    }
-
-    @Override
-    public void onPageChanged(int page, int pageCount) {
-        WritableMap event = Arguments.createMap();
-        event.putInt("page", page);
-        event.putInt("pageCount", pageCount);
-        reactNativeEvent(EVENT_ON_PAGE_CHANGED, event);
     }
 
     public void setFadeInDuration(int duration) {
