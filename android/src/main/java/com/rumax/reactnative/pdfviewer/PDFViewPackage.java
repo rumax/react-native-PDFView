@@ -20,6 +20,7 @@ public class PDFViewPackage implements ReactPackage {
         return Collections.emptyList();
     }
 
+    @SuppressWarnings("rawtypes")
     public List<ViewManager> createViewManagers(ReactApplicationContext reactContext) {
         return Collections.<ViewManager>singletonList(new PDFViewManager(reactContext));
     }

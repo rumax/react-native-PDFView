@@ -23,19 +23,19 @@ import java.net.URL;
 
 class AsyncDownload extends AsyncTask<Void, Void, Void> {
     private static final int BUFF_SIZE = 8192;
-    private final ReadableMap urlProps;
-    private AsyncTaskCompleted listener;
-    private File file;
-    private String resource;
-    private IOException exception;
     private static final String PROP_METHOD = "method";
     private static final String PROP_BODY = "body";
     private static final String PROP_HEADERS = "headers";
+    private final ReadableMap urlProps;
+    private AsyncTaskCompleted listener;
+    private File file;
+    private String url;
+    private IOException exception;
 
-    AsyncDownload(String resource, File file, AsyncTaskCompleted listener, ReadableMap urlProps) {
+    AsyncDownload(String url, File file, AsyncTaskCompleted listener, ReadableMap urlProps) {
         this.listener = listener;
         this.file = file;
-        this.resource = resource;
+        this.url = url;
         this.urlProps = urlProps;
     }
 
@@ -51,7 +51,7 @@ class AsyncDownload extends AsyncTask<Void, Void, Void> {
         HttpURLConnection connection;
 
         try {
-            url = new URL(resource);
+            url = new URL(this.url);
             connection = (HttpURLConnection) url.openConnection();
             enrichWithUrlProps(connection);
             connection.connect();
@@ -79,6 +79,24 @@ class AsyncDownload extends AsyncTask<Void, Void, Void> {
         return null;
     }
 
+    @Override
+    protected void onPostExecute(Void param) {
+        if (exception == null) {
+            listener.downloadTaskCompleted();
+        } else {
+            listener.downloadTaskFailed(exception);
+        }
+    }
+
+    private void enrichWithUrlProps(HttpURLConnection connection) throws IOException {
+        if (urlProps == null) {
+            return;
+        }
+        setRequestMethod(connection);
+        setRequestHeaders(connection);
+        setRequestBody(connection);
+    }
+
     private void setRequestMethod(HttpURLConnection connection) throws IOException {
         String method = "GET";
 
@@ -90,15 +108,6 @@ class AsyncDownload extends AsyncTask<Void, Void, Void> {
         }
 
         connection.setRequestMethod(method);
-    }
-
-    private void enrichWithUrlProps(HttpURLConnection connection) throws IOException {
-        if (urlProps == null) {
-            return;
-        }
-        setRequestMethod(connection);
-        setRequestHeaders(connection);
-        setRequestBody(connection);
     }
 
     private void setRequestHeaders(HttpURLConnection connection) throws IOException {
@@ -136,22 +145,13 @@ class AsyncDownload extends AsyncTask<Void, Void, Void> {
 
         String body = urlProps.getString(PROP_BODY);
 
-        if (body != null && body.getBytes().length > 0) {
+        if (body.getBytes().length > 0) {
             connection.setDoOutput(true);
             connection.setRequestProperty("Content-Length", "" + body.getBytes().length);
             try (OutputStream writer = connection.getOutputStream()) {
                 writer.write(body.getBytes());
                 writer.flush();
             }
-        }
-    }
-
-    @Override
-    protected void onPostExecute(Void param) {
-        if (exception == null) {
-            listener.downloadTaskCompleted();
-        } else {
-            listener.downloadTaskFailed(exception);
         }
     }
 }

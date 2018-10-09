@@ -12,6 +12,7 @@ import styles from './styles';
 import resources from './resources';
 import type { Resource } from './resources';
 import TabButton from './TabButton';
+import pkg from '../package.json';
 
 const PdfContent = (props) => {
   if (props.resource) {
@@ -35,9 +36,8 @@ const PdfContent = (props) => {
         Press one of the buttons above
       </Text>
       <Text style={styles.noContentSubText}>
-        You are running the app in
-        {__DEV__ ? 'DEV' : 'RELEASE'}
-        mode
+        You are running the app in {__DEV__ ? 'DEV' : 'RELEASE'} mode{'\n'}
+        RN version is {pkg.dependencies['react-native']}
       </Text>
     </View>
   );
