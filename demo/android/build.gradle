@@ -7,6 +7,8 @@ buildscript {
         compileSdkVersion = 27
         targetSdkVersion = 26
         supportLibVersion = "27.1.1"
+
+        pdfViewer = "3.1.0-beta.1"
     }
     repositories {
         jcenter()
