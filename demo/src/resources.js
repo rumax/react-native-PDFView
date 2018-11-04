@@ -11,6 +11,10 @@ export type Resource = {
 };
 
 const resources: {[key: string]: Resource } = {
+  fileAssets: {
+    resource: Platform.OS === 'ios' ? 'test-pdf.pdf' : 'assets-pdf.pdf',
+    resourceType: 'file',
+  },
   file: {
     resource: Platform.OS === 'ios' ? 'test-pdf.pdf' : '/sdcard/Download/test-pdf.pdf',
     resourceType: 'file',

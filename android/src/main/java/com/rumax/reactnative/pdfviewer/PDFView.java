@@ -6,6 +6,7 @@ package com.rumax.reactnative.pdfviewer;
  * This source code is licensed under the MIT license
  */
 
+import android.content.res.AssetManager;
 import android.util.Base64;
 import android.view.animation.AlphaAnimation;
 import android.view.animation.DecelerateInterpolator;
@@ -83,7 +84,7 @@ public class PDFView extends com.github.barteksc.pdfviewer.PDFView implements
 
     @Override
     public void downloadTaskCompleted() {
-        renderFromFile(downloadedFile);
+        renderFromFile(downloadedFile.getAbsolutePath());
     }
 
     @Override
@@ -120,13 +121,20 @@ public class PDFView extends com.github.barteksc.pdfviewer.PDFView implements
         sourceChanged = false;
     }
 
-    private void renderFromFile(File file) {
+    private void renderFromFile(String filePath) {
         InputStream input;
+
         try {
-            input = new FileInputStream(file);
+            if (filePath.startsWith("/")) { // absolute path, using FS
+                input = new FileInputStream(new File(filePath));
+            } else { // from assets
+                AssetManager assetManager = context.getAssets();
+                input = assetManager.open(filePath, AssetManager.ACCESS_BUFFER);
+            }
+
             configurator = this.fromStream(input);
             setupAndLoad();
-        } catch (FileNotFoundException e) {
+        } catch (IOException e) {
             onError(e);
         }
     }
@@ -179,7 +187,7 @@ public class PDFView extends com.github.barteksc.pdfviewer.PDFView implements
                 renderFromBase64();
                 break;
             case "file":
-                renderFromFile(new File(resource));
+                renderFromFile(resource);
                 break;
             default:
                 onError(new IOException(E_INVALID_RESOURCE_TYPE + resourceType));

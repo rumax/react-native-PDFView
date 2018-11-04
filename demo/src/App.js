@@ -69,6 +69,10 @@ export default class App extends React.Component<*, { resource?: Resource }> {
     this.setState({ resource: resources.file });
   }
 
+  setFileAssets = () => {
+    this.setState({ resource: resources.fileAssets });
+  }
+
   dataWithError = () => {
     this.setState({ resource: resources.invalid });
   }
@@ -124,6 +128,7 @@ export default class App extends React.Component<*, { resource?: Resource }> {
         />
         <View style={styles.tabs}>
           <TabButton onPress={this.setUrlPost} title="Url Post" />
+          <TabButton onPress={this.setFileAssets} title="Assets" />
           <TabButton onPress={this.resetData} title="Reset" />
         </View>
       </View>
