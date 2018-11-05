@@ -23,5 +23,5 @@ repositories {
 
 dependencies {
     compileOnly "com.facebook.react:react-native:+"
-    implementation 'com.github.barteksc:android-pdf-viewer:2.8.2'
+    implementation "com.github.barteksc:android-pdf-viewer:${safeExtGet("pdfViewer", "2.8.2")}"
 }
