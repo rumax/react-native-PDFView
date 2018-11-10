@@ -7,6 +7,8 @@ import {
   View,
 } from 'react-native';
 import PDFView from 'react-native-view-pdf';
+import Spinner from 'react-native-loading-spinner-overlay';
+import DropdownAlert from 'react-native-dropdownalert';
 
 import styles from './styles';
 import resources from './resources';
@@ -49,32 +51,32 @@ export default class App extends React.Component<*, { resource?: Resource }> {
 
   constructor(props: *) {
     super(props);
-    this.state = { resource: undefined };
+    this.state = { resource: undefined, spinner: false };
     this.renderStarted = 0;
   }
 
   setUrl = () => {
-    this.setState({ resource: resources.url });
+    this.setState({ resource: resources.url, spinner: true });
   }
 
   setUrlPost = () => {
-    this.setState({ resource: resources.urlPost });
+    this.setState({ resource: resources.urlPost, spinner: true });
   }
 
   setBase64 = () => {
-    this.setState({ resource: resources.base64 });
+    this.setState({ resource: resources.base64, spinner: true });
   }
 
   setFile = () => {
-    this.setState({ resource: resources.file });
+    this.setState({ resource: resources.file, spinner: true });
   }
 
   setFileAssets = () => {
-    this.setState({ resource: resources.fileAssets });
+    this.setState({ resource: resources.fileAssets, spinner: true });
   }
 
   dataWithError = () => {
-    this.setState({ resource: resources.invalid });
+    this.setState({ resource: resources.invalid, spinner: true });
   }
 
   resetData = () => {
@@ -82,24 +84,20 @@ export default class App extends React.Component<*, { resource?: Resource }> {
   }
 
   handleLoad = () => {
-    Alert.alert(
+    this.setState({ spinner: false });
+    this.dropdown.alertWithType(
+      'success',
       'Document loaded',
-      `Time: ${((new Date()).getTime() - this.renderStarted)}`,
-      [
-        { text: 'Cancel', style: 'cancel' },
-        { text: 'OK' },
-      ],
+      `Loading time: ${((new Date()).getTime() - this.renderStarted)}`,
     );
   }
 
   handleError = (error: Error) => {
-    Alert.alert(
+    this.setState({ spinner: false });
+    this.dropdown.alertWithType(
+      'error',
       'Document loading failed',
-      error.message,
-      [
-        { text: 'Cancel', style: 'cancel' },
-        { text: 'OK' },
-      ],
+      `error message: ${error.message}`,
     );
   }
 
@@ -131,6 +129,12 @@ export default class App extends React.Component<*, { resource?: Resource }> {
           <TabButton onPress={this.setFileAssets} title="Assets" />
           <TabButton onPress={this.resetData} title="Reset" />
         </View>
+        <Spinner
+          visible={this.state.spinner}
+          textContent="Loading..."
+          textStyle={styles.spinnerTextStyle}
+        />
+        <DropdownAlert ref={ref => this.dropdown = ref} />
       </View>
     );
   }

@@ -37,4 +37,5 @@ export default StyleSheet.create({
     marginTop: 20,
     textAlign: 'center',
   },
+  spinnerTextStyle: { color: cWhite },
 });
