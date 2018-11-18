@@ -14,13 +14,14 @@ export default StyleSheet.create({
     backgroundColor: cWhite,
   },
   tabs: { flexDirection: 'row' },
-  tab: {
+  tabButton: {
     flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
     backgroundColor: cLightBlue,
     borderColor: cBlue,
     borderWidth: 2,
+    paddingVertical: 8,
   },
   pdfView: { flex: 1 },
   noContent: { flex: 1, alignItems: 'center', backgroundColor: cGreen },
@@ -38,4 +39,16 @@ export default StyleSheet.create({
     textAlign: 'center',
   },
   spinnerTextStyle: { color: cWhite },
+  floatButtons: {
+    position: 'absolute',
+    top: 70,
+    right: 0,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  reloadButton: {
+    marginVertical: 2,
+    padding: 8,
+    backgroundColor: cLightBlue,
+  },
 });

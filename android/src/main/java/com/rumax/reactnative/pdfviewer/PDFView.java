@@ -245,4 +245,9 @@ public class PDFView extends com.github.barteksc.pdfviewer.PDFView implements
     public void setFadeInDuration(int duration) {
         this.fadeInDuration = duration;
     }
+
+    public void reload() {
+        sourceChanged = true;
+        render();
+    }
 }

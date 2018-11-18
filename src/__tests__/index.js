@@ -2,11 +2,25 @@
 import React from 'react';
 import renderer from 'react-test-renderer';
 
+import {
+  findNodeHandle,
+  NativeModules,
+} from 'react-native';
+
 import PDFVIew from '../index';
 
 jest.mock('../RNPDFView', () => 'RNPDFView');
+jest.mock('react-native', () => ({
+  findNodeHandle: jest.fn(),
+  Platform: { select: jest.fn(platforms => platforms.ios) },
+  NativeModules: { PDFViewManager: { reload: jest.fn() } },
+}));
 
 describe('PDFView', () => {
+  beforeEach(() => {
+    jest.clearAllMocks();
+  });
+
   it('renders with default url source type', () => {
     const tree = renderer.create(<PDFVIew resource="http://site.com/pdf" />);
 
@@ -83,5 +97,65 @@ describe('PDFView', () => {
     (tree.toJSON(): any).props.onError();
     (tree.toJSON(): any).props.onLoad();
     (tree.toJSON(): any).props.onPageChanged();
+  });
+
+  it('trigger reload', (done) => {
+    let pdfRef: any;
+
+    findNodeHandle.mockImplementationOnce(() => 'handle for ref');
+    const tree = renderer.create(<PDFVIew
+      resource="base64"
+      resourceType="base64"
+      ref={(ref) => {
+        pdfRef = ref;
+      }}
+    />);
+
+    const component = tree.getInstance();
+    const ref = { _name: 'ref_to_the_viewer' };
+
+    // $FlowFixMe: ignore null
+    component._setViewRef(ref);
+
+    setTimeout(() => {
+      expect(pdfRef.reload).toBeTruthy();
+      pdfRef.reload();
+
+      expect(findNodeHandle).toHaveBeenCalledTimes(1);
+      expect(NativeModules.PDFViewManager.reload).toHaveBeenCalledTimes(1);
+      done();
+    });
+  });
+
+  it('trigger reload throws exception if findNodeHandle fails to find handle', (done) => {
+    let pdfRef: any;
+
+    const tree = renderer.create(<PDFVIew
+      resource="base64"
+      resourceType="base64"
+      ref={(ref) => {
+        pdfRef = ref;
+      }}
+    />);
+
+    const component = tree.getInstance();
+    const ref = { _name: 'ref_to_the_viewer' };
+
+    // $FlowFixMe: ignore null
+    component._setViewRef(ref);
+
+    setTimeout(async () => {
+      expect(pdfRef.reload).toBeTruthy();
+      let error;
+
+      try {
+        await pdfRef.reload();
+      } catch (err) {
+        error = err;
+      }
+
+      expect(error).toMatchSnapshot();
+      done();
+    });
   });
 });

@@ -1,5 +1,11 @@
 /* @flow */
 import React from 'react';
+import {
+  findNodeHandle,
+  UIManager,
+  Platform,
+  NativeModules,
+} from 'react-native';
 
 import RNPDFView from './RNPDFView';
 
@@ -75,6 +81,10 @@ type Props = {
 };
 
 class PDFView extends React.Component<Props, *> {
+  // eslint-disable-next-line react/sort-comp
+  _viewerRef: any;
+
+
   static defaultProps = {
     onError: () => {},
     onLoad: () => {},
@@ -99,12 +109,45 @@ class PDFView extends React.Component<Props, *> {
     this.props.onError(nativeEvent || new Error('unknown error'));
   }
 
+
   onPageChanged: (event: any) => void;
   onPageChanged(event: any) {
     const { nativeEvent = {} } = event || {};
     const { page = -1, pageCount = -1 } = nativeEvent;
     this.props.onPageChanged(page, pageCount);
   }
+
+
+  /**
+   * A Function. Invoke it when PDF document needs to be reloaded. Use `ref` to
+   * access it. Throws an exception in case of errors
+   */
+  async reload() {
+    if (this._viewerRef) {
+      const handle = findNodeHandle(this._viewerRef);
+
+      if (!handle) {
+        throw new Error('Cannot find node handles');
+      }
+
+      await Platform.select({
+        android: async () => UIManager.dispatchViewManagerCommand(
+          handle,
+          UIManager.PDFView.Commands.reload,
+          [],
+        ),
+        ios: async () => NativeModules.PDFViewManager.reload(handle),
+      })();
+    } else {
+      throw new Error('No ref to PDFView component, check that component is mounted');
+    }
+  }
+
+
+  _setViewRef = (ref: any) => {
+    this._viewerRef = ref;
+  }
+
 
   render() {
     const {
@@ -114,6 +157,7 @@ class PDFView extends React.Component<Props, *> {
     } = this.props;
     return (
       <RNPDFView
+        ref={this._setViewRef}
         {...remainingProps}
         onError={this.onError}
         onPageChanged={this.onPageChanged}
