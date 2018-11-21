@@ -8,6 +8,7 @@ package com.rumax.reactnative.pdfviewer;
 
 import android.content.res.AssetManager;
 import android.util.Base64;
+import android.util.Log;
 import android.view.animation.AlphaAnimation;
 import android.view.animation.DecelerateInterpolator;
 
@@ -243,5 +244,10 @@ public class PDFView extends com.github.barteksc.pdfviewer.PDFView implements
     public void reload() {
         sourceChanged = true;
         render();
+    }
+
+    public void share() {
+        // TODO:
+        Log.d("PDF Viewer", "TODO: share PDF document");
     }
 }

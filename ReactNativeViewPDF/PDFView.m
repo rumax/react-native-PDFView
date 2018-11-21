@@ -30,6 +30,10 @@
     [self renderContent];
 }
 
+- (void)share {
+    NSLog(@"TODO: Share PDF document");
+}
+
 - (void)layoutSubviews {
     [super layoutSubviews];
     

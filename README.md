@@ -165,7 +165,7 @@ render() {
 }
 ```
 
-And trigger it by calling `reloadPDF`:
+And trigger it by calling `reload` method:
 
 ```js
 reloadPDF = async () => {
@@ -183,8 +183,39 @@ reloadPDF = async () => {
 }
 ```
 
-Or check the [demo project](https://github.com/rumax/react-native-PDFView/tree/master/demo) which also includes this functionality.
+#### `share`
 
+Allows to share the PDF document. To share the document you will need a `ref` to the component:
+
+```js
+...
+
+render() {
+  return (
+    <PDFView
+      ...
+      ref={(ref) => this._pdfRed = ref} />
+  );
+}
+```
+
+And trigger it by calling `share` method:
+
+```js
+sharePDF = async () => {
+  const pdfRef = this._pdfRef;
+
+  if (!pdfRef) {
+    return;
+  }
+
+  try {
+    await pdfRef.share();
+  } catch (err) {
+    console.err(err.message);
+  }
+}
+```
 
 ### Development tips
 

@@ -19,6 +19,7 @@ type StateType = {
   resource?: Resource,
   spinner: boolean,
   canReload?: boolean,
+  canSave?: boolean,
 };
 
 const PdfContent = (props) => {
@@ -97,12 +98,20 @@ export default class App extends React.Component<*, StateType> {
 
 
   resetData = () => {
-    this.setState({ resource: undefined, canReload: false });
+    this.setState({
+      resource: undefined,
+      canReload: false,
+      canSave: false,
+    });
   }
 
 
   handleLoad = () => {
-    this.setState({ spinner: false, canReload: true });
+    this.setState({
+      spinner: false,
+      canReload: true,
+      canSave: true,
+    });
     if (this._dropdownRef) {
       this._dropdownRef.alertWithType(
         'success',
@@ -114,7 +123,11 @@ export default class App extends React.Component<*, StateType> {
 
 
   handleError = (error: Error) => {
-    this.setState({ spinner: false, canReload: true });
+    this.setState({
+      spinner: false,
+      canReload: true,
+      canSave: false,
+    });
     if (this._dropdownRef) {
       this._dropdownRef.alertWithType(
         'error',
@@ -153,6 +166,27 @@ export default class App extends React.Component<*, StateType> {
   }
 
 
+  sharePDF = async () => {
+    const pdfRef = this._pdfRef;
+
+    if (!pdfRef) {
+      return;
+    }
+
+    try {
+      await pdfRef.share();
+    } catch (err) {
+      if (this._dropdownRef) {
+        this._dropdownRef.alertWithType(
+          'error',
+          'Document sharing failed',
+          `error message: ${err.message}`,
+        );
+      }
+    }
+  }
+
+
   onRef = (ref: ?PDFView) => {
     this._pdfRef = ref;
   }
@@ -183,13 +217,18 @@ export default class App extends React.Component<*, StateType> {
           <Button style={styles.tabButton} onPress={this.setFileAssets} title="Assets" />
           <Button style={styles.tabButton} onPress={this.resetData} title="Reset" />
         </View>
-        {state.canReload && (
+        {(state.canReload || state.canSave) && (
           <View style={styles.floatButtons}>
-            <Button
+            {state.canReload && <Button
               onPress={this.reloadPDF}
-              title="Reload PDF"
-              style={styles.reloadButton}
-            />
+              title="Reload"
+              style={styles.floatButton}
+            />}
+            {state.canSave && <Button
+              onPress={this.sharePDF}
+              title="Share"
+              style={styles.floatButton}
+            />}
           </View>
         )}
         <Spinner

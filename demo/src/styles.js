@@ -46,9 +46,11 @@ export default StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
   },
-  reloadButton: {
+  floatButton: {
     marginVertical: 2,
     padding: 8,
     backgroundColor: cLightBlue,
+    width: 80,
+    alignItems: 'center',
   },
 });

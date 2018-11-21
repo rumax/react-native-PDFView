@@ -3,6 +3,11 @@
 
 @implementation PDFViewManager
 
+enum {
+    COMMAND_RELOAD = 1,
+    COMMAND_SHARE = 2,
+};
+
 RCT_EXPORT_MODULE()
 
 RCT_CUSTOM_VIEW_PROPERTY(resource, NSString, PDFView) {
@@ -36,6 +41,18 @@ RCT_EXPORT_METHOD(reload: (nonnull NSNumber *)reactTag resolver: (RCTPromiseReso
             return;
         }
         [pdfView reload];
+        resolve(nil);
+    });
+}
+
+RCT_EXPORT_METHOD(share: (nonnull NSNumber *)reactTag resolver: (RCTPromiseResolveBlock)resolve rejecter: (RCTPromiseRejectBlock)reject) {
+    dispatch_async(dispatch_get_main_queue(), ^{
+        PDFView *pdfView = (PDFView *)[self.bridge.uiManager viewForReactTag: reactTag];
+        if (!pdfView) {
+            reject(ERROR_INVALID_REACT_TAG, [NSString stringWithFormat: @"ReactTag passed: %@", reactTag], nil);
+            return;
+        }
+        [pdfView share];
         resolve(nil);
     });
 }

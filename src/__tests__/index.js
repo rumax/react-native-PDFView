@@ -13,7 +13,7 @@ jest.mock('../RNPDFView', () => 'RNPDFView');
 jest.mock('react-native', () => ({
   findNodeHandle: jest.fn(),
   Platform: { select: jest.fn(platforms => platforms.ios) },
-  NativeModules: { PDFViewManager: { reload: jest.fn() } },
+  NativeModules: { PDFViewManager: { reload: jest.fn(), share: jest.fn() } },
 }));
 
 describe('PDFView', () => {
@@ -150,6 +150,66 @@ describe('PDFView', () => {
 
       try {
         await pdfRef.reload();
+      } catch (err) {
+        error = err;
+      }
+
+      expect(error).toMatchSnapshot();
+      done();
+    });
+  });
+
+  it('trigger share', (done) => {
+    let pdfRef: any;
+
+    findNodeHandle.mockImplementationOnce(() => 'handle for ref');
+    const tree = renderer.create(<PDFVIew
+      resource="base64"
+      resourceType="base64"
+      ref={(ref) => {
+        pdfRef = ref;
+      }}
+    />);
+
+    const component = tree.getInstance();
+    const ref = { _name: 'ref_to_the_viewer' };
+
+    // $FlowFixMe: ignore null
+    component._setViewRef(ref);
+
+    setTimeout(() => {
+      expect(pdfRef.share).toBeTruthy();
+      pdfRef.share();
+
+      expect(findNodeHandle).toHaveBeenCalledTimes(1);
+      expect(NativeModules.PDFViewManager.share).toHaveBeenCalledTimes(1);
+      done();
+    });
+  });
+
+  it('trigger share throws exception if findNodeHandle fails to find handle', (done) => {
+    let pdfRef: any;
+
+    const tree = renderer.create(<PDFVIew
+      resource="base64"
+      resourceType="base64"
+      ref={(ref) => {
+        pdfRef = ref;
+      }}
+    />);
+
+    const component = tree.getInstance();
+    const ref = { _name: 'ref_to_the_viewer' };
+
+    // $FlowFixMe: ignore null
+    component._setViewRef(ref);
+
+    setTimeout(async () => {
+      expect(pdfRef.share).toBeTruthy();
+      let error;
+
+      try {
+        await pdfRef.share();
       } catch (err) {
         error = err;
       }

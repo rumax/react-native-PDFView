@@ -118,11 +118,7 @@ class PDFView extends React.Component<Props, *> {
   }
 
 
-  /**
-   * A Function. Invoke it when PDF document needs to be reloaded. Use `ref` to
-   * access it. Throws an exception in case of errors
-   */
-  async reload() {
+  async _execCommand(cmd: 'share' | 'reload') {
     if (this._viewerRef) {
       const handle = findNodeHandle(this._viewerRef);
 
@@ -133,14 +129,32 @@ class PDFView extends React.Component<Props, *> {
       await Platform.select({
         android: async () => UIManager.dispatchViewManagerCommand(
           handle,
-          UIManager.PDFView.Commands.reload,
+          UIManager.PDFView.Commands[cmd],
           [],
         ),
-        ios: async () => NativeModules.PDFViewManager.reload(handle),
+        ios: async () => NativeModules.PDFViewManager[cmd](handle),
       })();
     } else {
       throw new Error('No ref to PDFView component, check that component is mounted');
     }
+  }
+
+
+  /**
+   * A Function. Invoke it when PDF document needs to be reloaded. Use `ref` to
+   * access it. Throws an exception in case of errors
+   */
+  async reload() {
+    return this._execCommand('reload');
+  }
+
+
+  /**
+   * A Function. Invoke it when PDF document needs to be shared. Use `ref` to
+   * access it. Throws an exception in case of errors
+   */
+  async share() {
+    return this._execCommand('share');
   }
 
 

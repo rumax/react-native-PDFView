@@ -54,3 +54,5 @@ exports[`PDFView renders with default url source type 1`] = `
 `;
 
 exports[`PDFView trigger reload throws exception if findNodeHandle fails to find handle 1`] = `[Error: Cannot find node handles]`;
+
+exports[`PDFView trigger share throws exception if findNodeHandle fails to find handle 1`] = `[Error: Cannot find node handles]`;

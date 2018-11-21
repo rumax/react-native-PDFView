@@ -25,6 +25,7 @@ public class PDFViewManager extends SimpleViewManager<PDFView> {
     private PDFView pdfView = null;
     private final static String EVENT_BUBBLED = "bubbled";
     private static final int COMMAND_RELOAD = 1;
+    private static final int COMMAND_SHARE = 2;
 
     @SuppressWarnings("unused")
     PDFViewManager(ReactApplicationContext context) {}
@@ -114,7 +115,9 @@ public class PDFViewManager extends SimpleViewManager<PDFView> {
 
     @Override
     public Map<String,Integer> getCommandsMap() {
-        return MapBuilder.of("reload", COMMAND_RELOAD);
+        return MapBuilder.of(
+                "reload", COMMAND_RELOAD,
+                "share", COMMAND_SHARE);
     }
 
     @Override
@@ -122,6 +125,10 @@ public class PDFViewManager extends SimpleViewManager<PDFView> {
         switch (command) {
             case COMMAND_RELOAD: {
                 view.reload();
+                break;
+            }
+            case COMMAND_SHARE: {
+                view.share();
                 break;
             }
             default: {

@@ -18,5 +18,6 @@
 - (BOOL)isBase64Resource;
 
 - (void)reload;
+- (void)share;
 
 @end
