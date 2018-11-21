@@ -27,12 +27,12 @@ class AsyncDownload extends AsyncTask<Void, Void, Void> {
     private static final String PROP_BODY = "body";
     private static final String PROP_HEADERS = "headers";
     private final ReadableMap urlProps;
-    private AsyncTaskCompleted listener;
+    private TaskCompleted listener;
     private File file;
     private String url;
     private IOException exception;
 
-    AsyncDownload(String url, File file, AsyncTaskCompleted listener, ReadableMap urlProps) {
+    AsyncDownload(String url, File file, ReadableMap urlProps, TaskCompleted listener) {
         this.listener = listener;
         this.file = file;
         this.url = url;
@@ -153,5 +153,10 @@ class AsyncDownload extends AsyncTask<Void, Void, Void> {
                 writer.flush();
             }
         }
+    }
+
+    public interface TaskCompleted {
+        void downloadTaskCompleted();
+        void downloadTaskFailed(IOException e);
     }
 }

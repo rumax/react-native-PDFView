@@ -23,26 +23,20 @@ import com.github.barteksc.pdfviewer.listener.OnPageChangeListener;
 
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 
 public class PDFView extends com.github.barteksc.pdfviewer.PDFView implements
         OnLoadCompleteListener,
         OnErrorListener,
-        OnPageChangeListener,
-        AsyncTaskCompleted {
+        OnPageChangeListener {
     public final static String EVENT_ON_LOAD = "onLoad";
     public final static String EVENT_ON_ERROR = "onError";
     public final static String EVENT_ON_PAGE_CHANGED = "onPageChanged";
-    private static final String E_NO_RESOURCE = "source is not defined";
-    private static final String E_NO_RESOURCE_TYPE = "resourceType is not defined";
-    private static final String E_INVALID_RESOURCE_TYPE = "resourceType is Invalid";
-    private static final String E_INVALID_BASE64 = "data is not in valid Base64 scheme";
     private ThemedReactContext context;
     private String resource;
     private File downloadedFile;
-    private AsyncDownload asyncDownload = null;
+    private AsyncDownload downloadTask = null;
     private String resourceType = null;
     private Configurator configurator = null;
     private boolean sourceChanged = true;
@@ -74,17 +68,6 @@ public class PDFView extends com.github.barteksc.pdfviewer.PDFView implements
     @Override
     public void onError(Throwable t) {
         reactNativeMessageEvent(EVENT_ON_ERROR, "error: " + t.getMessage());
-    }
-
-    @Override
-    public void downloadTaskFailed(IOException e) {
-        cleanDownloadedFile();
-        onError(e);
-    }
-
-    @Override
-    public void downloadTaskCompleted() {
-        renderFromFile(downloadedFile.getAbsolutePath());
     }
 
     @Override
@@ -145,7 +128,7 @@ public class PDFView extends com.github.barteksc.pdfviewer.PDFView implements
             configurator = this.fromBytes(bytes);
             setupAndLoad();
         } catch (IllegalArgumentException e) {
-            onError(new IOException(E_INVALID_BASE64));
+            onError(new IOException(Errors.E_INVALID_BASE64.getCode()));
         }
     }
 
@@ -158,20 +141,31 @@ public class PDFView extends com.github.barteksc.pdfviewer.PDFView implements
             return;
         }
 
-        asyncDownload = new AsyncDownload(resource, downloadedFile, this, urlProps);
-        asyncDownload.execute();
+        downloadTask = new AsyncDownload(resource, downloadedFile, urlProps, new AsyncDownload.TaskCompleted() {
+            @Override
+            public void downloadTaskCompleted() {
+                renderFromFile(downloadedFile.getAbsolutePath());
+            }
+
+            @Override
+            public void downloadTaskFailed(IOException e) {
+                cleanDownloadedFile();
+                onError(e);
+            }
+        });
+        downloadTask.execute();
     }
 
     public void render() {
         cleanup();
 
         if (resource == null) {
-            onError(new IOException(E_NO_RESOURCE));
+            onError(new IOException(Errors.E_NO_RESOURCE.getCode()));
             return;
         }
 
         if (resourceType == null) {
-            onError(new IOException(E_NO_RESOURCE_TYPE));
+            onError(new IOException(Errors.E_NO_RESOURCE_TYPE.getCode()));
             return;
         }
 
@@ -190,14 +184,14 @@ public class PDFView extends com.github.barteksc.pdfviewer.PDFView implements
                 renderFromFile(resource);
                 break;
             default:
-                onError(new IOException(E_INVALID_RESOURCE_TYPE + resourceType));
+                onError(new IOException(Errors.E_INVALID_RESOURCE_TYPE.getCode() + resourceType));
                 break;
         }
     }
 
     private void cleanup() {
-        if (asyncDownload != null) {
-            asyncDownload.cancel(true);
+        if (downloadTask != null) {
+            downloadTask.cancel(true);
         }
         cleanDownloadedFile();
     }
@@ -205,7 +199,7 @@ public class PDFView extends com.github.barteksc.pdfviewer.PDFView implements
     private void cleanDownloadedFile() {
         if (downloadedFile != null) {
             if (!downloadedFile.delete()) {
-                onError(new IOException("Cannot delete downloaded file"));
+                onError(new IOException(Errors.E_DELETE_FILE.getCode()));
             }
             downloadedFile = null;
         }
