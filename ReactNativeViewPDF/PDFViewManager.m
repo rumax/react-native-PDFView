@@ -28,13 +28,11 @@ RCT_CUSTOM_VIEW_PROPERTY(fadeInDuration, NSTimeInterval, PDFView) {
 RCT_EXPORT_VIEW_PROPERTY(onLoad, RCTDirectEventBlock)
 RCT_EXPORT_VIEW_PROPERTY(onError, RCTDirectEventBlock)
 
-RCT_EXPORT_METHOD(reload: (nonnull NSNumber *)reactTag resolver:(RCTPromiseResolveBlock)resolve rejecter:(RCTPromiseRejectBlock)reject) {
+RCT_EXPORT_METHOD(reload: (nonnull NSNumber *)reactTag resolver: (RCTPromiseResolveBlock)resolve rejecter: (RCTPromiseRejectBlock)reject) {
     dispatch_async(dispatch_get_main_queue(), ^{
-        PDFView *pdfView = (PDFView *)[self.bridge.uiManager viewForReactTag:reactTag];
+        PDFView *pdfView = (PDFView *)[self.bridge.uiManager viewForReactTag: reactTag];
         if (!pdfView) {
-            NSString* errorMessage = [NSString stringWithFormat:@"Invalid reactTag %@",
-                                 reactTag];
-            reject(@"error", errorMessage, nil);
+            reject(ERROR_INVALID_REACT_TAG, [NSString stringWithFormat: @"ReactTag passed: %@", reactTag], nil);
             return;
         }
         [pdfView reload];

@@ -26,7 +26,7 @@
     return self;
 }
 
-- (void) reload {
+- (void)reload {
     [self renderContent];
 }
 
@@ -40,12 +40,12 @@
         return;
     }
     
-    [webview setAlpha: 0.0];
-    
     [self renderContent];
 }
 
 - (void)renderContent {
+    [webview setAlpha: 0.0];
+    
     if (![self isRequiredInputSet]) {
         return;
     }
