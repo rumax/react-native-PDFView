@@ -17,4 +17,6 @@
 - (BOOL)isURLResource;
 - (BOOL)isBase64Resource;
 
+- (void)reload;
+
 @end

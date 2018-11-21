@@ -17,6 +17,7 @@ extern NSString * const URL_PROPS_BODY_KEY;
 extern NSString * const ERROR_UNSUPPORTED_TYPE;
 extern NSString * const ERROR_ONLOADING;
 extern NSString * const ERROR_REQUIRED_INPUT_NOT_SET;
+extern NSString * const ERROR_INVALID_REACT_TAG;
 
 // Error messages
 extern NSString * const ERROR_MESSAGE_KEY;

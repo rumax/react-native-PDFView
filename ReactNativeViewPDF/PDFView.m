@@ -26,6 +26,10 @@
     return self;
 }
 
+- (void)reload {
+    [self renderContent];
+}
+
 - (void)layoutSubviews {
     [super layoutSubviews];
     
@@ -36,17 +40,22 @@
         return;
     }
     
+    [self renderContent];
+}
+
+- (void)renderContent {
+    [webview setAlpha: 0.0];
+    
     if (![self isRequiredInputSet]) {
         return;
     }
+    
     [self updateInput];
     
     if (![self isSupportedResourceType]) {
         [self throwError: ERROR_UNSUPPORTED_TYPE withMessage: [NSString stringWithFormat: @"resourceType: %@ not recognized", _resourceType]];
         return;
     }
-    
-    [webview setAlpha: 0.0];
     
     if ([self isURLResource]) {
         [webview loadRequest: [self createRequest]];
@@ -151,7 +160,8 @@
 }
 
 - (BOOL)isNewInput {
-    return ![_resource isEqualToString: currentResource] || ![_resourceType isEqualToString: currentResourceType];
+    return ![_resource isEqualToString: currentResource] ||
+        ![_resourceType isEqualToString: currentResourceType];
 }
 
 - (BOOL)isSupportedResourceType {

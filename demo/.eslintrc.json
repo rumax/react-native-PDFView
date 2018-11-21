@@ -5,7 +5,10 @@
       "quote-props": 0,
       "react/destructuring-assignment": 0,
       "react/jsx-filename-extension": 0,
-      "react/jsx-one-expression-per-line": 0
+      "react/jsx-one-expression-per-line": 0,
+      "import/no-unresolved": [2, { "ignore": ["StyleSheet"] }],
+      "react/sort-comp": 0,
+      "no-underscore-dangle": 0
     },
     "globals": {
       "__DEV__": true

@@ -5,4 +5,5 @@ module.exports = {
     '!demo/**/*',
   ],
   modulePathIgnorePatterns: ['demo'],
+  transform: { '^.+\\.js$': './preprocessor.js' },
 };

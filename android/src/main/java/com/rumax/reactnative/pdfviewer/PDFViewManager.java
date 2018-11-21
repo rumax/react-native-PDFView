@@ -9,6 +9,7 @@ package com.rumax.reactnative.pdfviewer;
 import android.view.ViewGroup;
 
 import com.facebook.react.bridge.ReactApplicationContext;
+import com.facebook.react.bridge.ReadableArray;
 import com.facebook.react.bridge.ReadableMap;
 import com.facebook.react.common.MapBuilder;
 import com.facebook.react.uimanager.SimpleViewManager;
@@ -23,6 +24,7 @@ public class PDFViewManager extends SimpleViewManager<PDFView> {
     private static final String REACT_CLASS = "PDFView";
     private PDFView pdfView = null;
     private final static String EVENT_BUBBLED = "bubbled";
+    private static final int COMMAND_RELOAD = 1;
 
     @SuppressWarnings("unused")
     PDFViewManager(ReactApplicationContext context) {}
@@ -108,5 +110,23 @@ public class PDFViewManager extends SimpleViewManager<PDFView> {
     public void onAfterUpdateTransaction(PDFView pdfView) {
         super.onAfterUpdateTransaction(pdfView);
         pdfView.render();
+    }
+
+    @Override
+    public Map<String,Integer> getCommandsMap() {
+        return MapBuilder.of("reload", COMMAND_RELOAD);
+    }
+
+    @Override
+    public void receiveCommand(final PDFView view, int command, final ReadableArray args) {
+        switch (command) {
+            case COMMAND_RELOAD: {
+                view.reload();
+                break;
+            }
+            default: {
+                break;
+            }
+        }
     }
 }
