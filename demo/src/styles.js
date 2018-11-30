@@ -23,6 +23,7 @@ export default StyleSheet.create({
     borderWidth: 2,
     paddingVertical: 8,
   },
+  tabButtonActive: { backgroundColor: cBlue },
   pdfView: { flex: 1 },
   noContent: { flex: 1, alignItems: 'center', backgroundColor: cGreen },
   noContentText: {

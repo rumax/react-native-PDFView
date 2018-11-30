@@ -16,6 +16,7 @@ import Button from './Button';
 import pkg from '../package.json';
 
 type StateType = {
+  activeButton?: 'assets' | 'file' | 'url' | 'post' | 'base64' | 'error',
   resource?: Resource,
   spinner: boolean,
   canReload?: boolean,
@@ -67,37 +68,65 @@ export default class App extends React.Component<*, StateType> {
 
 
   setUrl = () => {
-    this.setState({ resource: resources.url, spinner: true });
+    this.setState({
+      activeButton: 'url',
+      resource: resources.url,
+      spinner: true,
+    });
   }
 
 
   setUrlPost = () => {
-    this.setState({ resource: resources.urlPost, spinner: true });
+    this.setState({
+      activeButton: 'post',
+      resource: resources.urlPost,
+      spinner: true,
+    });
   }
 
 
   setBase64 = () => {
-    this.setState({ resource: resources.base64, spinner: true });
+    this.setState({
+      activeButton: 'base64',
+      resource: resources.base64,
+      spinner: true,
+    });
   }
 
 
   setFile = () => {
-    this.setState({ resource: resources.file, spinner: true });
+    this.setState({
+      activeButton: 'file',
+      resource: resources.file,
+      spinner: true,
+    });
   }
 
 
   setFileAssets = () => {
-    this.setState({ resource: resources.fileAssets, spinner: true });
+    this.setState({
+      activeButton: 'assets',
+      resource: resources.fileAssets,
+      spinner: true,
+    });
   }
 
 
   dataWithError = () => {
-    this.setState({ resource: resources.invalid, spinner: true });
+    this.setState({
+      activeButton: 'error',
+      resource: resources.invalid,
+      spinner: true,
+    });
   }
 
 
   resetData = () => {
-    this.setState({ resource: undefined, canReload: false });
+    this.setState({
+      activeButton: undefined,
+      resource: undefined,
+      canReload: false,
+    });
   }
 
 
@@ -160,16 +189,17 @@ export default class App extends React.Component<*, StateType> {
 
   render() {
     const { state } = this;
+    const { activeButton } = state;
     this._renderStarted = (new Date()).getTime();
 
     return (
       <View style={styles.container}>
         <View style={styles.tabs}>
-          <Button style={styles.tabButton} onPress={this.setUrl} title="Url" />
-          <Button style={styles.tabButton} onPress={this.setBase64} title="Base64" />
-          <Button style={styles.tabButton} onPress={this.setFile} title="File" />
-          <Button style={styles.tabButton} onPress={this.dataWithError} title="Error" />
-          <Button style={styles.tabButton} onPress={this.resetData} title="Reset" />
+          <Button active={activeButton === 'url'} onPress={this.setUrl} title="Url" />
+          <Button active={activeButton === 'base64'} onPress={this.setBase64} title="Base64" />
+          <Button active={activeButton === 'file'} onPress={this.setFile} title="File" />
+          <Button active={activeButton === 'error'} onPress={this.dataWithError} title="Error" />
+          <Button active={activeButton === 'reset'} onPress={this.resetData} title="Reset" />
         </View>
         <PdfContent
           resource={state.resource}
@@ -179,9 +209,9 @@ export default class App extends React.Component<*, StateType> {
           onPageChanged={this.handlePageChanged}
         />
         <View style={styles.tabs}>
-          <Button style={styles.tabButton} onPress={this.setUrlPost} title="Url Post" />
-          <Button style={styles.tabButton} onPress={this.setFileAssets} title="Assets" />
-          <Button style={styles.tabButton} onPress={this.resetData} title="Reset" />
+          <Button active={activeButton === 'post'} onPress={this.setUrlPost} title="Url Post" />
+          <Button active={activeButton === 'assets'} onPress={this.setFileAssets} title="Assets" />
+          <Button active={activeButton === 'reset'} onPress={this.resetData} title="Reset" />
         </View>
         {state.canReload && (
           <View style={styles.floatButtons}>
