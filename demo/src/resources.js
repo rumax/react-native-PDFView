@@ -41,9 +41,13 @@ const resources: {[key: string]: Resource } = {
     resource: base64Data.document,
     resourceType: 'base64',
   },
-  invalid: {
+  invalidData: {
     resource: '**invalid base 64**',
     resourceType: 'base64',
+  },
+  invalidProtocol: {
+    resource: 'file:/test-pdf.pdf',
+    resourceType: 'url',
   },
 };
 
