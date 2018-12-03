@@ -22,6 +22,8 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 
 class AsyncDownload extends AsyncTask<Void, Void, Void> {
+    public static final String HTTP = "http";
+    public static final String HTTPS = "https";
     private static final int BUFF_SIZE = 8192;
     private static final String PROP_METHOD = "method";
     private static final String PROP_BODY = "body";
@@ -30,7 +32,7 @@ class AsyncDownload extends AsyncTask<Void, Void, Void> {
     private TaskCompleted listener;
     private File file;
     private String url;
-    private IOException exception;
+    private Exception exception;
 
     AsyncDownload(String url, File file, ReadableMap urlProps, TaskCompleted listener) {
         this.listener = listener;
@@ -52,10 +54,15 @@ class AsyncDownload extends AsyncTask<Void, Void, Void> {
 
         try {
             url = new URL(this.url);
+            String protocol = url.getProtocol();
+            if (!protocol.equalsIgnoreCase(HTTP) && !protocol.equalsIgnoreCase(HTTPS)) {
+                exception = new IOException("Protocol \"" + protocol + "\" is not supported");
+                return null;
+            }
             connection = (HttpURLConnection) url.openConnection();
             enrichWithUrlProps(connection);
             connection.connect();
-        } catch (IOException e) {
+        } catch (Exception e) {
             exception = e;
             return null;
         }
@@ -81,11 +88,7 @@ class AsyncDownload extends AsyncTask<Void, Void, Void> {
 
     @Override
     protected void onPostExecute(Void param) {
-        if (exception == null) {
-            listener.downloadTaskCompleted();
-        } else {
-            listener.downloadTaskFailed(exception);
-        }
+        listener.onComplete(exception);
     }
 
     private void enrichWithUrlProps(HttpURLConnection connection) throws IOException {
@@ -156,7 +159,6 @@ class AsyncDownload extends AsyncTask<Void, Void, Void> {
     }
 
     public interface TaskCompleted {
-        void downloadTaskCompleted();
-        void downloadTaskFailed(IOException e);
+        void onComplete(Exception ex);
     }
 }

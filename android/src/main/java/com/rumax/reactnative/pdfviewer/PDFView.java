@@ -27,9 +27,9 @@ import java.io.IOException;
 import java.io.InputStream;
 
 public class PDFView extends com.github.barteksc.pdfviewer.PDFView implements
-        OnLoadCompleteListener,
         OnErrorListener,
-        OnPageChangeListener {
+        OnPageChangeListener,
+        OnLoadCompleteListener {
     public final static String EVENT_ON_LOAD = "onLoad";
     public final static String EVENT_ON_ERROR = "onError";
     public final static String EVENT_ON_PAGE_CHANGED = "onPageChanged";
@@ -143,14 +143,13 @@ public class PDFView extends com.github.barteksc.pdfviewer.PDFView implements
 
         downloadTask = new AsyncDownload(resource, downloadedFile, urlProps, new AsyncDownload.TaskCompleted() {
             @Override
-            public void downloadTaskCompleted() {
-                renderFromFile(downloadedFile.getAbsolutePath());
-            }
-
-            @Override
-            public void downloadTaskFailed(IOException e) {
-                cleanDownloadedFile();
-                onError(e);
+            public void onComplete(Exception ex) {
+                if (ex == null) {
+                    renderFromFile(downloadedFile.getAbsolutePath());
+                } else {
+                    cleanDownloadedFile();
+                    onError(ex);
+                }
             }
         });
         downloadTask.execute();

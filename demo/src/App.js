@@ -16,7 +16,7 @@ import Button from './Button';
 import pkg from '../package.json';
 
 type StateType = {
-  activeButton?: 'assets' | 'file' | 'url' | 'post' | 'base64' | 'error',
+  activeButton?: 'assets' | 'file' | 'url' | 'post' | 'base64' | 'errorData' | 'errorProtocol',
   resource?: Resource,
   spinner: boolean,
   canReload?: boolean,
@@ -114,8 +114,17 @@ export default class App extends React.Component<*, StateType> {
 
   dataWithError = () => {
     this.setState({
-      activeButton: 'error',
-      resource: resources.invalid,
+      activeButton: 'errorData',
+      resource: resources.invalidData,
+      spinner: true,
+    });
+  }
+
+
+  protocolWithError = () => {
+    this.setState({
+      activeButton: 'errorProtocol',
+      resource: resources.invalidProtocol,
       spinner: true,
     });
   }
@@ -198,8 +207,8 @@ export default class App extends React.Component<*, StateType> {
           <Button active={activeButton === 'url'} onPress={this.setUrl} title="Url" />
           <Button active={activeButton === 'base64'} onPress={this.setBase64} title="Base64" />
           <Button active={activeButton === 'file'} onPress={this.setFile} title="File" />
-          <Button active={activeButton === 'error'} onPress={this.dataWithError} title="Error" />
-          <Button active={activeButton === 'reset'} onPress={this.resetData} title="Reset" />
+          <Button active={activeButton === 'assets'} onPress={this.setFileAssets} title="Assets" />
+          <Button active={activeButton === 'post'} onPress={this.setUrlPost} title="Url Post" />
         </View>
         <PdfContent
           resource={state.resource}
@@ -209,8 +218,8 @@ export default class App extends React.Component<*, StateType> {
           onPageChanged={this.handlePageChanged}
         />
         <View style={styles.tabs}>
-          <Button active={activeButton === 'post'} onPress={this.setUrlPost} title="Url Post" />
-          <Button active={activeButton === 'assets'} onPress={this.setFileAssets} title="Assets" />
+          <Button active={activeButton === 'errorData'} onPress={this.dataWithError} title="Error data" />
+          <Button active={activeButton === 'errorProtocol'} onPress={this.protocolWithError} title="Error protocol" />
           <Button active={activeButton === 'reset'} onPress={this.resetData} title="Reset" />
         </View>
         {state.canReload && (
