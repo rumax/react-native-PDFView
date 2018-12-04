@@ -85,10 +85,9 @@
     NSURL *URL = [NSURL URLWithString: _resource];
     NSString *scheme = URL.scheme;
 
-    if ([HTTP caseInsensitiveCompare:scheme] != NSOrderedSame &&
-        [HTTPS caseInsensitiveCompare:scheme] != NSOrderedSame) {
-        NSString *errorMessage = [NSString stringWithFormat:@"Protocol %@ is not supported", scheme];
-        [self throwError: errorMessage withMessage: errorMessage];
+    if ([HTTP caseInsensitiveCompare: scheme] != NSOrderedSame &&
+        [HTTPS caseInsensitiveCompare: scheme] != NSOrderedSame) {
+        [self throwError: ERROR_ONLOADING withMessage: [NSString stringWithFormat:@"Protocol %@ is not supported", scheme]];
     }
 
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL: URL
@@ -156,7 +155,7 @@
     if(![[NSFileManager defaultManager] fileExistsAtPath: filePath]) {
         return nil;
     }
-    return [NSURL fileURLWithPath:filePath];
+    return [NSURL fileURLWithPath: filePath];
 }
 
 - (BOOL)isRequiredInputSet {

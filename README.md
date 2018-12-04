@@ -102,7 +102,7 @@ import PDFView from 'react-native-view-pdf';
 // import PDFView from 'react-native-view-pdf/lib/index';
 
 const resources = {
-  file: Platform.OS === 'ios' ? 'test-pdf.pdf' : '/sdcard/Download/test-pdf.pdf',
+  file: Platform.OS === 'ios' ? 'downloadedDocument.pdf' : '/sdcard/Download/downloadedDocument.pdf',
   url: 'https://www.ets.org/Media/Tests/TOEFL/pdf/SampleQuestions.pdf',
   base64: 'JVBERi0xLjMKJcfs...',
 };
@@ -194,7 +194,12 @@ section from react native or [Request App Permissions ](https://developer.androi
 documentation. [Demo](https://github.com/rumax/react-native-PDFView/tree/master/demo)
 project provides an example how to implement it using Java, check the [MainActivity.java](https://github.com/rumax/react-native-PDFView/blob/b84913df174d3b638d2d820a66ed4e6605d56860/demo/android/app/src/main/java/com/demo/MainActivity.java#L12) and [AndroidManifest.xml](https://github.com/rumax/react-native-PDFView/blob/b84913df174d3b638d2d820a66ed4e6605d56860/demo/android/app/src/main/AndroidManifest.xml#L6) files.
 
-Before trying `file` type in [demo project](https://github.com/rumax/react-native-PDFView/tree/master/demo), open `sdcard/Download` folder in `Device File Explorer` and store the `test-pdf.pdf` document that you want to render (you can find an example in demo/ios/test-pdf.pdf).
+Before trying `file` type in [demo project](https://github.com/rumax/react-native-PDFView/tree/master/demo), open `sdcard/Download` folder in `Device File Explorer` and store some `downloadedDocument.pdf` document that you want to render.
+
+On iOS, using resource `file` will make the component lookup in two places. First, it will attempt to locate the file in the Bundle. If it cannot locate it there, it will search the Documents directory. For more information on the iOS filesystem access at runtime of an application please refer [the official documentation](https://developer.apple.com/library/archive/documentation/FileManagement/Conceptual/FileSystemProgrammingGuide/FileSystemOverview/FileSystemOverview.html).
+Note here that the resource will always need to be a relative path from the Documents directory for example and also do NOT put the scheme in the path (so no `file://.....`).
+
+You can find an example of both usage of the Bundle and Documents directory for rendering a pdf from `file` on iOS in the demo project.
 
 In [demo](https://github.com/rumax/react-native-PDFView/tree/master/demo) project you can also run the simple server to serve PDF file. To do this navigate to `demo/utils/` and start the server
 `node server.js`. (*Do not forget to set proper IP adress of the server
