@@ -29,7 +29,18 @@
   rootViewController.view = rootView;
   self.window.rootViewController = rootViewController;
   [self.window makeKeyAndVisible];
+  [self writePDFToDocumentsDir];
   return YES;
+}
+
+-(void)writePDFToDocumentsDir
+{
+  NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+  NSString *documentDirectory = [paths objectAtIndex: 0];
+  NSString *finalPath = [documentDirectory stringByAppendingPathComponent: [NSString stringWithFormat: @"downloadedDocument.pdf"]];
+  
+  NSData *datapdf = [NSData dataWithContentsOfURL: [NSURL fileURLWithPath: [[NSBundle mainBundle] pathForResource: @"test-pdf" ofType: @"pdf"]]];
+  [datapdf writeToFile: finalPath atomically: YES];
 }
 
 @end
