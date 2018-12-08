@@ -2,6 +2,7 @@
 /* eslint-disable react/prop-types, no-console */
 import React from 'react';
 import {
+  Alert,
   Text,
   View,
 } from 'react-native';
@@ -20,9 +21,20 @@ type StateType = {
   resource?: Resource,
   spinner: boolean,
   canReload?: boolean,
+  multiple?: boolean,
 };
 
-const PdfContent = (props) => {
+const HorisontalLine = () => (<View style={styles.horizontalLine}/>);
+
+type PdfContentType = {
+  resource?: Resource,
+  onRef?: Function,
+  onLoad? : Function,
+  onError?: Function,
+  onPageChanged?: Function,
+};
+
+const PdfContent = (props: PdfContentType) => {
   if (props.resource) {
     return (
       <PDFView
@@ -139,6 +151,28 @@ export default class App extends React.Component<*, StateType> {
   }
 
 
+  multiplePDFs = () => {
+    const { state } = this;
+
+    if (state.multiple) {
+      this.setState({ multiple: false });
+      return;
+    }
+
+    Alert.alert(
+      'Duplicate PDF',
+      'The PDF will be duplicated',
+      [
+        { text: 'Cancel', onPress: () => {}, style: 'cancel' },
+        { text: 'OK', onPress: () => {
+          this.setState({ multiple: true });
+        }},
+      ],
+      { cancelable: false }
+    );
+  }
+
+
   handleLoad = () => {
     this.setState({ spinner: false, canReload: true });
     if (this._dropdownRef) {
@@ -217,10 +251,13 @@ export default class App extends React.Component<*, StateType> {
           onRef={this.onRef}
           onPageChanged={this.handlePageChanged}
         />
+        {state.multiple && state.resource && <HorisontalLine />}
+        {state.multiple && state.resource && <PdfContent resource={state.resource} />}
         <View style={styles.tabs}>
           <Button active={activeButton === 'errorData'} onPress={this.dataWithError} title="Error data" />
           <Button active={activeButton === 'errorProtocol'} onPress={this.protocolWithError} title="Error protocol" />
           <Button active={activeButton === 'reset'} onPress={this.resetData} title="Reset" />
+          <Button onPress={this.multiplePDFs} title="Multiple" />
         </View>
         {state.canReload && (
           <View style={styles.floatButtons}>

@@ -52,4 +52,5 @@ export default StyleSheet.create({
     padding: 8,
     backgroundColor: cLightBlue,
   },
+  horizontalLine: { height: 5, backgroundColor: cBlue }
 });
