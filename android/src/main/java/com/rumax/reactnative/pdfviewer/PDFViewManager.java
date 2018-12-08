@@ -6,8 +6,6 @@ package com.rumax.reactnative.pdfviewer;
  * This source code is licensed under the MIT license
  */
 
-import android.view.ViewGroup;
-
 import com.facebook.react.bridge.ReactApplicationContext;
 import com.facebook.react.bridge.ReadableArray;
 import com.facebook.react.bridge.ReadableMap;
@@ -22,7 +20,6 @@ import javax.annotation.Nullable;
 
 public class PDFViewManager extends SimpleViewManager<PDFView> {
     private static final String REACT_CLASS = "PDFView";
-    private PDFView pdfView = null;
     private final static String EVENT_BUBBLED = "bubbled";
     private static final int COMMAND_RELOAD = 1;
 
@@ -63,23 +60,12 @@ public class PDFViewManager extends SimpleViewManager<PDFView> {
 
     @Override
     public PDFView createViewInstance(ThemedReactContext context) {
-        if (pdfView != null) {
-            ViewGroup parentView = (ViewGroup) pdfView.getParent();
-            if (parentView != null) {
-                pdfView.onDrop();
-                parentView.removeView(pdfView);
-            }
-        }
-
-        pdfView = new PDFView(context);
-
-        return pdfView;
+        return new PDFView(context);
     }
 
     @Override
     public void onDropViewInstance(PDFView pdfView) {
         pdfView.onDrop();
-        this.pdfView = null;
     }
 
     @ReactProp(name = "resource")
