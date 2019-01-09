@@ -6,6 +6,7 @@
 [![CircleCI](https://circleci.com/gh/rumax/react-native-PDFView.svg?style=shield)](https://circleci.com/gh/rumax/react-native-PDFView)
 [![codecov](https://codecov.io/gh/rumax/react-native-PDFView/branch/master/graph/badge.svg)](https://codecov.io/gh/rumax/react-native-PDFView)
 [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=flat-square)](http://makeapullrequest.com)
+[![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2Frumax%2Freact-native-PDFView.svg?type=shield)](https://app.fossa.io/projects/git%2Bgithub.com%2Frumax%2Freact-native-PDFView?ref=badge_shield)
 
 Library for displaying [PDF documents](https://acrobat.adobe.com/us/en/acrobat/about-adobe-pdf.html) in [react-native](http://facebook.github.io/react-native/)
 
@@ -208,6 +209,9 @@ in `demo/App.js`*)
 ## License
 
 [MIT](https://opensource.org/licenses/MIT)
+
+
+[![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2Frumax%2Freact-native-PDFView.svg?type=large)](https://app.fossa.io/projects/git%2Bgithub.com%2Frumax%2Freact-native-PDFView?ref=badge_large)
 
 ## Authors
 - [sanderfrenken](https://github.com/sanderfrenken)
