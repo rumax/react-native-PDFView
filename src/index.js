@@ -69,7 +69,7 @@ type Props = {
    *   - "bundle"
    *   - "documentsDirectory"
    */
-  fileFrom?: 'bundle' | 'documentsDirectory',
+  fileFrom?: 'bundle' | 'documentsDirectory' | 'appGroup',
 
   urlProps?: UrlProps,
 

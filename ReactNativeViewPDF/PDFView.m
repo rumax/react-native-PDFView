@@ -83,6 +83,8 @@
     NSURL *url;
     if ([currentFileFrom isEqualToString:@"bundle"]) {
         url = [self fileFromBundleURL];
+    } else if ([currentFileFrom hasPrefix:@"appGroup:"]) {
+        url = [self fileFromAppGroupURL];
     } else if ([currentFileFrom isEqualToString:@"documentsDirectory"]) {
         url = [self fileFromDocumentsDirectoryURL];
     } else { // default is search
@@ -170,6 +172,18 @@
     if(![[NSFileManager defaultManager] fileExistsAtPath: filePath]) {
         return nil;
     }
+    return [NSURL fileURLWithPath: filePath];
+}
+
+- (NSURL *)fileFromAppGroupURL {
+    NSString *groupIdentifier = [currentFileFrom componentsSeparatedByString: @":"][1];
+    NSFileManager *fileManager = [NSFileManager defaultManager];
+    NSURL *groupPath = [fileManager containerURLForSecurityApplicationGroupIdentifier:groupIdentifier];
+    if (groupPath == nil) {
+        return nil;
+    }
+    NSString *filePath = [NSString stringWithFormat:@"%@/%@", groupPath.path, currentResource];
+
     return [NSURL fileURLWithPath: filePath];
 }
 
