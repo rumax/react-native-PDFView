@@ -5,6 +5,9 @@ __tests__
 .eslintrc.json
 .flowconfig
 .github
+.babelrc
+.eslintignore
+preprocessor.js
 **/__tests__/**/*
 build
 CONTRIBUTING.md
