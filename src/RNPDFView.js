@@ -38,6 +38,13 @@ const componentInterface = {
     resourceType: PropTypes.string,
 
     /**
+     * iOS file location. Can be one of:
+     *   - "bundle"
+     *   - "documentsDirectory"
+     */
+    fileFrom: PropTypes.string,
+
+    /**
      * Extended props for "url" resource type
      */
     urlProps: {

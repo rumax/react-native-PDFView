@@ -13,6 +13,10 @@ RCT_CUSTOM_VIEW_PROPERTY(resourceType, NSString, PDFView) {
     [view setResourceType: json ? [RCTConvert NSString: json] : nil];
 }
 
+RCT_CUSTOM_VIEW_PROPERTY(fileFrom, NSString, PDFView) {
+    [view setFileFrom: json ? [RCTConvert NSString: json] : nil];
+}
+
 RCT_CUSTOM_VIEW_PROPERTY(textEncoding, NSString, PDFView) {
     [view setTextEncoding: json ? [RCTConvert NSString: json] : UTF_8];
 }
