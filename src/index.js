@@ -64,6 +64,13 @@ type Props = {
    */
   resourceType: 'url' | 'base64' | 'file',
 
+  /**
+   * iOS file location. Can be one of:
+   *   - "bundle"
+   *   - "documentsDirectory"
+   */
+  fileFrom?: 'bundle' | 'documentsDirectory',
+
   urlProps?: UrlProps,
 
   /**

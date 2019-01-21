@@ -5,6 +5,7 @@
     WKWebView *webview;
     NSString *currentResource;
     NSString *currentResourceType;
+    NSString *currentFileFrom;
     bool didLoadOnce; // Needed as on init, didSetProps is called as well, leading to layoutSubviews being called twice
 }
 
@@ -60,16 +61,13 @@
     if ([self isURLResource]) {
         [webview loadRequest: [self createRequest]];
     } else if ([self isFileResource]) {
-        NSURL *targetURL = [self fileFromBundleURL];
-        if (targetURL == nil) {
-            targetURL = [self fileFromDocumentsDirectoryURL];
-        }
-        if (targetURL == nil) {
+        NSURL *fileURL = [self getFileURL];
+        if (fileURL == nil) {
             [self throwError: ERROR_ONLOADING withMessage: ERROR_MESSAGE_FILENOTFOUND];
             return;
         }
 
-        [webview loadFileURL: targetURL allowingReadAccessToURL: targetURL];
+        [webview loadFileURL: fileURL allowingReadAccessToURL: fileURL];
     } else {
         NSString *characterEncodingName = [_textEncoding isEqual: UTF_16] ? UTF_16 : UTF_8;
         NSData *base64Decoded = [[NSData alloc] initWithBase64EncodedString: _resource options: NSDataBase64DecodingIgnoreUnknownCharacters];
@@ -79,6 +77,22 @@
             [self throwError: ERROR_ONLOADING withMessage: ERROR_MESSAGE_BASE64_NIL];
         }
     }
+}
+
+- (NSURL *)getFileURL {
+    NSURL *url;
+    if ([currentFileFrom isEqualToString:@"bundle"]) {
+        url = [self fileFromBundleURL];
+    } else if ([currentFileFrom isEqualToString:@"documentsDirectory"]) {
+        url = [self fileFromDocumentsDirectoryURL];
+    } else { // default is search
+        url = [self fileFromBundleURL];
+        if (url == nil) {
+            url = [self fileFromDocumentsDirectoryURL];
+        }
+    }
+
+    return url;
 }
 
 - (NSMutableURLRequest *)createRequest {
@@ -121,6 +135,7 @@
 - (void)updateInput {
     currentResourceType = _resourceType;
     currentResource = _resource;
+    currentFileFrom = _fileFrom;
 }
 
 - (void)webView:(WKWebView *)webView didFinishNavigation:(WKNavigation *)navigation {
@@ -169,7 +184,8 @@
 
 - (BOOL)isNewInput {
     return ![_resource isEqualToString: currentResource] ||
-        ![_resourceType isEqualToString: currentResourceType];
+        ![_resourceType isEqualToString: currentResourceType] ||
+        ![_resourceType isEqualToString: currentFileFrom];
 }
 
 - (BOOL)isSupportedResourceType {

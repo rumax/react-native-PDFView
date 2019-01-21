@@ -10,7 +10,7 @@
     "react-native": "0.57.7",
     "react-native-dropdownalert": "^3.7.0",
     "react-native-loading-spinner-overlay": "^1.0.1",
-    "react-native-view-pdf": "^0.6.3"
+    "react-native-view-pdf": "^0.6.4"
   },
   "devDependencies": {
     "babel-jest": "23.6.0",

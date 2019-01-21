@@ -6,6 +6,7 @@
 
 @property (nonatomic, copy) NSString *resource;
 @property (nonatomic, copy) NSString *resourceType;
+@property (nonatomic, copy) NSString *fileFrom;
 @property (nonatomic, copy) NSString *textEncoding;
 @property (nonatomic, copy) NSDictionary *urlProps;
 @property (nonatomic) NSTimeInterval fadeInDuration;

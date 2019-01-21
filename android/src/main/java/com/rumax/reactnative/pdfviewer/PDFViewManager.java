@@ -78,6 +78,11 @@ public class PDFViewManager extends SimpleViewManager<PDFView> {
         pdfView.setResourceType(resourceType);
     }
 
+    @ReactProp(name = "fileFrom")
+    public void setFileFrom(PDFView pdfView, String fileFrom) {
+        // iOS specific, ignoring
+    }
+
     @ReactProp(name = "textEncoding")
     public void setTextEncoding(PDFView pdfView, String textEncoding) {
     }
