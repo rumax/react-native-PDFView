@@ -50,6 +50,13 @@ public class PDFViewManager extends SimpleViewManager<PDFView> {
                                 MapBuilder.of(EVENT_BUBBLED, PDFView.EVENT_ON_PAGE_CHANGED)
                         )
                 )
+                .put(
+                        PDFView.EVENT_ON_SCROLLED,
+                        MapBuilder.of(
+                                "phasedRegistrationNames",
+                                MapBuilder.of(EVENT_BUBBLED, PDFView.EVENT_ON_SCROLLED)
+                        )
+                )
                 .build();
     }
 
