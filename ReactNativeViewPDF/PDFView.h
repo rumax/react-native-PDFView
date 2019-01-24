@@ -2,7 +2,7 @@
 #import "PDFConstants.h"
 #import <WebKit/WebKit.h>
 
-@interface PDFView : RCTView <WKNavigationDelegate>
+@interface PDFView : RCTView <WKNavigationDelegate, UIScrollViewDelegate>
 
 @property (nonatomic, copy) NSString *resource;
 @property (nonatomic, copy) NSString *resourceType;
@@ -12,6 +12,7 @@
 @property (nonatomic) NSTimeInterval fadeInDuration;
 @property (nonatomic, copy) RCTDirectEventBlock onLoad;
 @property (nonatomic, copy) RCTDirectEventBlock onError;
+@property (nonatomic, copy) RCTDirectEventBlock onScrolled;
 
 - (BOOL)isRequiredInputSet;
 - (BOOL)isSupportedResourceType;

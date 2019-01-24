@@ -32,6 +32,7 @@ type PdfContentType = {
   onLoad? : Function,
   onError?: Function,
   onPageChanged?: Function,
+  onScrolled?: Function,
 };
 
 const PdfContent = (props: PdfContentType) => {
@@ -44,6 +45,7 @@ const PdfContent = (props: PdfContentType) => {
         {...props.resource}
         onLoad={props.onLoad}
         onError={props.onError}
+        onScrolled={props.onScrolled}
         onPageChanged={props.onPageChanged}
       />
     );
@@ -201,6 +203,10 @@ export default class App extends React.Component<*, StateType> {
     console.log(`page ${page + 1} out of ${pageCount}`);
   }
 
+  handleOnScrolled = (offset: number) => {
+    console.log(`offset is: ${offset}`);
+  }
+
 
   reloadPDF = async () => {
     const pdfRef = this._pdfRef;
@@ -250,6 +256,7 @@ export default class App extends React.Component<*, StateType> {
           onError={this.handleError}
           onRef={this.onRef}
           onPageChanged={this.handlePageChanged}
+          onScrolled={this.handleOnScrolled}
         />
         {state.multiple && state.resource && <HorisontalLine />}
         {state.multiple && state.resource && <PdfContent resource={state.resource} />}

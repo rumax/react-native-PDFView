@@ -140,13 +140,14 @@ Name | Android | iOS | Description
 ---- | ------- | --- | -----------
 resource | ✓ | ✓ | A resource to render. It's possible to render PDF from `file`, `url` or `base64`
 resourceType | ✓ | ✓ | Should correspond to resource and can be: `file`, `url` or `base64`
-fileFrom | ✗ | ✓ | *iOS ONLY:* In case if `resourceType` is set to `file`, there are different way to search for it on [iOS file system](https://developer.apple.com/library/archive/documentation/FileManagement/Conceptual/FileSystemProgrammingGuide/FileSystemOverview/FileSystemOverview.html). Currently `Documents` and `app’s bundle` are supported. 
+fileFrom | ✗ | ✓ | *iOS ONLY:* In case if `resourceType` is set to `file`, there are different way to search for it on [iOS file system](https://developer.apple.com/library/archive/documentation/FileManagement/Conceptual/FileSystemProgrammingGuide/FileSystemOverview/FileSystemOverview.html). Currently `Documents` and `app’s bundle` are supported.
 onLoad | ✓ | ✓ | Callback that is triggered when loading is completed
 onError | ✓ | ✓ | Callback that is triggered when loading has failed. And error is provided as a function parameter
 style | ✓ | ✓ | A [style](https://facebook.github.io/react-native/docs/style)
 fadeInDuration | ✓ | ✓ | Fade in duration (in ms, defaults to 0.0) to smoothly fade the webview into view when pdf loading is completed
 urlProps | ✓ | ✓ | Extended properties for `url` type that allows to specify HTTP Method, HTTP headers and HTTP body
 onPageChanged | ✓ | ✗ | Callback that is invoked when page is changed. Provides `active page` and `total pages` information
+onScrolled | ✓ | ✓ | Callback that is invoked when PDF is scrolled. Provides `offset` value in a range between 0 and 1. *Currently only 0 and 1 are supported*.
 
 ### Methods
 

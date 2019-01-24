@@ -48,6 +48,15 @@ type Props = {
   onPageChanged: (page: number, pageCount: number) => void,
 
   /**
+   * A Function. Invoked when page is sscrolled.
+   * @param {Number} offset - Offet. Currrently only 1 and 0 are supported.
+   *                          where:
+   *                            0 - begining of the document
+   *                            1 - end of the document
+   */
+  onScrolled: (offset: number) => void,
+
+  /**
    * A String value. Defines the resource to render. Can be one of:
    *   - url. Example: http://www.pdf995.com/samples/pdf.pdf
    *   - base64. Example: 'JVBERi0xLjcKCjEgMCBvYmogICUgZW50...'
@@ -96,6 +105,7 @@ class PDFView extends React.Component<Props, *> {
     onError: () => {},
     onLoad: () => {},
     onPageChanged: () => {},
+    onScrolled: () => {},
     fadeInDuration: 0.0,
     resourceType: 'url',
     textEncoding: 'utf-8',
@@ -107,6 +117,7 @@ class PDFView extends React.Component<Props, *> {
     super(props);
     this.onError = this.onError.bind(this);
     this.onPageChanged = this.onPageChanged.bind(this);
+    this.onScrolled = this.onScrolled.bind(this);
   }
 
 
@@ -122,6 +133,14 @@ class PDFView extends React.Component<Props, *> {
     const { nativeEvent = {} } = event || {};
     const { page = -1, pageCount = -1 } = nativeEvent;
     this.props.onPageChanged(page, pageCount);
+  }
+
+
+  onScrolled: (event: any) => void;
+  onScrolled(event: any) {
+    const { nativeEvent = {} } = event || {};
+    const { offset = -1 } = nativeEvent;
+    this.props.onScrolled(offset);
   }
 
 
@@ -160,6 +179,7 @@ class PDFView extends React.Component<Props, *> {
     const {
       onError,
       onPageChanged,
+      onScrolled,
       ...remainingProps
     } = this.props;
     return (
@@ -168,6 +188,7 @@ class PDFView extends React.Component<Props, *> {
         {...remainingProps}
         onError={this.onError}
         onPageChanged={this.onPageChanged}
+        onScrolled={this.onScrolled}
       />
     );
   }

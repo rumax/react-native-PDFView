@@ -7,6 +7,8 @@
     NSString *currentResourceType;
     NSString *currentFileFrom;
     bool didLoadOnce; // Needed as on init, didSetProps is called as well, leading to layoutSubviews being called twice
+    bool ignoreScrollEvent;
+    float lastOffset;
 }
 
 - (void)didSetProps:(NSArray<NSString *> *)changedProps {
@@ -17,14 +19,39 @@
 
 - (instancetype)init {
     self = [super init];
+    lastOffset = 0;
+    ignoreScrollEvent = true;
     if ( self ) {
         [self setBackgroundColor: [UIColor clearColor]];
 
         webview = [[WKWebView alloc] initWithFrame: self.frame];
         [webview setNavigationDelegate: self];
+        [webview.scrollView setDelegate: self];
         [self addSubview: webview];
     }
     return self;
+}
+
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView {
+    if (ignoreScrollEvent) {
+        return;
+    }
+    // currently only offset 0 and 1 are supported
+    if (lastOffset != 0 && scrollView.contentOffset.y <= 0.0){
+        lastOffset = 0;
+        [self reportOnScroll];
+    } else if (lastOffset != 1 && scrollView.contentOffset.y >=
+              (scrollView.contentSize.height - scrollView.frame.size.height)){
+        lastOffset = 1;
+        [self reportOnScroll];
+    }
+
+}
+
+- (void)reportOnScroll {
+    if (_onScrolled) {
+        _onScrolled(@{ @"offset": [NSNumber numberWithFloat:(float) lastOffset] });
+    }
 }
 
 - (void)reload {
@@ -57,6 +84,8 @@
         [self throwError: ERROR_UNSUPPORTED_TYPE withMessage: [NSString stringWithFormat: @"resourceType: %@ not recognized", _resourceType]];
         return;
     }
+
+    ignoreScrollEvent = true;
 
     if ([self isURLResource]) {
         [webview loadRequest: [self createRequest]];
@@ -146,6 +175,8 @@
     if (_onLoad) {
         _onLoad(nil);
     }
+
+    ignoreScrollEvent = false;
 }
 
 - (void)webView:(WKWebView *)webView didFailNavigation:(WKNavigation *)navigation withError:(NSError *)error {

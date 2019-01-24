@@ -20,6 +20,7 @@ import com.facebook.react.uimanager.events.RCTEventEmitter;
 import com.github.barteksc.pdfviewer.listener.OnErrorListener;
 import com.github.barteksc.pdfviewer.listener.OnLoadCompleteListener;
 import com.github.barteksc.pdfviewer.listener.OnPageChangeListener;
+import com.github.barteksc.pdfviewer.listener.OnPageScrollListener;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -29,10 +30,12 @@ import java.io.InputStream;
 public class PDFView extends com.github.barteksc.pdfviewer.PDFView implements
         OnErrorListener,
         OnPageChangeListener,
+        OnPageScrollListener,
         OnLoadCompleteListener {
     public final static String EVENT_ON_LOAD = "onLoad";
     public final static String EVENT_ON_ERROR = "onError";
     public final static String EVENT_ON_PAGE_CHANGED = "onPageChanged";
+    public final static String EVENT_ON_SCROLLED = "onScrolled";
     private ThemedReactContext context;
     private String resource;
     private File downloadedFile;
@@ -42,6 +45,7 @@ public class PDFView extends com.github.barteksc.pdfviewer.PDFView implements
     private boolean sourceChanged = true;
     private ReadableMap urlProps;
     private int fadeInDuration = 0;
+    private float lastPositionOffset = 0;
 
     public PDFView(ThemedReactContext context) {
         super(context, null);
@@ -78,6 +82,17 @@ public class PDFView extends com.github.barteksc.pdfviewer.PDFView implements
         reactNativeEvent(EVENT_ON_PAGE_CHANGED, event);
     }
 
+    @Override
+    public void onPageScrolled(int page, float positionOffset) {
+        if (lastPositionOffset != positionOffset && (positionOffset == 0 || positionOffset == 1)) {
+            // Only 0 and 1 are currently supported
+            lastPositionOffset = positionOffset;
+            WritableMap event = Arguments.createMap();
+            event.putDouble("offset", positionOffset);
+            reactNativeEvent(EVENT_ON_SCROLLED, event);
+        }
+    }
+
     private void reactNativeMessageEvent(String eventName, String message) {
         WritableMap event = Arguments.createMap();
         event.putString("message", message);
@@ -92,6 +107,7 @@ public class PDFView extends com.github.barteksc.pdfviewer.PDFView implements
     }
 
     private void setupAndLoad() {
+        lastPositionOffset = 0;
         this.setAlpha(0);
         configurator
                 .defaultPage(0)
@@ -99,6 +115,7 @@ public class PDFView extends com.github.barteksc.pdfviewer.PDFView implements
                 .onLoad(this)
                 .onError(this)
                 .onPageChange(this)
+                .onPageScroll(this)
                 .spacing(10)
                 .load();
         sourceChanged = false;
