@@ -6,12 +6,12 @@
 
 ### Git Commit Messages
 
-* Use the present tense ("Add feature" not "Added feature")
-* Use the imperative mood ("Move cursor to..." not "Moves cursor to...")
-* Limit the first line to 72 characters or less
-* Reference issues and pull requests liberally after the first line
-* When only changing documentation, include `[ci skip]` in the commit title
-* Consider starting the commit message with an applicable emoji:
+  * Use the present tense ("Add feature" not "Added feature")
+  * Use the imperative mood ("Move cursor to..." not "Moves cursor to...")
+  * Limit the first line to 72 characters or less
+  * Reference issues and pull requests liberally after the first line
+  * When only changing documentation, include `[ci skip]` in the commit title
+  * Consider starting the commit message with an applicable emoji:
     * :art: `:art:` when improving the format/structure of the code
     * :racehorse: `:racehorse:` when improving performance
     * :non-potable_water: `:non-potable_water:` when plugging memory leaks
@@ -29,7 +29,7 @@
 
 ### JavaScript Styleguide
 
-* All JavaScript must adhere to [JavaScript Standard Style](https://standardjs.com/).
+  * All JavaScript must adhere to [JavaScript Standard Style](https://standardjs.com/).
 
 ### Java Styleguide
 

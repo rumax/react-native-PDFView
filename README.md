@@ -9,22 +9,22 @@
 
 Library for displaying [PDF documents](https://acrobat.adobe.com/us/en/acrobat/about-adobe-pdf.html) in [react-native](http://facebook.github.io/react-native/)
 
-- android - uses [Android PdfViewer](https://github.com/barteksc/AndroidPdfViewer). Targets minSdkVersion 19 and above.. By default stable version `2.8.2` is used. It's also possible to override it and use `3.1.0-beta.1` (this version allows to handle links, etc. and will be used when Android PdfViewer stable version is released). To change the version, define it in your build file:
+  - android - uses [Android PdfViewer](https://github.com/barteksc/AndroidPdfViewer). Targets minSdkVersion 19 and above.. By default stable version `2.8.2` is used. It's also possible to override it and use `3.1.0-beta.1` (this version allows to handle links, etc. and will be used when Android PdfViewer stable version is released). To change the version, define it in your build file:
 
-```
-buildscript {
-  ext {
+  ```
+  buildscript {
+    ext {
+      ...
+      pdfViewer = "3.1.0-beta.1"
+    }
     ...
-    pdfViewer = "3.1.0-beta.1"
   }
-  ...
-}
-```
+  ```
 
-- ios - uses [WKWebView](https://developer.apple.com/documentation/webkit/wkwebview).
+  - ios - uses [WKWebView](https://developer.apple.com/documentation/webkit/wkwebview).
 Targets iOS9.0 and above
 
-- zero NPM dependencies
+  - zero NPM dependencies
 
 ## Getting started
 
@@ -39,9 +39,9 @@ Targets iOS9.0 and above
 
 #### iOS
 
-1. Add ReactNativeViewPDF project to your project
-2. Under your build target general settings, add the library to your Linked Frameworks and Libraries
-3. If you run into any issues, confirm that under Build Phases -> Link Binary With Libraries the library is present
+  1. Add ReactNativeViewPDF project to your project
+  2. Under your build target general settings, add the library to your Linked Frameworks and Libraries
+  3. If you run into any issues, confirm that under Build Phases -> Link Binary With Libraries the library is present
 
 ##### Using CocoaPods
 
@@ -59,29 +59,32 @@ pod install
 
 #### Android
 
-1. Open up `android/app/src/main/java/[...]/MainApplication.java`
-  - Add `import com.rumax.reactnative.pdfviewer.PDFViewPackage;` to the imports at the top of the file
-  - Add `new PDFViewPackage()` to the list returned by the `getPackages()` method
-2. Append the following lines to `android/settings.gradle`:
-    ```
-    include ':react-native-view-pdf'
-    project(':react-native-view-pdf').projectDir = new File(rootProject.projectDir, '../node_modules/react-native-view-pdf/android')
-    ```
-3. Insert the following lines inside the dependencies block in `android/app/build.gradle`:
-    ```
-    compile project(':react-native-view-pdf')
-    ```
+  1. Open up `android/app/src/main/java/[...]/MainApplication.java`
+    - Add `import com.rumax.reactnative.pdfviewer.PDFViewPackage;` to the imports at the top of the file
+    - Add `new PDFViewPackage()` to the list returned by the `getPackages()` method
+  2. Append the following lines to `android/settings.gradle`:
+      ```
+      include ':react-native-view-pdf'
+      project(':react-native-view-pdf').projectDir = new File(rootProject.projectDir, '../node_modules/react-native-view-pdf/android')
+      ```
+  3. Insert the following lines inside the dependencies block in `android/app/build.gradle`:
+      ```
+      compile project(':react-native-view-pdf')
+      ```
 
 ##### Note for Android
-  The Android project tries to retrieve the following properties:
-   - compileSdkVersion
-   - buildToolsVersion
-   - minSdkVersion
-   - targetSdkVersion
 
-  from the `ext` object if you have one defined in your Android's project root (you can read more about it [here](https://docs.gradle.org/current/userguide/writing_build_scripts.html#example_using_extra_properties)). If not, it falls back to its current versions (check [the gradle file](./android/build.gradle) for additional information).
+The Android project tries to retrieve the following properties:
+
+  - compileSdkVersion
+  - buildToolsVersion
+  - minSdkVersion
+  - targetSdkVersion
+
+from the `ext` object if you have one defined in your Android's project root (you can read more about it [here](https://docs.gradle.org/current/userguide/writing_build_scripts.html#example_using_extra_properties)). If not, it falls back to its current versions (check [the gradle file](./android/build.gradle) for additional information).
 
 #### Windows
+
 [ReactWindows](https://github.com/ReactWindows/react-native)
 
 N/A
@@ -130,9 +133,9 @@ export default class App extends React.Component {
 
 Use the [demo](https://github.com/rumax/react-native-PDFView/tree/master/demo) project to:
 
-- Test the component on both android and iOS
-- Render PDF using URL, BASE64 data or local file
-- Handle error state
+  - Test the component on both android and iOS
+  - Render PDF using URL, BASE64 data or local file
+  - Handle error state
 
 ### Props
 
@@ -212,17 +215,18 @@ in `demo/App.js`*)
 [MIT](https://opensource.org/licenses/MIT)
 
 ## Authors
-- [sanderfrenken](https://github.com/sanderfrenken)
-- [rumax](https://github.com/rumax)
+
+  - [sanderfrenken](https://github.com/sanderfrenken)
+  - [rumax](https://github.com/rumax)
 
 ### Other information
 
-- Generated with [react-native-create-library](https://github.com/frostney/react-native-create-library)
-- Zero JavaScript dependency. Which means that you do not bring other dependencies to your project
-- If you think that something is missing or would like to propose new feature, please, discuss it with authors
-- Please, feel free to ⭐️ the project. This gives us a confidence that you like it and we did a great job by publishing and supporting it 🤩
-- [If you are using ProGuard, add following rule to proguard config file:](https://github.com/barteksc/AndroidPdfViewer#proguard)
+  - Generated with [react-native-create-library](https://github.com/frostney/react-native-create-library)
+  - Zero JavaScript dependency. Which means that you do not bring other dependencies to your project
+  - If you think that something is missing or would like to propose new feature, please, discuss it with authors
+  - Please, feel free to ⭐️ the project. This gives us a confidence that you like it and we did a great job by publishing and supporting it 🤩
+  - [If you are using ProGuard, add following rule to proguard config file:](https://github.com/barteksc/AndroidPdfViewer#proguard)
 
-```
-    -keep class com.shockwave.**
-```
+  ```
+      -keep class com.shockwave.**
+  ```
