@@ -9,7 +9,7 @@ import {
 
 import RNPDFView from './RNPDFView';
 
-export type UrlProps = {
+export type UrlPropsType = {
   /**
    * `method` is the HTTP Method to use. Defaults to GET if not specified.
    */
@@ -29,23 +29,23 @@ export type UrlProps = {
   body?: string,
 };
 
-type Props = {
+type PropsType = {
   /**
    * A Function. Invoked on load error with {nativeEvent: {error}}.
    */
-  onError: (Error) => void,
+  onError?: (Error) => void,
 
   /**
    * A Function. Invoked when load completes successfully.
    */
-  onLoad: () => void,
+  onLoad?: () => void,
 
   /**
    * A Function. Invoked when page is changed.
    * @param {Number} page - The active page.
    * @param {Number} pageCount - Total pages.
    */
-  onPageChanged: (page: number, pageCount: number) => void,
+  onPageChanged?: (page: number, pageCount: number) => void,
 
   /**
    * A Function. Invoked when page is sscrolled.
@@ -54,7 +54,7 @@ type Props = {
    *                            0 - begining of the document
    *                            1 - end of the document
    */
-  onScrolled: (offset: number) => void,
+  onScrolled?: (offset: number) => void,
 
   /**
    * A String value. Defines the resource to render. Can be one of:
@@ -71,7 +71,7 @@ type Props = {
    *   - "base64", for base64 data
    *   - "file", for local files
    */
-  resourceType: 'url' | 'base64' | 'file',
+  resourceType?: 'url' | 'base64' | 'file',
 
   /**
    * iOS file location. Can be one of:
@@ -80,23 +80,23 @@ type Props = {
    */
   fileFrom?: 'bundle' | 'documentsDirectory',
 
-  urlProps?: UrlProps,
+  urlProps?: UrlPropsType,
 
   /**
    * A String value. Defines encoding type. Can be one of:
    *   - "utf-8", default
    *   - "utf-16"
    */
-  textEncoding: 'utf-8' | 'utf-16',
+  textEncoding?: 'utf-8' | 'utf-16',
 
   /**
    * A Number value. Fades in effect (in ms) on load successfully:
    *   - 0.0, default
    */
-  fadeInDuration: number,
+  fadeInDuration?: number,
 };
 
-class PDFView extends React.Component<Props, *> {
+class PDFView extends React.Component<PropsType, *> {
   // eslint-disable-next-line react/sort-comp
   _viewerRef: any;
 
@@ -113,33 +113,25 @@ class PDFView extends React.Component<Props, *> {
   };
 
 
-  constructor(props: Props) {
-    super(props);
-    this.onError = this.onError.bind(this);
-    this.onPageChanged = this.onPageChanged.bind(this);
-    this.onScrolled = this.onScrolled.bind(this);
-  }
-
-
-  onError: (event: any) => void;
-  onError(event: any) {
+  onError = (event: any): void => {
     const { nativeEvent } = event || {};
+    // $FlowFixMe: defined in defaultProps
     this.props.onError(nativeEvent || new Error('unknown error'));
   }
 
 
-  onPageChanged: (event: any) => void;
-  onPageChanged(event: any) {
+  onPageChanged = (event: any): void => {
     const { nativeEvent = {} } = event || {};
     const { page = -1, pageCount = -1 } = nativeEvent;
+    // $FlowFixMe: defined in defaultProps
     this.props.onPageChanged(page, pageCount);
   }
 
 
-  onScrolled: (event: any) => void;
-  onScrolled(event: any) {
+  onScrolled = (event: any): void => {
     const { nativeEvent = {} } = event || {};
     const { offset = -1 } = nativeEvent;
+    // $FlowFixMe: defined in defaultProps
     this.props.onScrolled(offset);
   }
 
@@ -159,7 +151,7 @@ class PDFView extends React.Component<Props, *> {
       await Platform.select({
         android: async () => UIManager.dispatchViewManagerCommand(
           handle,
-          UIManager.PDFView.Commands.reload,
+          this._getCommands().reload,
           [],
         ),
         ios: async () => NativeModules.PDFViewManager.reload(handle),
@@ -167,6 +159,14 @@ class PDFView extends React.Component<Props, *> {
     } else {
       throw new Error('No ref to PDFView component, check that component is mounted');
     }
+  }
+
+
+  _getCommands = () => {
+    const _PDFView = UIManager.getViewManagerConfig
+      ? UIManager.getViewManagerConfig('PDFView') // RN 0.58
+      : UIManager.PDFView; // RN 0.57
+    return _PDFView.Commands;
   }
 
 

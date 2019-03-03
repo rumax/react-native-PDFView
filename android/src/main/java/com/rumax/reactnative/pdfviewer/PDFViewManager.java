@@ -92,6 +92,7 @@ public class PDFViewManager extends SimpleViewManager<PDFView> {
 
     @ReactProp(name = "textEncoding")
     public void setTextEncoding(PDFView pdfView, String textEncoding) {
+        // iOS specific, ignoring
     }
 
     @ReactProp(name = "urlProps")
