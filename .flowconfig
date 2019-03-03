@@ -1,4 +1,7 @@
 [ignore]
+; Demo project, has it's own flow
+.*/demo/.*
+
 ; We fork some components by platform
 .*/*[.]android.js
 
@@ -18,9 +21,6 @@
 
 ; Ignore metro
 .*/node_modules/metro/.*
-
-; Ignore demo project
-.*/demo/.*
 
 [include]
 
@@ -70,4 +70,4 @@ suppress_comment=\\(.\\|\n\\)*\\$FlowFixedInNextDeploy
 suppress_comment=\\(.\\|\n\\)*\\$FlowExpectedError
 
 [version]
-^0.78.0
+^0.86.0

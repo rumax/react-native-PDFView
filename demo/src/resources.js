@@ -1,13 +1,13 @@
 /* @flow */
 import { Platform } from 'react-native';
-import type { UrlProps } from 'react-native-view-pdf';
+import type { UrlPropsType } from 'react-native-view-pdf';
 
 import base64Data from './base64.json';
 
 export type Resource = {
   resource: string,
   resourceType: 'url' | 'base64' | 'file',
-  urlProps?: UrlProps,
+  urlProps?: UrlPropsType,
 };
 
 const resources: {[key: string]: Resource } = {
