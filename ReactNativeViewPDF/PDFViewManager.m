@@ -3,7 +3,7 @@
 
 @implementation PDFViewManager
 
-RCT_EXPORT_MODULE()
+RCT_EXPORT_MODULE(PDFView)
 
 RCT_CUSTOM_VIEW_PROPERTY(resource, NSString, PDFView) {
     [view setResource: json ? [RCTConvert NSString: json] : nil];
