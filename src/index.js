@@ -136,6 +136,19 @@ class PDFView extends React.Component<PropsType, *> {
   }
 
 
+  _getCommands = () => {
+    const _PDFView = UIManager.getViewManagerConfig
+      ? UIManager.getViewManagerConfig('PDFView') // RN 0.58
+      : UIManager.PDFView; // RN 0.57
+    return _PDFView.Commands;
+  }
+
+
+  _setViewRef = (ref: any) => {
+    this._viewerRef = ref;
+  }
+
+
   /**
    * A Function. Invoke it when PDF document needs to be reloaded. Use `ref` to
    * access it. Throws an exception in case of errors
@@ -159,19 +172,6 @@ class PDFView extends React.Component<PropsType, *> {
     } else {
       throw new Error('No ref to PDFView component, check that component is mounted');
     }
-  }
-
-
-  _getCommands = () => {
-    const _PDFView = UIManager.getViewManagerConfig
-      ? UIManager.getViewManagerConfig('PDFView') // RN 0.58
-      : UIManager.PDFView; // RN 0.57
-    return _PDFView.Commands;
-  }
-
-
-  _setViewRef = (ref: any) => {
-    this._viewerRef = ref;
   }
 
 
