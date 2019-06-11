@@ -7,8 +7,6 @@ def _defaults = {
     minSdkVersion = 21
     supportLibVersion = "28.0.0"
     targetSdkVersion = 28
-
-    pdfViewerVersion = "2.8.2"
 }
 
 apply plugin: 'com.android.library'
@@ -33,7 +31,7 @@ android {
 
 dependencies {
     def supportLibVersion = safeExtGet('supportLibVersion', _defaults.supportLibVersion)
-    def pdfViewerVersion = safeExtGet('pdfViewer', _defaults.supportLibVersion)
+    def pdfViewerVersion = safeExtGet('pdfViewer', "2.8.2")
 
     //noinspection GradleDynamicVersion
     compileOnly "com.facebook.react:react-native:+"
