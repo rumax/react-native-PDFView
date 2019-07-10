@@ -9,9 +9,8 @@ const cBlue = '#428bca';
 
 export default StyleSheet.create({
   container: {
-    paddingTop: Platform.OS === 'ios' ? 20 : 0,
     flex: 1,
-    backgroundColor: cWhite,
+    backgroundColor: cLightBlue,
   },
   tabs: { flexDirection: 'row' },
   tabButton: {
