@@ -3,10 +3,10 @@
 buildscript {
     ext {
         buildToolsVersion = "28.0.3"
-        compileSdkVersion = 28
         minSdkVersion = 21
-        supportLibVersion = "28.0.0"
+        compileSdkVersion = 28
         targetSdkVersion = 28
+        supportLibVersion = "28.0.0"
 
         pdfViewer = "3.1.0-beta.1"
     }
@@ -15,7 +15,7 @@ buildscript {
         jcenter()
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:3.3.1'
+        classpath("com.android.tools.build:gradle:3.4.1")
 
         // NOTE: Do not place your application dependencies here; they belong
         // in the individual module build.gradle files
@@ -25,16 +25,16 @@ buildscript {
 allprojects {
     repositories {
         mavenLocal()
-        google()
-        jcenter()
         maven {
             // All of React Native (JS, Obj-C sources, Android binaries) is installed from npm
-            url "$rootDir/../node_modules/react-native/android"
+            url("$rootDir/../node_modules/react-native/android")
         }
-    }
-    gradle.projectsEvaluated {
-        tasks.withType(JavaCompile) {
-            options.compilerArgs << "-Xlint:all" << "-Xlint:-processing" << "-Xlint:-serial" << "-Werror"
+        maven {
+            // Android JSC is installed from npm
+            url("$rootDir/../node_modules/jsc-android/dist")
         }
+
+        google()
+        jcenter()
     }
 }

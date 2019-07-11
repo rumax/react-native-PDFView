@@ -1,8 +1,10 @@
 /* @flow */
 /* eslint-disable react/prop-types, no-console */
-import React from 'react';
+import React, { Fragment  } from 'react';
 import {
   Alert,
+  SafeAreaView,
+  StatusBar,
   Text,
   View,
 } from 'react-native';
@@ -242,49 +244,52 @@ export default class App extends React.Component<*, StateType> {
     this._renderStarted = (new Date()).getTime();
 
     return (
-      <View style={styles.container}>
-        <View style={styles.tabs}>
-          <Button active={activeButton === 'url'} onPress={this.setUrl} title="Url" />
-          <Button active={activeButton === 'base64'} onPress={this.setBase64} title="Base64" />
-          <Button active={activeButton === 'file'} onPress={this.setFile} title="File" />
-          <Button active={activeButton === 'assets'} onPress={this.setFileAssets} title="Assets" />
-          <Button active={activeButton === 'post'} onPress={this.setUrlPost} title="Url Post" />
-        </View>
-        <PdfContent
-          resource={state.resource}
-          onLoad={this.handleLoad}
-          onError={this.handleError}
-          onRef={this.onRef}
-          onPageChanged={this.handlePageChanged}
-          onScrolled={this.handleOnScrolled}
-        />
-        {state.multiple && state.resource && <HorisontalLine />}
-        {state.multiple && state.resource && <PdfContent resource={state.resource} />}
-        <View style={styles.tabs}>
-          <Button active={activeButton === 'errorData'} onPress={this.dataWithError} title="Error data" />
-          <Button active={activeButton === 'errorProtocol'} onPress={this.protocolWithError} title="Error protocol" />
-          <Button active={activeButton === 'reset'} onPress={this.resetData} title="Reset" />
-          <Button onPress={this.multiplePDFs} title="Multiple" />
-        </View>
-        {state.canReload && (
-          <View style={styles.floatButtons}>
-            <Button
-              onPress={this.reloadPDF}
-              title="Reload PDF"
-              style={styles.reloadButton}
-            />
+      <Fragment>
+        <StatusBar barStyle="dark-content" />
+        <SafeAreaView style={styles.container}>
+          <View style={styles.tabs}>
+            <Button active={activeButton === 'url'} onPress={this.setUrl} title="Url" />
+            <Button active={activeButton === 'base64'} onPress={this.setBase64} title="Base64" />
+            <Button active={activeButton === 'file'} onPress={this.setFile} title="File" />
+            <Button active={activeButton === 'assets'} onPress={this.setFileAssets} title="Assets" />
+            <Button active={activeButton === 'post'} onPress={this.setUrlPost} title="Url Post" />
           </View>
-        )}
-        <Spinner
-          visible={this.state.spinner}
-          textContent="Loading..."
-          textStyle={styles.spinnerTextStyle}
-        />
-        <DropdownAlert ref={(ref) => {
-          this._dropdownRef = ref;
-        }}
-        />
-      </View>
+          <PdfContent
+            resource={state.resource}
+            onLoad={this.handleLoad}
+            onError={this.handleError}
+            onRef={this.onRef}
+            onPageChanged={this.handlePageChanged}
+            onScrolled={this.handleOnScrolled}
+          />
+          {state.multiple && state.resource && <HorisontalLine />}
+          {state.multiple && state.resource && <PdfContent resource={state.resource} />}
+          <View style={styles.tabs}>
+            <Button active={activeButton === 'errorData'} onPress={this.dataWithError} title="Error data" />
+            <Button active={activeButton === 'errorProtocol'} onPress={this.protocolWithError} title="Error protocol" />
+            <Button active={activeButton === 'reset'} onPress={this.resetData} title="Reset" />
+            <Button onPress={this.multiplePDFs} title="Multiple" />
+          </View>
+          {state.canReload && (
+            <View style={styles.floatButtons}>
+              <Button
+                onPress={this.reloadPDF}
+                title="Reload PDF"
+                style={styles.reloadButton}
+              />
+            </View>
+          )}
+          <Spinner
+            visible={this.state.spinner}
+            textContent="Loading..."
+            textStyle={styles.spinnerTextStyle}
+          />
+          <DropdownAlert ref={(ref) => {
+            this._dropdownRef = ref;
+          }}
+          />
+        </SafeAreaView>
+      </Fragment>
     );
   }
 }

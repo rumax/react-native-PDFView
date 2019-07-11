@@ -30,6 +30,12 @@ Targets iOS9.0 and above
 
 `$ npm install react-native-view-pdf --save`
 
+## Linking
+
+From [RN 0.60](https://github.com/facebook/react-native/releases/tag/v0.60.0) there is no need to link - [Native Modules are now Autolinked](https://facebook.github.io/react-native/blog/2019/07/03/version-60)
+
+Otherwise use steps below
+
 ### Mostly automatic installation
 
 `$ react-native link react-native-view-pdf`

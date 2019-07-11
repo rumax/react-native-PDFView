@@ -13,7 +13,7 @@ jest.mock('../RNPDFView', () => 'RNPDFView');
 jest.mock('react-native', () => ({
   findNodeHandle: jest.fn(),
   Platform: { select: jest.fn(platforms => platforms.ios) },
-  NativeModules: { PDFViewManager: { reload: jest.fn() } },
+  NativeModules: { PDFView: { reload: jest.fn() } },
 }));
 
 describe('PDFView', () => {
@@ -122,7 +122,7 @@ describe('PDFView', () => {
       pdfRef.reload();
 
       expect(findNodeHandle).toHaveBeenCalledTimes(1);
-      expect(NativeModules.PDFViewManager.reload).toHaveBeenCalledTimes(1);
+      expect(NativeModules.PDFView.reload).toHaveBeenCalledTimes(1);
       done();
     });
   });
