@@ -1,6 +1,6 @@
-#import "PDFView.h"
+#import "RNPDFView.h"
 
-@implementation PDFView
+@implementation RNPDFView
 {
     WKWebView *webview;
     NSString *currentResource;

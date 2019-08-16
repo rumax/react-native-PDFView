@@ -1,8 +1,8 @@
 #import <React/RCTView.h>
-#import "PDFConstants.h"
+#import "RNPDFConstants.h"
 #import <WebKit/WebKit.h>
 
-@interface PDFView : RCTView <WKNavigationDelegate, UIScrollViewDelegate>
+@interface RNPDFView : RCTView <WKNavigationDelegate, UIScrollViewDelegate>
 
 @property (nonatomic, copy) NSString *resource;
 @property (nonatomic, copy) NSString *resourceType;
