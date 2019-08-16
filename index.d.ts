@@ -3,7 +3,7 @@
 // Definitions by: Uilque Messias <https://github.com/uqmessias>
 // TypeScript Version: 3.2.1
 
-import React from "react";
+import * as React from "react";
 import { StyleProp, ViewStyle } from "react-native";
 
 export interface PDFViewUrlProps {
