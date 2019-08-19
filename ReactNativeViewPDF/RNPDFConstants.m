@@ -1,4 +1,4 @@
-#import "PDFConstants.h"
+#import "RNPDFConstants.h"
 
 NSString *const UTF_8 = @"utf-8";
 NSString *const UTF_16 = @"utf-16";

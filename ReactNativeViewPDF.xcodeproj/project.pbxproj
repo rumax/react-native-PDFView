@@ -7,9 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		5318AA192052B83E009FB5F2 /* PDFView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5318AA132052B83D009FB5F2 /* PDFView.m */; };
-		5318AA1A2052B83E009FB5F2 /* PDFViewManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 5318AA162052B83E009FB5F2 /* PDFViewManager.m */; };
-		5318AA1B2052B83E009FB5F2 /* PDFConstants.m in Sources */ = {isa = PBXBuildFile; fileRef = 5318AA182052B83E009FB5F2 /* PDFConstants.m */; };
+		5318AA192052B83E009FB5F2 /* RNPDFView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5318AA132052B83D009FB5F2 /* RNPDFView.m */; };
+		5318AA1A2052B83E009FB5F2 /* RNPDFViewManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 5318AA162052B83E009FB5F2 /* RNPDFViewManager.m */; };
+		5318AA1B2052B83E009FB5F2 /* RNPDFConstants.m in Sources */ = {isa = PBXBuildFile; fileRef = 5318AA182052B83E009FB5F2 /* RNPDFConstants.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -26,12 +26,12 @@
 
 /* Begin PBXFileReference section */
 		5318AA072052B7FC009FB5F2 /* libReactNativeViewPDF.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libReactNativeViewPDF.a; sourceTree = BUILT_PRODUCTS_DIR; };
-		5318AA132052B83D009FB5F2 /* PDFView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PDFView.m; sourceTree = "<group>"; };
-		5318AA142052B83D009FB5F2 /* PDFView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PDFView.h; sourceTree = "<group>"; };
-		5318AA152052B83E009FB5F2 /* PDFViewManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PDFViewManager.h; sourceTree = "<group>"; };
-		5318AA162052B83E009FB5F2 /* PDFViewManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PDFViewManager.m; sourceTree = "<group>"; };
-		5318AA172052B83E009FB5F2 /* PDFConstants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PDFConstants.h; sourceTree = "<group>"; };
-		5318AA182052B83E009FB5F2 /* PDFConstants.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PDFConstants.m; sourceTree = "<group>"; };
+		5318AA132052B83D009FB5F2 /* RNPDFView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RNPDFView.m; sourceTree = "<group>"; };
+		5318AA142052B83D009FB5F2 /* RNPDFView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RNPDFView.h; sourceTree = "<group>"; };
+		5318AA152052B83E009FB5F2 /* RNPDFViewManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RNPDFViewManager.h; sourceTree = "<group>"; };
+		5318AA162052B83E009FB5F2 /* RNPDFViewManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RNPDFViewManager.m; sourceTree = "<group>"; };
+		5318AA172052B83E009FB5F2 /* RNPDFConstants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RNPDFConstants.h; sourceTree = "<group>"; };
+		5318AA182052B83E009FB5F2 /* RNPDFConstants.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RNPDFConstants.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -64,12 +64,12 @@
 		5318AA092052B7FC009FB5F2 /* ReactNativeViewPDF */ = {
 			isa = PBXGroup;
 			children = (
-				5318AA172052B83E009FB5F2 /* PDFConstants.h */,
-				5318AA182052B83E009FB5F2 /* PDFConstants.m */,
-				5318AA142052B83D009FB5F2 /* PDFView.h */,
-				5318AA132052B83D009FB5F2 /* PDFView.m */,
-				5318AA152052B83E009FB5F2 /* PDFViewManager.h */,
-				5318AA162052B83E009FB5F2 /* PDFViewManager.m */,
+				5318AA172052B83E009FB5F2 /* RNPDFConstants.h */,
+				5318AA182052B83E009FB5F2 /* RNPDFConstants.m */,
+				5318AA142052B83D009FB5F2 /* RNPDFView.h */,
+				5318AA132052B83D009FB5F2 /* RNPDFView.m */,
+				5318AA152052B83E009FB5F2 /* RNPDFViewManager.h */,
+				5318AA162052B83E009FB5F2 /* RNPDFViewManager.m */,
 			);
 			path = ReactNativeViewPDF;
 			sourceTree = "<group>";
@@ -131,9 +131,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				5318AA192052B83E009FB5F2 /* PDFView.m in Sources */,
-				5318AA1B2052B83E009FB5F2 /* PDFConstants.m in Sources */,
-				5318AA1A2052B83E009FB5F2 /* PDFViewManager.m in Sources */,
+				5318AA192052B83E009FB5F2 /* RNPDFView.m in Sources */,
+				5318AA1B2052B83E009FB5F2 /* RNPDFConstants.m in Sources */,
+				5318AA1A2052B83E009FB5F2 /* RNPDFViewManager.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
