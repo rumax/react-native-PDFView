@@ -34,20 +34,11 @@ Targets iOS9.0 and above
 
 From [RN 0.60](https://github.com/facebook/react-native/releases/tag/v0.60.0) there is no need to link - [Native Modules are now Autolinked](https://facebook.github.io/react-native/blog/2019/07/03/version-60)
 
-Otherwise use steps below
-
 ### Mostly automatic installation
 
-`$ react-native link react-native-view-pdf`
+`$ react-native link`
 
-### Manual installation
-
-
-#### iOS
-
-1. Add ReactNativeViewPDF project to your project
-2. Under your build target general settings, add the library to your Linked Frameworks and Libraries
-3. If you run into any issues, confirm that under Build Phases -> Link Binary With Libraries the library is present
+If it doesn't work follow the [official react native documentation](https://facebook.github.io/react-native/docs/linking-libraries-ios)
 
 ##### Using CocoaPods
 
