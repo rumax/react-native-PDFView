@@ -79,7 +79,7 @@ PODS:
     - React-Core (= 0.60.5)
   - React-RCTWebSocket (0.60.5):
     - React-Core (= 0.60.5)
-  - RNPDF (0.9.2):
+  - RNPDF (0.10.0):
     - React
   - yoga (0.60.5.React)
 
@@ -179,9 +179,9 @@ SPEC CHECKSUMS:
   React-RCTText: b074d89033583d4f2eb5faf7ea2db3a13c7553a2
   React-RCTVibration: 2105b2e0e2b66a6408fc69a46c8a7fb5b2fdade0
   React-RCTWebSocket: cd932a16b7214898b6b7f788c8bddb3637246ac4
-  RNPDF: ed19bfdd4918cdaffe3901edd7d1cd351c142f0a
+  RNPDF: 6f162fe97bb2b15f91b2447ca2be83b71ab6fa09
   yoga: 312528f5bbbba37b4dcea5ef00e8b4033fdd9411
 
 PODFILE CHECKSUM: 66b9367b80149a69e75e5232a9b6d46ed8f1efd7
 
-COCOAPODS: 1.7.3
+COCOAPODS: 1.7.5
