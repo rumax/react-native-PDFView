@@ -137,7 +137,7 @@ Name | Android | iOS | Description
 ---- | ------- | --- | -----------
 resource | ✓ | ✓ | A resource to render. It's possible to render PDF from `file`, `url` or `base64`
 resourceType | ✓ | ✓ | Should correspond to resource and can be: `file`, `url` or `base64`
-fileFrom | ✗ | ✓ | *iOS ONLY:* In case if `resourceType` is set to `file`, there are different way to search for it on [iOS file system](https://developer.apple.com/library/archive/documentation/FileManagement/Conceptual/FileSystemProgrammingGuide/FileSystemOverview/FileSystemOverview.html). Currently `Documents` and `app’s bundle` are supported.
+fileFrom | ✗ | ✓ | *iOS ONLY:* In case if `resourceType` is set to `file`, there are different way to search for it on [iOS file system](https://developer.apple.com/library/archive/documentation/FileManagement/Conceptual/FileSystemProgrammingGuide/FileSystemOverview/FileSystemOverview.html). Currently `documentsDirectory`, `libraryDirectory`, `tempDirectory` and `bundle` are supported.
 onLoad | ✓ | ✓ | Callback that is triggered when loading is completed
 onError | ✓ | ✓ | Callback that is triggered when loading has failed. And error is provided as a function parameter
 style | ✓ | ✓ | A [style](https://facebook.github.io/react-native/docs/style)
@@ -195,7 +195,7 @@ project provides an example how to implement it using Java, check the [MainActiv
 
 Before trying `file` type in [demo project](https://github.com/rumax/react-native-PDFView/tree/master/demo), open `sdcard/Download` folder in `Device File Explorer` and store some `downloadedDocument.pdf` document that you want to render.
 
-On iOS, using resource `file` will make the component lookup in two places. First, it will attempt to locate the file in the Bundle. If it cannot locate it there, it will search the Documents directory. For more information on the iOS filesystem access at runtime of an application please refer [the official documentation](https://developer.apple.com/library/archive/documentation/FileManagement/Conceptual/FileSystemProgrammingGuide/FileSystemOverview/FileSystemOverview.html).
+On iOS, when using resource `file` you can specify where to look for the file with `fileFrom`. If you do not pass any value, the component will lookup in two places. First, it will attempt to locate the file in the Bundle. If it cannot locate it there, it will search the Documents directory. For more information on the iOS filesystem access at runtime of an application please refer [the official documentation](https://developer.apple.com/library/archive/documentation/FileManagement/Conceptual/FileSystemProgrammingGuide/FileSystemOverview/FileSystemOverview.html).
 Note here that the resource will always need to be a relative path from the Documents directory for example and also do NOT put the scheme in the path (so no `file://.....`).
 
 You can find an example of both usage of the Bundle and Documents directory for rendering a pdf from `file` on iOS in the demo project.

@@ -77,8 +77,10 @@ type PropsType = {
    * iOS file location. Can be one of:
    *   - "bundle"
    *   - "documentsDirectory"
+   *   - "libraryDirectory"
+   *   - "tempDirectory"
    */
-  fileFrom?: 'bundle' | 'documentsDirectory',
+  fileFrom?: 'bundle' | 'documentsDirectory' | 'libraryDirectory' | 'tempDirectory',
 
   urlProps?: UrlPropsType,
 
