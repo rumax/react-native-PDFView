@@ -113,15 +113,15 @@
     if ([currentFileFrom isEqualToString:@"bundle"]) {
         url = [self fileFromBundleURL];
     } else if ([currentFileFrom isEqualToString:@"documentsDirectory"]) {
-		url = [self fileFromDirectoryURL:NSDocumentDirectory];
-	} else if ([currentFileFrom isEqualToString:@"libraryDirectory"]) {
-		url = [self fileFromDirectoryURL:NSLibraryDirectory];
-	} else if ([currentFileFrom isEqualToString:@"tempDirectory"]) {
-		url = [self fileFromDirectoryPath:NSTemporaryDirectory()];
-	} else { // default is search
+        url = [self fileFromDirectoryURL:NSDocumentDirectory];
+    } else if ([currentFileFrom isEqualToString:@"libraryDirectory"]) {
+        url = [self fileFromDirectoryURL:NSLibraryDirectory];
+    } else if ([currentFileFrom isEqualToString:@"tempDirectory"]) {
+        url = [self fileFromDirectoryPath:NSTemporaryDirectory()];
+    } else { // default is search
         url = [self fileFromBundleURL];
         if (url == nil) {
-			// default directory is Documents
+            // default directory is Documents
             url = [self fileFromDirectoryURL:NSDocumentDirectory];
         }
     }
@@ -204,14 +204,14 @@
 }
 
 - (NSURL *)fileFromDirectoryPath:(NSString *)directoryPath {
-	if (directoryPath == nil) {
-		return nil;
-	}
-	NSString *filePath = [directoryPath stringByAppendingPathComponent: _resource];
-	if(![[NSFileManager defaultManager] fileExistsAtPath: filePath]) {
-		return nil;
-	}
-	return [NSURL fileURLWithPath: filePath];
+    if (directoryPath == nil) {
+        return nil;
+    }
+    NSString *filePath = [directoryPath stringByAppendingPathComponent: _resource];
+    if(![[NSFileManager defaultManager] fileExistsAtPath: filePath]) {
+        return nil;
+    }
+    return [NSURL fileURLWithPath: filePath];
 }
 
 - (BOOL)isRequiredInputSet {
