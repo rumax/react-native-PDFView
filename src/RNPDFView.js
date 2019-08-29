@@ -46,6 +46,8 @@ const componentInterface = {
      * iOS file location. Can be one of:
      *   - "bundle"
      *   - "documentsDirectory"
+     *   - "libraryDirectory"
+     *   - "tempDirectory"
      */
     fileFrom: PropTypes.string,
 
