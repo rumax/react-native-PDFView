@@ -20,7 +20,7 @@ const resources: {[key: string]: Resource } = {
     resourceType: 'file',
   },
   url: {
-    resource: 'https://www.ets.org/Media/Tests/TOEFL/pdf/SampleQuestions.pdf',
+    resource: 'http://www.africau.edu/images/default/sample.pdf',
     resourceType: 'url',
   },
   urlPost: {
