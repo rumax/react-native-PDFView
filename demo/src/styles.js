@@ -6,6 +6,7 @@ const cWhite = '#f9f9f9';
 const cLightBlue = '#5bc0de';
 const cGreen = '#5cb85c';
 const cBlue = '#428bca';
+const cGrey = '#5f5f5f';
 
 export default StyleSheet.create({
   container: {
@@ -23,7 +24,7 @@ export default StyleSheet.create({
     paddingVertical: 8,
   },
   tabButtonActive: { backgroundColor: cBlue },
-  pdfView: { flex: 1 },
+  pdfView: { flex: 1, backgroundColor: cGrey },
   noContent: { flex: 1, alignItems: 'center', backgroundColor: cGreen },
   noContentText: {
     fontSize: 22,
