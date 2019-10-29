@@ -12,12 +12,12 @@ apply plugin: 'com.android.library'
 
 
 android {
-    compileSdkVersion safeExtGet('compileSdkVersion', _defaults.compileSdkVersion)
-    buildToolsVersion safeExtGet('buildToolsVersion', _defaults.buildToolsVersion)
+    compileSdkVersion safeExtGet('compileSdkVersion', 28)
+    buildToolsVersion safeExtGet('buildToolsVersion', "28.0.3")
 
     defaultConfig {
-        minSdkVersion safeExtGet('minSdkVersion', _defaults.minSdkVersion)
-        targetSdkVersion safeExtGet('targetSdkVersion', _defaults.targetSdkVersion)
+        minSdkVersion safeExtGet('minSdkVersion', 19)
+        targetSdkVersion safeExtGet('targetSdkVersion', 28)
     }
     lintOptions {
         abortOnError false
@@ -32,6 +32,6 @@ dependencies {
     def pdfViewerVersion = safeExtGet('pdfViewer', "2.8.2")
 
     //noinspection GradleDynamicVersion
-    implementation "com.facebook.react:react-native:+"
+    compileOnly "com.facebook.react:react-native:+"
     implementation "com.github.barteksc:android-pdf-viewer:$pdfViewerVersion"
 }
