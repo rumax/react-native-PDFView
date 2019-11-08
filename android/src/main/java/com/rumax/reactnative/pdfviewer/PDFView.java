@@ -66,7 +66,9 @@ public class PDFView extends com.github.barteksc.pdfviewer.PDFView implements
     @Override
     protected void onLayout(boolean changed, int left, int top, int right, int bottom) {
         super.onLayout(changed, left, top, right, bottom);
-        this.setClipToOutline(true);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            this.setClipToOutline(true);
+        }
     }
 
     @Override
