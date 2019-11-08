@@ -29,7 +29,7 @@ android {
 }
 
 dependencies {
-    def pdfViewerVersion = safeExtGet('pdfViewer', "2.8.2")
+    def pdfViewerVersion = safeExtGet('pdfViewer', "3.1.0-beta.1")
 
     //noinspection GradleDynamicVersion
     compileOnly "com.facebook.react:react-native:+"
