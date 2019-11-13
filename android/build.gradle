@@ -25,8 +25,7 @@ android {
         }
     }
     lintOptions {
-        warning 'InvalidPackage',
-        abortOnError false
+        warning 'InvalidPackage'
     }
 
     buildTypes {
