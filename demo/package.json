@@ -11,7 +11,7 @@
   },
   "dependencies": {
     "react": "16.9.0",
-    "react-native": "0.61.1",
+    "react-native": "0.62.0",
     "react-native-dropdownalert": "^4.2.0",
     "react-native-loading-spinner-overlay": "^1.0.1",
     "react-native-view-pdf": "^0.10.1"
