@@ -258,6 +258,10 @@ public class PDFView extends com.github.barteksc.pdfviewer.PDFView implements
         this.fadeInDuration = duration;
     }
 
+    public void setEnableAnnotations(boolean enableAnnotations) {
+        this.enableAnnotations = enableAnnotations;
+    }
+
     public void reload() {
         sourceChanged = true;
         render();
