@@ -86,6 +86,13 @@ const componentInterface = {
      *   - 0.0, default
      */
     fadeInDuration: PropTypes.number,
+
+    /**
+     * A Boolean value. Enables annotations view on Android
+     *   - false, default
+     */
+    enableAnnotations: PropTypes.bool,
+
     ...ViewPropTypes,
   },
 };

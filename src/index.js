@@ -96,6 +96,12 @@ type PropsType = {
    *   - 0.0, default
    */
   fadeInDuration?: number,
+
+  /**
+   * A Boolean value. Enables annotations view on Android
+   *   - false, default
+   */
+  enableAnnotations?: boolean,
 };
 
 class PDFView extends React.Component<PropsType, *> {

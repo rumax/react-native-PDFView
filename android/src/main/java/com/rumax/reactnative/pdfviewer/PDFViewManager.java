@@ -105,6 +105,11 @@ public class PDFViewManager extends SimpleViewManager<PDFView> {
         pdfView.setFadeInDuration(duration);
     }
 
+    @ReactProp(name = "enableAnnotations")
+    public void setEnableAnnotations(PDFView pdfView, boolean enableAnnotations) {
+        pdfView.setEnableAnnotations(enableAnnotations);
+    }
+
     @Override
     public void onAfterUpdateTransaction(PDFView pdfView) {
         super.onAfterUpdateTransaction(pdfView);
