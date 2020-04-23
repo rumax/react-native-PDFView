@@ -45,6 +45,7 @@ public class PDFView extends com.github.barteksc.pdfviewer.PDFView implements
     private boolean sourceChanged = true;
     private ReadableMap urlProps;
     private int fadeInDuration = 0;
+    private boolean enableAnnotations = false;
     private float lastPositionOffset = 0;
 
     public PDFView(ThemedReactContext context) {
@@ -117,6 +118,7 @@ public class PDFView extends com.github.barteksc.pdfviewer.PDFView implements
                 .onPageChange(this)
                 .onPageScroll(this)
                 .spacing(10)
+                .enableAnnotationRendering(enableAnnotations)
                 .load();
         sourceChanged = false;
     }
@@ -254,6 +256,10 @@ public class PDFView extends com.github.barteksc.pdfviewer.PDFView implements
 
     public void setFadeInDuration(int duration) {
         this.fadeInDuration = duration;
+    }
+
+    public void setEnableAnnotations(boolean enableAnnotations) {
+        this.enableAnnotations = enableAnnotations;
     }
 
     public void reload() {
