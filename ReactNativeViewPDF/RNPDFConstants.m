@@ -19,6 +19,7 @@ NSString *const HTTPS = @"https";
 
 // Error types
 NSString *const ERROR_UNSUPPORTED_TYPE = @"Unsupported resourceType";
+NSString *const ERROR_NETWORK_ERROR = @"Network error";
 NSString *const ERROR_ONLOADING = @"Error occured while loading content in webview";
 NSString *const ERROR_REQUIRED_INPUT_NOT_SET = @"Validation failed. Confirm resource and resourceType have a value";
 NSString *const ERROR_INVALID_REACT_TAG = @"Invalid react tag";
