@@ -19,6 +19,7 @@ extern NSString * const HTTPS;
 
 // Error types
 extern NSString * const ERROR_UNSUPPORTED_TYPE;
+extern NSString * const ERROR_NETWORK_ERROR;
 extern NSString * const ERROR_ONLOADING;
 extern NSString * const ERROR_REQUIRED_INPUT_NOT_SET;
 extern NSString * const ERROR_INVALID_REACT_TAG;

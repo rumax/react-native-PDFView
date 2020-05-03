@@ -172,6 +172,20 @@
     currentFileFrom = _fileFrom;
 }
 
+- (void)webView:(WKWebView *)webView decidePolicyForNavigationResponse:(WKNavigationResponse *)navigationResponse decisionHandler:(void (^)(WKNavigationResponsePolicy))decisionHandler {
+    
+    if ([navigationResponse.response isKindOfClass:[NSHTTPURLResponse class]]) {
+        NSHTTPURLResponse * response = (NSHTTPURLResponse *)navigationResponse.response;
+
+        if (![self isResponseSuccess:response]) {
+            decisionHandler(WKNavigationResponsePolicyCancel);
+            [self throwError: ERROR_NETWORK_ERROR withMessage: [NSString stringWithFormat: @"resource %@ in unreachable, statusCode %ld", _resource, response.statusCode]];
+            return;
+        }
+    }
+    decisionHandler(WKNavigationResponsePolicyAllow);
+}
+
 - (void)webView:(WKWebView *)webView didFinishNavigation:(WKNavigation *)navigation {
     [UIView animateWithDuration: _fadeInDuration animations: ^(void) {
         [webview setAlpha: 1.0];
@@ -243,6 +257,10 @@
 
 - (BOOL)isFileResource {
     return [_resourceType  isEqualToString: RESOURCE_TYPE_FILE];
+}
+
+- (BOOL)isResponseSuccess: (NSHTTPURLResponse *)response {
+    return response.statusCode >= 200 && response.statusCode <= 299;
 }
 
 - (void)throwError: (NSString *)title withMessage:(NSString *)message {
