@@ -100,13 +100,13 @@ import PDFView from 'react-native-view-pdf';
 
 const resources = {
   file: Platform.OS === 'ios' ? 'downloadedDocument.pdf' : '/sdcard/Download/downloadedDocument.pdf',
-  url: 'https://www.ets.org/Media/Tests/TOEFL/pdf/SampleQuestions.pdf',
+  url: 'https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf',
   base64: 'JVBERi0xLjMKJcfs...',
 };
 
 export default class App extends React.Component {
   render() {
-    const resourceType = 'base64';
+    const resourceType = 'url';
 
     return (
       <View style={{ flex: 1 }}>
@@ -116,8 +116,8 @@ export default class App extends React.Component {
           style={{ flex: 1 }}
           resource={resources[resourceType]}
           resourceType={resourceType}
-          onLoad={() => console.log(`PDF rendered from ${resourceType}`);}
-          onError={() => console.log('Cannot render PDF', error)}
+          onLoad={() => console.log(`PDF rendered from ${resourceType}`)}
+          onError={(error) => console.log('Cannot render PDF', error)}
         />
       </View>
     );
