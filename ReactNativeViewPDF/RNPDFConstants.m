@@ -14,8 +14,9 @@ NSString *const URL_PROPS_HEADERS_KEY = @"headers";
 NSString *const URL_PROPS_BODY_KEY = @"body";
 
 // Supported protocols
-NSString *const HTTP = @"http";
-NSString *const HTTPS = @"https";
+NSString *const HTTP_PROTOCOL = @"http";
+NSString *const HTTPS_PROTOCOL = @"https";
+NSString *const FILE_PROTOCOL = @"file";
 
 // Error types
 NSString *const ERROR_UNSUPPORTED_TYPE = @"Unsupported resourceType";

@@ -14,8 +14,9 @@ extern NSString * const URL_PROPS_HEADERS_KEY;
 extern NSString * const URL_PROPS_BODY_KEY;
 
 // Supported protocols
-extern NSString * const HTTP;
-extern NSString * const HTTPS;
+extern NSString * const HTTP_PROTOCOL;
+extern NSString * const HTTPS_PROTOCOL;
+extern NSString * const FILE_PROTOCOL;
 
 // Error types
 extern NSString * const ERROR_UNSUPPORTED_TYPE;
