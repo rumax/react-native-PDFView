@@ -207,6 +207,10 @@
     [self throwError: ERROR_ONLOADING withMessage: error.localizedDescription];
 }
 
+- (void)webView:(WKWebView *)webView didFailProvisionalNavigation:(WKNavigation *)navigation withError:(NSError *)error {
+    [self throwError: ERROR_ONLOADING withMessage: error.localizedDescription];
+}
+
 - (NSURL *)fileFromBundleURL {
     NSString *resourcePath = [_resource stringByReplacingOccurrencesOfString: @".pdf" withString: @""]; // Remove pdf extension from path if present
     if (![[NSBundle mainBundle] pathForResource: resourcePath ofType: @"pdf"]) {
