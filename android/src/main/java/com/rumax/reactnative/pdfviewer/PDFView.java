@@ -160,7 +160,7 @@ public class PDFView extends com.github.barteksc.pdfviewer.PDFView implements
             return;
         }
 
-        downloadTask = new AsyncDownload(resource, downloadedFile, urlProps, new AsyncDownload.TaskCompleted() {
+        downloadTask = new AsyncDownload(context, resource, downloadedFile, urlProps, new AsyncDownload.TaskCompleted() {
             @Override
             public void onComplete(Exception ex) {
                 if (ex == null) {

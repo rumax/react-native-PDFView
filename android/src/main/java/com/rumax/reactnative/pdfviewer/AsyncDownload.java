@@ -6,6 +6,8 @@ package com.rumax.reactnative.pdfviewer;
  * This source code is licensed under the MIT license
  */
 
+import android.content.Context;
+import android.net.Uri;
 import android.os.AsyncTask;
 
 import com.facebook.react.bridge.ReadableMap;
@@ -24,17 +26,20 @@ import java.net.URL;
 class AsyncDownload extends AsyncTask<Void, Void, Void> {
     public static final String HTTP = "http";
     public static final String HTTPS = "https";
+    public static final String CONTENT = "content";
     private static final int BUFF_SIZE = 8192;
     private static final String PROP_METHOD = "method";
     private static final String PROP_BODY = "body";
     private static final String PROP_HEADERS = "headers";
     private final ReadableMap urlProps;
+    private Context context;
     private TaskCompleted listener;
     private File file;
     private String url;
     private Exception exception;
 
-    AsyncDownload(String url, File file, ReadableMap urlProps, TaskCompleted listener) {
+    AsyncDownload(Context context, String url, File file, ReadableMap urlProps, TaskCompleted listener) {
+        this.context = context;
         this.listener = listener;
         this.file = file;
         this.url = url;
@@ -47,8 +52,36 @@ class AsyncDownload extends AsyncTask<Void, Void, Void> {
         exception = null;
     }
 
+    private void copyAndFlush(InputStream input, OutputStream output) throws IOException {
+        int count;
+        byte data[] = new byte[BUFF_SIZE];
+
+        while ((count = input.read(data)) != -1) {
+            output.write(data, 0, count);
+        }
+
+        output.flush();
+    }
+
+    private Void handleContentUri(Uri uri) {
+        try (
+                InputStream input = context.getContentResolver().openInputStream(uri);
+                OutputStream output = new FileOutputStream(file)
+        ) {
+            copyAndFlush(input, output);
+        } catch (Exception e) {
+            exception = e;
+        }
+        return null;
+    }
+
     @Override
     protected Void doInBackground(Void... params) {
+        Uri uri = Uri.parse(this.url);
+        if (uri.getScheme().equalsIgnoreCase(CONTENT)) {
+            return handleContentUri(uri);
+        }
+
         URL url;
         HttpURLConnection connection;
 
@@ -71,14 +104,7 @@ class AsyncDownload extends AsyncTask<Void, Void, Void> {
                 InputStream input = new BufferedInputStream(connection.getInputStream(), BUFF_SIZE);
                 OutputStream output = new FileOutputStream(file)
         ) {
-            int count;
-            byte data[] = new byte[BUFF_SIZE];
-
-            while ((count = input.read(data)) != -1) {
-                output.write(data, 0, count);
-            }
-
-            output.flush();
+            copyAndFlush(input, output);
         } catch (IOException e) {
             exception = e;
         }
