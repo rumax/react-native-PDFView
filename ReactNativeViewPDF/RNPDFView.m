@@ -88,7 +88,10 @@
     ignoreScrollEvent = true;
 
     if ([self isURLResource]) {
-        [webview loadRequest: [self createRequest]];
+        NSURLRequest *request = [self createRequest];
+        if (request) {
+            [webview loadRequest: request];
+        }
     } else if ([self isFileResource]) {
         NSURL *fileURL = [self getFileURL];
         if (fileURL == nil) {
@@ -133,9 +136,11 @@
     NSURL *URL = [NSURL URLWithString: _resource];
     NSString *scheme = URL.scheme;
 
-    if ([HTTP caseInsensitiveCompare: scheme] != NSOrderedSame &&
-        [HTTPS caseInsensitiveCompare: scheme] != NSOrderedSame) {
+    if ([HTTP_PROTOCOL caseInsensitiveCompare: scheme] != NSOrderedSame &&
+        [HTTPS_PROTOCOL caseInsensitiveCompare: scheme] != NSOrderedSame &&
+        [FILE_PROTOCOL caseInsensitiveCompare: scheme] != NSOrderedSame) {
         [self throwError: ERROR_ONLOADING withMessage: [NSString stringWithFormat:@"Protocol %@ is not supported", scheme]];
+        return nil;
     }
 
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL: URL
