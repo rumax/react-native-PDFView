@@ -1,6 +1,6 @@
 /* @flow */
 /* eslint-disable react/prop-types, no-console */
-import React, { Fragment  } from 'react';
+import React, { Fragment } from 'react';
 import {
   Alert,
   SafeAreaView,
@@ -26,12 +26,12 @@ type StateType = {
   multiple?: boolean,
 };
 
-const HorisontalLine = () => (<View style={styles.horizontalLine}/>);
+const HorisontalLine = () => (<View style={styles.horizontalLine} />);
 
 type PdfContentType = {
   resource?: Resource,
   onRef?: Function,
-  onLoad? : Function,
+  onLoad?: Function,
   onError?: Function,
   onPageChanged?: Function,
   onScrolled?: Function,
@@ -167,10 +167,12 @@ export default class App extends React.Component<*, StateType> {
       'Duplicate PDF',
       'The PDF will be duplicated',
       [
-        { text: 'Cancel', onPress: () => {}, style: 'cancel' },
-        { text: 'OK', onPress: () => {
-          this.setState({ multiple: true });
-        }},
+        { text: 'Cancel', onPress: () => { }, style: 'cancel' },
+        {
+          text: 'OK', onPress: () => {
+            this.setState({ multiple: true });
+          }
+        },
       ],
       { cancelable: false }
     );
