@@ -10,22 +10,22 @@
     "lint": "eslint ."
   },
   "dependencies": {
-    "react": "16.11.0",
-    "react-native": "0.62.1",
-    "react-native-dropdownalert": "^4.2.1",
+    "react": "16.13.1",
+    "react-native": "0.63.3",
+    "react-native-dropdownalert": "^4.3.0",
     "react-native-loading-spinner-overlay": "^1.1.0",
-    "react-native-view-pdf": "^0.10.1"
+    "react-native-view-pdf": "^0.11.0"
   },
   "devDependencies": {
-    "@babel/core": "^7.9.0",
-    "@babel/runtime": "^7.9.2",
-    "@react-native-community/eslint-config": "^1.0.0",
-    "babel-jest": "^25.2.6",
-    "eslint": "^6.8.0",
-    "flow-bin": "^0.113.0",
-    "jest": "^25.2.7",
+    "@babel/core": "^7.8.4",
+    "@babel/runtime": "^7.8.4",
+    "@react-native-community/eslint-config": "^1.1.0",
+    "babel-jest": "^25.1.0",
+    "eslint": "^6.5.1",
+    "flow-bin": "^0.122.0",
+    "jest": "^25.1.0",
     "metro-react-native-babel-preset": "^0.59.0",
-    "react-test-renderer": "16.11.0"
+    "react-test-renderer": "16.13.1"
   },
   "jest": {
     "preset": "react-native"
