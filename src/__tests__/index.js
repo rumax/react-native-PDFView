@@ -102,7 +102,7 @@ describe('PDFView', () => {
   it('trigger reload', (done) => {
     let pdfRef: any;
 
-    findNodeHandle.mockImplementationOnce(() => 'handle for ref');
+    (findNodeHandle: any).mockImplementationOnce(() => 'handle for ref');
     const tree = renderer.create(<PDFVIew
       resource="base64"
       resourceType="base64"
