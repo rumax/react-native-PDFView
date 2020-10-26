@@ -7,6 +7,8 @@ import {
   NativeModules,
 } from 'react-native';
 
+import type { ViewProps } from 'react-native/Libraries/Components/View/ViewPropTypes';
+
 import RNPDFView from './RNPDFView';
 
 export type UrlPropsType = {
@@ -29,7 +31,9 @@ export type UrlPropsType = {
   body?: string,
 };
 
-type PropsType = {
+type PropsType = {|
+  ...ViewProps,
+
   /**
    * A Function. Invoked on load error with {nativeEvent: {error}}.
    */
@@ -102,7 +106,7 @@ type PropsType = {
    *   - false, default
    */
   enableAnnotations?: boolean,
-};
+|};
 
 class PDFView extends React.Component<PropsType, *> {
   // eslint-disable-next-line react/sort-comp
@@ -147,7 +151,7 @@ class PDFView extends React.Component<PropsType, *> {
   _getCommands = () => {
     const _PDFView = UIManager.getViewManagerConfig
       ? UIManager.getViewManagerConfig('PDFView') // RN 0.58
-      : UIManager.PDFView; // RN 0.57
+      : (UIManager: any).PDFView; // RN 0.57
     return _PDFView.Commands;
   }
 

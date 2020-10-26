@@ -1,5 +1,4 @@
 /* @flow */
-/* eslint-disable react/prop-types, no-console */
 import React, { Fragment } from 'react';
 import {
   Alert,
@@ -28,14 +27,14 @@ type StateType = {
 
 const HorisontalLine = () => (<View style={styles.horizontalLine} />);
 
-type PdfContentType = {
+type PdfContentType = {|
   resource?: Resource,
   onRef?: Function,
   onLoad?: Function,
   onError?: Function,
   onPageChanged?: Function,
   onScrolled?: Function,
-};
+|};
 
 const PdfContent = (props: PdfContentType) => {
   if (props.resource) {

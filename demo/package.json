@@ -6,6 +6,7 @@
     "android": "react-native run-android",
     "ios": "react-native run-ios",
     "start": "react-native start",
+    "preinstall": "rm -rf node_modules package-lock.json && cd .. && rm -rf react-native-view-pdf-*.tgz && npm i && npm pack && mv react-native-view-pdf-*.tgz react-native-view-pdf.tgz",
     "test": "jest",
     "lint": "eslint ."
   },
@@ -14,7 +15,7 @@
     "react-native": "0.63.3",
     "react-native-dropdownalert": "^4.3.0",
     "react-native-loading-spinner-overlay": "^1.1.0",
-    "react-native-view-pdf": "^0.11.0"
+    "react-native-view-pdf": "../react-native-view-pdf.tgz"
   },
   "devDependencies": {
     "@babel/core": "^7.8.4",

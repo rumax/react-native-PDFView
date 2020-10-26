@@ -4,11 +4,11 @@ import type { UrlPropsType } from 'react-native-view-pdf';
 
 import base64Data from './base64.json';
 
-export type Resource = {
+export type Resource = {|
   resource: string,
   resourceType: 'url' | 'base64' | 'file',
   urlProps?: UrlPropsType,
-};
+|};
 
 const resources: {[key: string]: Resource } = {
   fileAssets: {
