@@ -1,8 +1,10 @@
 # NPM
 react-native-view-pdf-*.tgz
+react-native-view-pdf.tgz
 package/
 
 package-lock.json
+yarn.lock
 
 # jest
 coverage
