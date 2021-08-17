@@ -77,7 +77,11 @@ interface PDFViewProps {
    *   - "libraryDirectory"
    *   - "tempDirectory"
    */
-  fileFrom?: "bundle" | "documentsDirectory" | "libraryDirectory" | "tempDirectory";
+  fileFrom?:
+    | "bundle"
+    | "documentsDirectory"
+    | "libraryDirectory"
+    | "tempDirectory";
 
   urlProps?: PDFViewUrlProps;
 
@@ -98,6 +102,11 @@ interface PDFViewProps {
    * A style for the PDFView
    */
   style?: StyleProp<ViewStyle>;
+
+  /**
+   * Used to locate in end-to-end tests
+   */
+  testID?: string;
 }
 
 export default class PDFView extends React.Component<PDFViewProps, {}> {}
