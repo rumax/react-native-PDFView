@@ -1,23 +1,17 @@
-def safeExtGet(prop, fallback) {
-    rootProject.ext.has(prop) ? rootProject.ext.get(prop) : fallback
-}
-def _defaults = {
-    buildToolsVersion = "28.0.3"
-    compileSdkVersion = 28
-    minSdkVersion = 21
-    targetSdkVersion = 28
+def safeExtGet(prop) {
+    rootProject.ext.has(prop) ? rootProject.ext.get(prop) : project.properties[prop]
 }
 
 apply plugin: 'com.android.library'
 
 
 android {
-    compileSdkVersion safeExtGet('compileSdkVersion', _defaults.compileSdkVersion)
-    buildToolsVersion safeExtGet('buildToolsVersion', _defaults.buildToolsVersion)
+    compileSdkVersion safeExtGet('compileSdkVersion')
+    buildToolsVersion safeExtGet('buildToolsVersion')
 
     defaultConfig {
-        minSdkVersion safeExtGet('minSdkVersion', _defaults.minSdkVersion)
-        targetSdkVersion safeExtGet('targetSdkVersion', _defaults.targetSdkVersion)
+        minSdkVersion safeExtGet('minSdkVersion')
+        targetSdkVersion safeExtGet('targetSdkVersion')
     }
     lintOptions {
         abortOnError false
@@ -29,7 +23,7 @@ android {
 }
 
 dependencies {
-    def pdfViewerVersion = safeExtGet('pdfViewer', "2.8.2")
+    def pdfViewerVersion = safeExtGet('pdfViewer')
 
     //noinspection GradleDynamicVersion
     implementation "com.facebook.react:react-native:+"
