@@ -1,5 +1,11 @@
-def safeExtGet(prop) {
-    rootProject.ext.has(prop) ? rootProject.ext.get(prop) : project.properties[prop]
+def safeExtGet(prop, fallback = null) {
+    if (rootProject.ext.has(prop)) {
+        return rootProject.ext[prop]
+    }
+    if (project.properties[prop]) {
+        return project.properties[prop]
+    }
+    return fallback
 }
 
 apply plugin: 'com.android.library'
@@ -23,7 +29,7 @@ android {
 }
 
 dependencies {
-    def pdfViewerVersion = safeExtGet('pdfViewer')
+    def pdfViewerVersion = safeExtGet('pdfViewer', '2.8.2')
 
     //noinspection GradleDynamicVersion
     implementation "com.facebook.react:react-native:+"
