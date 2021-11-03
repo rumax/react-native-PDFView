@@ -135,7 +135,7 @@ Use the [demo](https://github.com/rumax/react-native-PDFView/tree/master/demo) p
 
 Name | Android | iOS | Description
 ---- | ------- | --- | -----------
-resource | ✓ | ✓ | A resource to render. It's possible to render PDF from `file`, `url` or `base64`
+resource | ✓ | ✓ | A resource to render. It's possible to render PDF from `file`, `url` (should be [encoded](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/encodeURI)) or `base64`
 resourceType | ✓ | ✓ | Should correspond to resource and can be: `file`, `url` or `base64`
 fileFrom | ✗ | ✓ | *iOS ONLY:* In case if `resourceType` is set to `file`, there are different way to search for it on [iOS file system](https://developer.apple.com/library/archive/documentation/FileManagement/Conceptual/FileSystemProgrammingGuide/FileSystemOverview/FileSystemOverview.html). Currently `documentsDirectory`, `libraryDirectory`, `tempDirectory` and `bundle` are supported.
 onLoad | ✓ | ✓ | Callback that is triggered when loading is completed
