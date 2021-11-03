@@ -133,8 +133,7 @@
 }
 
 - (NSMutableURLRequest *)createRequest {
-    NSString *stringURL = [_resource stringByAddingPercentEncodingWithAllowedCharacters: NSCharacterSet.URLQueryAllowedCharacterSet];
-    NSURL *URL = [NSURL URLWithString:stringURL];
+    NSURL *URL = [NSURL URLWithString: _resource];
     NSString *scheme = URL.scheme;
 
     if ([HTTP_PROTOCOL caseInsensitiveCompare: scheme] != NSOrderedSame &&

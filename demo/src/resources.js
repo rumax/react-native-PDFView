@@ -20,7 +20,7 @@ const resources: {[key: string]: Resource } = {
     resourceType: 'file',
   },
   url: {
-    resource: 'http://www.africau.edu/images/default/sample.pdf?filter={"caseRef.uuid":"1000859035,"pRef.mrn":"10244957"}',
+    resource: 'http://www.africau.edu/images/default/sample.pdf',
     resourceType: 'url',
   },
   urlPost: {
