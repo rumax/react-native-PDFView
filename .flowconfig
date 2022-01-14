@@ -4,6 +4,9 @@
 ; We fork some components by platform
 .*/*[.]android.js
 
+; https://github.com/meteor/meteor/issues/11830#issuecomment-1005161448
+<PROJECT_ROOT>/node_modules/resolve/test/resolver/malformed_package_json
+
 ; Ignore "BUCK" generated dirs
 <PROJECT_ROOT>/\.buckd/
 
