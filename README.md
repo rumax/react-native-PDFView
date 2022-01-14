@@ -9,13 +9,27 @@
 
 Library for displaying [PDF documents](https://acrobat.adobe.com/us/en/acrobat/about-adobe-pdf.html) in [react-native](http://facebook.github.io/react-native/)
 
-- android - uses [Android PdfViewer](https://github.com/barteksc/AndroidPdfViewer). Targets minSdkVersion 21 (required by [setClipToOutline](https://developer.android.com/reference/android/view/View.html#setClipToOutline%28boolean%29)) and above.. By default stable version `2.8.2` is used. It's also possible to override it and use `3.1.0-beta.1` (this version allows to handle links, etc. and will be used when Android PdfViewer stable version is released). To change the version, define it in your build file:
+- android - uses [Android PdfViewer](https://github.com/barteksc/AndroidPdfViewer). Targets minSdkVersion 21 (required by [setClipToOutline](https://developer.android.com/reference/android/view/View.html#setClipToOutline%28boolean%29)) and above. By default stable version `2.8.2` is used. It's also possible to override it and use `3.1.0-beta.1` (this version allows to handle links, etc. and will be used when Android PdfViewer stable version is released). To change the version, define it in your build file:
 
 ```
 buildscript {
   ext {
     ...
-    pdfViewer = "3.1.0-beta.1"
+    pdfViewerVersion = "3.1.0-beta.1"
+  }
+  ...
+}
+```
+
+Barteksc PdfViewer uses JCenter, which should be [read-only indefinitely](https://jfrog.com/blog/into-the-sunset-bintray-jcenter-gocenter-and-chartcenter/), but in case the host project does not use it, there is a possibility to use [mhiew/AndroidPdfViewer](https://github.com/mhiew/AndroidPdfViewer)
+ which is a fork published on mavenCentral. To use it, define the following configuration in your gradle script:
+
+ ```
+buildscript {
+  ext {
+    ...
+    pdfViewerVersion = "3.2.0-beta.1"
+    pdfViewerViewerRepo = "com.github.mhiew"
   }
   ...
 }
