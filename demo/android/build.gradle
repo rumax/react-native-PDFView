@@ -7,7 +7,8 @@ buildscript {
         compileSdkVersion = 29
         targetSdkVersion = 29
 
-        pdfViewer = "3.1.0-beta.1"
+        pdfViewerVersion = "3.2.0-beta.1"
+        pdfViewerViewerRepo = "com.github.mhiew"
     }
     repositories {
         google()
