@@ -29,7 +29,7 @@ buildscript {
   ext {
     ...
     pdfViewerVersion = "3.2.0-beta.1"
-    pdfViewerViewerRepo = "com.github.mhiew"
+    pdfViewerRepo = "com.github.mhiew"
   }
   ...
 }
