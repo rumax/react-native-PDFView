@@ -47,6 +47,7 @@ const componentInterface = {
      *   - "bundle"
      *   - "documentsDirectory"
      *   - "libraryDirectory"
+     *   - "cachesDirectory"
      *   - "tempDirectory"
      */
     fileFrom: PropTypes.string,

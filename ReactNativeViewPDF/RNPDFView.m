@@ -119,6 +119,8 @@
         url = [self fileFromDirectoryURL:NSDocumentDirectory];
     } else if ([currentFileFrom isEqualToString:@"libraryDirectory"]) {
         url = [self fileFromDirectoryURL:NSLibraryDirectory];
+    } else if ([currentFileFrom isEqualToString:@"cachesDirectory"]) {
+        url = [self fileFromDirectoryURL:NSCachesDirectory];
     } else if ([currentFileFrom isEqualToString:@"tempDirectory"]) {
         url = [self fileFromDirectoryPath:NSTemporaryDirectory()];
     } else { // default is search
@@ -178,7 +180,7 @@
 }
 
 - (void)webView:(WKWebView *)webView decidePolicyForNavigationResponse:(WKNavigationResponse *)navigationResponse decisionHandler:(void (^)(WKNavigationResponsePolicy))decisionHandler {
-    
+
     if ([navigationResponse.response isKindOfClass:[NSHTTPURLResponse class]]) {
         NSHTTPURLResponse * response = (NSHTTPURLResponse *)navigationResponse.response;
 

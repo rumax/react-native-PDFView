@@ -75,12 +75,14 @@ interface PDFViewProps {
    *   - "bundle"
    *   - "documentsDirectory"
    *   - "libraryDirectory"
+   *   - "cachesDirectory"
    *   - "tempDirectory"
    */
   fileFrom?:
     | "bundle"
     | "documentsDirectory"
     | "libraryDirectory"
+    | "cachesDirectory"
     | "tempDirectory";
 
   urlProps?: PDFViewUrlProps;
