@@ -114,7 +114,7 @@ interface PDFViewProps {
    * [Android only] A Boolean value. Enables rendering PDF annotations (such as comments, colors, or forms).
    *   - false, default
    */
-  enableAnnotations: boolean;
+  enableAnnotations?: boolean;
 }
 
 export default class PDFView extends Component<PDFViewProps, {}> {
