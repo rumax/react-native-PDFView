@@ -1,15 +1,13 @@
-/* @flow */
 import React from 'react';
 import {
   findNodeHandle,
   UIManager,
   Platform,
   NativeModules,
+  requireNativeComponent,
 } from 'react-native';
 
-import type { ViewProps } from 'react-native/Libraries/Components/View/ViewPropTypes';
-
-import RNPDFView from './RNPDFView';
+import type { HostComponent, StyleProp, ViewStyle } from 'react-native';
 
 export type UrlPropsType = {
   /**
@@ -31,34 +29,56 @@ export type UrlPropsType = {
   body?: string,
 };
 
-type PropsType = {|
-  ...ViewProps,
+export interface PDFViewUrlProps {
+  /**
+   * `method` is the HTTP Method to use. Defaults to GET if not specified.
+   */
+  method?: string;
 
+  /**
+   * `headers` is an object representing the HTTP headers to send along with the
+   * request for a remote image.
+   */
+  headers?: { [key: string]: string };
+
+  /**
+   * `body` is the HTTP body to send with the request. This must be a valid
+   * UTF-8 string, and will be sent exactly as specified, with no
+   * additional encoding (e.g. URL-escaping or base64) applied.
+   */
+  body?: string;
+}
+
+export interface PDFViewProps {
+  /**
+   * `style` View Style Property https://reactnative.dev/docs/view-style-props
+   */
+  style?: StyleProp<ViewStyle>,
   /**
    * A Function. Invoked on load error with {nativeEvent: {error}}.
    */
-  onError?: (Error) => void,
+  onError?: (error: { message: string }) => void;
 
   /**
    * A Function. Invoked when load completes successfully.
    */
-  onLoad?: () => void,
+  onLoad?: () => void;
 
   /**
    * A Function. Invoked when page is changed.
    * @param {Number} page - The active page.
    * @param {Number} pageCount - Total pages.
    */
-  onPageChanged?: (page: number, pageCount: number) => void,
+  onPageChanged?: (page: number, pageCount: number) => void;
 
   /**
-   * A Function. Invoked when page is sscrolled.
-   * @param {Number} offset - Offet. Currrently only 1 and 0 are supported.
+   * A Function. Invoked when page is scrolled.
+   * @param {Number} offset - Offset. Currently only 1 and 0 are supported.
    *                          where:
-   *                            0 - begining of the document
+   *                            0 - beginning of the document
    *                            1 - end of the document
    */
-  onScrolled?: (offset: number) => void,
+  onScrolled?: (offset: number) => void;
 
   /**
    * A String value. Defines the resource to render. Can be one of:
@@ -75,7 +95,7 @@ type PropsType = {|
    *   - "base64", for base64 data
    *   - "file", for local files
    */
-  resourceType?: 'url' | 'base64' | 'file',
+  resourceType?: 'url' | 'base64' | 'file';
 
   /**
    * iOS file location. Can be one of:
@@ -85,9 +105,17 @@ type PropsType = {|
    *   - "cachesDirectory"
    *   - "tempDirectory"
    */
-  fileFrom?: 'bundle' | 'documentsDirectory' | 'libraryDirectory' | 'cachesDirectory' | 'tempDirectory',
+  fileFrom?:
+    | 'bundle'
+    | 'documentsDirectory'
+    | 'libraryDirectory'
+    | 'cachesDirectory'
+    | 'tempDirectory';
 
-  urlProps?: UrlPropsType,
+  /**
+   * Extended props for "url" resource type
+   */
+  urlProps?: PDFViewUrlProps,
 
   /**
    * A String value. Defines encoding type. Can be one of:
@@ -97,67 +125,63 @@ type PropsType = {|
   textEncoding?: 'utf-8' | 'utf-16',
 
   /**
-   * A Number value. Fades in effect (in ms) on load successfully:
+   * A Number value. Fades in the webview (in ms) on load successfully (iOS Only):
    *   - 0.0, default
    */
-  fadeInDuration?: number,
+  fadeInDuration?:number,
 
   /**
    * A Boolean value. Enables annotations view on Android
    *   - false, default
    */
   enableAnnotations?: boolean,
-|};
+}
 
-class PDFView extends React.Component<PropsType, *> {
-  // eslint-disable-next-line react/sort-comp
+const PDFViewNativeComponent: HostComponent<PDFViewProps> = requireNativeComponent('PDFView');
+
+class PDFView extends React.Component<PDFViewProps> {
   _viewerRef: any;
 
 
   static defaultProps = {
-    onError: () => {},
-    onLoad: () => {},
-    onPageChanged: () => {},
-    onScrolled: () => {},
     fadeInDuration: 0.0,
     resourceType: 'url',
     textEncoding: 'utf-8',
     urlProps: {},
+    enableAnnotations: false,
+    fileFrom: 'bundle',
   };
 
 
   onError = (event: any): void => {
     const { nativeEvent } = event || {};
-    // $FlowFixMe: defined in defaultProps
-    this.props.onError(nativeEvent || new Error('unknown error'));
+    this.props.onError?.(nativeEvent || new Error('unknown error'));
   }
 
 
   onPageChanged = (event: any): void => {
     const { nativeEvent = {} } = event || {};
     const { page = -1, pageCount = -1 } = nativeEvent;
-    // $FlowFixMe: defined in defaultProps
-    this.props.onPageChanged(page, pageCount);
+    this.props.onPageChanged?.(page, pageCount);
   }
 
 
   onScrolled = (event: any): void => {
     const { nativeEvent = {} } = event || {};
     const { offset = -1 } = nativeEvent;
-    // $FlowFixMe: defined in defaultProps
-    this.props.onScrolled(offset);
+    this.props.onScrolled?.(offset);
   }
 
 
-  _getCommands = () => {
+  _getCommands = (): any => {
     const _PDFView = UIManager.getViewManagerConfig
       ? UIManager.getViewManagerConfig('PDFView') // RN 0.58
-      : (UIManager: any).PDFView; // RN 0.57
+      : (UIManager as any).PDFView; // RN 0.57
     return _PDFView.Commands;
   }
 
 
-  _setViewRef = (ref: any) => {
+  _setViewRef = (ref: any): void => {
     this._viewerRef = ref;
   }
 
@@ -166,7 +190,7 @@ class PDFView extends React.Component<PropsType, *> {
    * A Function. Invoke it when PDF document needs to be reloaded. Use `ref` to
    * access it. Throws an exception in case of errors
    */
-  async reload() {
+  async reload(): Promise<void> {
     if (this._viewerRef) {
       const handle = findNodeHandle(this._viewerRef);
 
@@ -181,6 +205,7 @@ class PDFView extends React.Component<PropsType, *> {
           [],
         ),
         ios: async () => NativeModules.PDFView.reload(handle),
+        default: async () => {},
       })();
     } else {
       throw new Error('No ref to PDFView component, check that component is mounted');
@@ -188,15 +213,18 @@ class PDFView extends React.Component<PropsType, *> {
   }
 
 
-  render() {
+  render(): React.ReactElement {
     const {
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
       onError,
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
       onPageChanged,
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
       onScrolled,
       ...remainingProps
     } = this.props;
     return (
-      <RNPDFView
+      <PDFViewNativeComponent
         ref={this._setViewRef}
         {...remainingProps}
         onError={this.onError}

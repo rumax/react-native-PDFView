@@ -9,10 +9,10 @@ import {
 
 import PDFVIew from '../index';
 
-jest.mock('../RNPDFView', () => 'RNPDFView');
 jest.mock('react-native', () => ({
+  requireNativeComponent: jest.fn(() => 'NativeComponent'),
   findNodeHandle: jest.fn(),
-  Platform: { select: jest.fn(platforms => platforms.ios) },
+  Platform: { select: jest.fn((platforms) => platforms.ios) },
   NativeModules: { PDFView: { reload: jest.fn() } },
 }));
 
@@ -41,7 +41,7 @@ describe('PDFView', () => {
       resourceType="base64"
     />);
 
-    (tree.toJSON(): any).props.onLoad();
+    (tree.toJSON() as any).props.onLoad();
 
     expect(onLoad).toHaveBeenCalledTimes(1);
   });
@@ -54,7 +54,7 @@ describe('PDFView', () => {
       resourceType="base64"
     />);
 
-    (tree.toJSON(): any).props.onError();
+    (tree.toJSON() as any).props.onError();
 
     expect(onError).toHaveBeenCalledTimes(1);
     expect(onError.mock.calls).toMatchSnapshot();
@@ -68,7 +68,7 @@ describe('PDFView', () => {
       resourceType="base64"
     />);
 
-    (tree.toJSON(): any).props.onError({ nativeEvent: { message: 'native error' } });
+    (tree.toJSON() as any).props.onError({ nativeEvent: { message: 'native error' } });
 
     expect(onError).toHaveBeenCalledTimes(1);
     expect(onError.mock.calls).toMatchSnapshot();
@@ -82,31 +82,33 @@ describe('PDFView', () => {
       resourceType="base64"
     />);
 
-    (tree.toJSON(): any).props.onPageChanged({ nativeEvent: { page: 2, pageCount: 10 } });
+    (tree.toJSON() as any).props.onPageChanged({ nativeEvent: { page: 2, pageCount: 10 } });
 
     expect(onPageChanged).toHaveBeenCalledTimes(1);
     expect(onPageChanged.mock.calls).toMatchSnapshot();
   });
 
   it('uses default callbacks', () => {
+    const onLoad = jest.fn();
     const tree = renderer.create(<PDFVIew
       resource="base64"
       resourceType="base64"
+      onLoad={onLoad}
     />);
 
-    (tree.toJSON(): any).props.onError();
-    (tree.toJSON(): any).props.onLoad();
-    (tree.toJSON(): any).props.onPageChanged();
+    (tree.toJSON() as any).props.onError();
+    (tree.toJSON() as any).props.onLoad();
+    (tree.toJSON() as any).props.onPageChanged();
   });
 
   it('trigger reload', (done) => {
     let pdfRef: any;
 
-    (findNodeHandle: any).mockImplementationOnce(() => 'handle for ref');
+    (findNodeHandle as any).mockImplementationOnce(() => 'handle for ref');
     const tree = renderer.create(<PDFVIew
       resource="base64"
       resourceType="base64"
-      ref={(ref) => {
+      ref={(ref): void => {
         pdfRef = ref;
       }}
     />);
@@ -114,7 +116,6 @@ describe('PDFView', () => {
     const component = tree.getInstance();
     const ref = { _name: 'ref_to_the_viewer' };
 
-    // $FlowFixMe: ignore null
     component._setViewRef(ref);
 
     setTimeout(() => {
@@ -133,7 +134,7 @@ describe('PDFView', () => {
     const tree = renderer.create(<PDFVIew
       resource="base64"
       resourceType="base64"
-      ref={(ref) => {
+      ref={(ref): void => {
         pdfRef = ref;
       }}
     />);

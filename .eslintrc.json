@@ -1,21 +1,70 @@
 {
-  "parser": "babel-eslint",
-  "extends": "airbnb",
-  "env": {
-    "es6": true,
-    "jest": true
-  },
-  "globals": {
-    "jest": false
-  },
-  "rules": {
-    "no-mixed-operators": 0,
-    "react/jsx-filename-extension": 0,
-    "react/prefer-stateless-function": 0,
-    "no-underscore-dangle": 0,
-    "react/require-default-props": 0,
-    "lines-between-class-members": 0,
-    "react/destructuring-assignment": 0,
-    "prettier/prettier": 0
-  }
+    "env": {
+        "browser": true,
+        "es2021": true,
+        "es6": true,
+        "jasmine": true
+    },
+    "extends": [
+        "plugin:react/recommended",
+        "airbnb"
+    ],
+    "globals": {
+        "jest": false,
+        "__DEV__": false
+    },
+    "settings": {
+        "import/resolver": {
+            "node": {
+                "extensions": [".js", ".jsx", ".ts", ".tsx"]
+            }
+        }
+    },
+    "parser": "@typescript-eslint/parser",
+    "parserOptions": {
+        "ecmaFeatures": {
+            "jsx": true
+        },
+        "ecmaVersion": 12,
+        "sourceType": "module"
+    },
+    "plugins": [
+        "react",
+        "@typescript-eslint"
+    ],
+    "rules": {
+        "import/no-extraneous-dependencies": 0,
+        "react/destructuring-assignment": 0,
+        "operator-linebreak": 0,
+        "react/sort-comp": 0,
+        "no-multiple-empty-lines": ["error", { "max": 2, "maxEOF": 0 }],
+        "no-underscore-dangle": 0,
+        "class-methods-use-this": 0,
+        "import/extensions": 0,
+        "no-plusplus": 0,
+        "no-await-in-loop": 0,
+        "max-classes-per-file": 0,
+        "global-require": 0,
+        "react/jsx-filename-extension": 0,
+        "react/require-default-props": 0,
+        "no-use-before-define": 0,
+        "react/jsx-props-no-spreading": 0,
+        "react/static-property-placement": 0,
+        "@typescript-eslint/no-use-before-define": ["error"]
+    },
+    "overrides": [
+        {
+          "files": ["*.ts", "*.tsx"],
+          "parser": "@typescript-eslint/parser",
+          "rules": {
+            "@typescript-eslint/no-unused-vars": "warn",
+            "@typescript-eslint/explicit-function-return-type": "error",
+            "@typescript-eslint/consistent-type-imports": [
+                2,
+                { "prefer": "type-imports" }
+              ]
+          }
+        }
+      ]
+
 }
