@@ -1,0 +1,21 @@
+{
+  "compilerOptions": {
+    "jsx": "react",
+    "target": "es6",
+    "declaration": true,
+    "outDir": "./lib/",
+    "allowJs": true,
+    "skipLibCheck": true,
+    "allowSyntheticDefaultImports": true,
+    "types": [
+      "jest",
+    ],
+    "strict": true
+  },
+  "include": ["./src/**/*"],
+  "exclude": [
+    "node_modules",
+    "**/__tests__/*",
+    "demo/"
+  ]
+}

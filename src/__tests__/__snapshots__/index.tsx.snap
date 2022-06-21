@@ -28,10 +28,11 @@ Array [
 `;
 
 exports[`PDFView renders base64 1`] = `
-<RNPDFView
+<NativeComponent
+  enableAnnotations={false}
   fadeInDuration={0}
+  fileFrom="bundle"
   onError={[Function]}
-  onLoad={[Function]}
   onPageChanged={[Function]}
   onScrolled={[Function]}
   resource="base64"
@@ -42,10 +43,11 @@ exports[`PDFView renders base64 1`] = `
 `;
 
 exports[`PDFView renders with default url source type 1`] = `
-<RNPDFView
+<NativeComponent
+  enableAnnotations={false}
   fadeInDuration={0}
+  fileFrom="bundle"
   onError={[Function]}
-  onLoad={[Function]}
   onPageChanged={[Function]}
   onScrolled={[Function]}
   resource="http://site.com/pdf"
