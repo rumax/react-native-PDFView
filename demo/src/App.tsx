@@ -1,12 +1,5 @@
-/* @flow */
 import React, { Fragment } from 'react';
-import {
-  Alert,
-  SafeAreaView,
-  StatusBar,
-  Text,
-  View,
-} from 'react-native';
+import { Alert, SafeAreaView, StatusBar, Text, View } from 'react-native';
 import PDFView from 'react-native-view-pdf';
 import Spinner from 'react-native-loading-spinner-overlay';
 import DropdownAlert from 'react-native-dropdownalert';
@@ -18,23 +11,31 @@ import Button from './Button';
 import pkg from '../package.json';
 
 type StateType = {
-  activeButton?: 'assets' | 'file' | 'url' | 'post' | 'base64' | 'errorData' | 'errorProtocol',
-  resource?: Resource,
-  spinner: boolean,
-  canReload?: boolean,
-  multiple?: boolean,
+  activeButton?:
+    | 'assets'
+    | 'file'
+    | 'url'
+    | 'post'
+    | 'base64'
+    | 'reset'
+    | 'errorData'
+    | 'errorProtocol';
+  resource?: Resource;
+  spinner: boolean;
+  canReload?: boolean;
+  multiple?: boolean;
 };
 
-const HorisontalLine = () => (<View style={styles.horizontalLine} />);
+const HorisontalLine = () => <View style={styles.horizontalLine} />;
 
-type PdfContentType = {|
-  resource?: Resource,
-  onRef?: Function,
-  onLoad?: Function,
-  onError?: Function,
-  onPageChanged?: Function,
-  onScrolled?: Function,
-|};
+type PdfContentType = {
+  resource?: Resource;
+  onRef?: any;
+  onLoad?: () => void;
+  onError?: (error: { message: string }) => void;
+  onPageChanged?: (page: number, pageCount: number) => void;
+  onScrolled?: (offset: number) => void;
+};
 
 const PdfContent = (props: PdfContentType) => {
   if (props.resource) {
@@ -67,20 +68,18 @@ const PdfContent = (props: PdfContentType) => {
   );
 };
 
-export default class App extends React.Component<*, StateType> {
-  _dropdownRef: ?DropdownAlert;
+export default class App extends React.Component<{}, StateType> {
+  _dropdownRef: DropdownAlert | null = null;
 
-  _pdfRef: ?PDFView;
+  _pdfRef: PDFView | null = null;
 
   _renderStarted: number;
 
-
-  constructor(props: *) {
+  constructor(props: {}) {
     super(props);
     this.state = { resource: undefined, spinner: false };
     this._renderStarted = 0;
   }
-
 
   setUrl = () => {
     this.setState({
@@ -88,8 +87,7 @@ export default class App extends React.Component<*, StateType> {
       resource: resources.url,
       spinner: true,
     });
-  }
-
+  };
 
   setUrlPost = () => {
     this.setState({
@@ -97,8 +95,7 @@ export default class App extends React.Component<*, StateType> {
       resource: resources.urlPost,
       spinner: true,
     });
-  }
-
+  };
 
   setBase64 = () => {
     this.setState({
@@ -106,8 +103,7 @@ export default class App extends React.Component<*, StateType> {
       resource: resources.base64,
       spinner: true,
     });
-  }
-
+  };
 
   setFile = () => {
     this.setState({
@@ -115,8 +111,7 @@ export default class App extends React.Component<*, StateType> {
       resource: resources.file,
       spinner: true,
     });
-  }
-
+  };
 
   setFileAssets = () => {
     this.setState({
@@ -124,8 +119,7 @@ export default class App extends React.Component<*, StateType> {
       resource: resources.fileAssets,
       spinner: true,
     });
-  }
-
+  };
 
   dataWithError = () => {
     this.setState({
@@ -133,8 +127,7 @@ export default class App extends React.Component<*, StateType> {
       resource: resources.invalidData,
       spinner: true,
     });
-  }
-
+  };
 
   protocolWithError = () => {
     this.setState({
@@ -142,8 +135,7 @@ export default class App extends React.Component<*, StateType> {
       resource: resources.invalidProtocol,
       spinner: true,
     });
-  }
-
+  };
 
   resetData = () => {
     this.setState({
@@ -151,8 +143,7 @@ export default class App extends React.Component<*, StateType> {
       resource: undefined,
       canReload: false,
     });
-  }
-
+  };
 
   multiplePDFs = () => {
     const { state } = this;
@@ -166,17 +157,17 @@ export default class App extends React.Component<*, StateType> {
       'Duplicate PDF',
       'The PDF will be duplicated',
       [
-        { text: 'Cancel', onPress: () => { }, style: 'cancel' },
+        { text: 'Cancel', onPress: () => {}, style: 'cancel' },
         {
-          text: 'OK', onPress: () => {
+          text: 'OK',
+          onPress: () => {
             this.setState({ multiple: true });
-          }
+          },
         },
       ],
-      { cancelable: false }
+      { cancelable: false },
     );
-  }
-
+  };
 
   handleLoad = () => {
     this.setState({ spinner: false, canReload: true });
@@ -184,13 +175,12 @@ export default class App extends React.Component<*, StateType> {
       this._dropdownRef.alertWithType(
         'success',
         'Document loaded',
-        `Loading time: ${((new Date()).getTime() - this._renderStarted)}`,
+        `Loading time: ${new Date().getTime() - this._renderStarted}`,
       );
     }
-  }
+  };
 
-
-  handleError = (error: Error) => {
+  handleError = (error: { message: string }) => {
     this.setState({ spinner: false, canReload: true });
     if (this._dropdownRef) {
       this._dropdownRef.alertWithType(
@@ -199,17 +189,15 @@ export default class App extends React.Component<*, StateType> {
         `error message: ${error.message}`,
       );
     }
-  }
-
+  };
 
   handlePageChanged = (page: number, pageCount: number) => {
     console.log(`page ${page + 1} out of ${pageCount}`);
-  }
+  };
 
   handleOnScrolled = (offset: number) => {
     console.log(`offset is: ${offset}`);
-  }
-
+  };
 
   reloadPDF = async () => {
     const pdfRef = this._pdfRef;
@@ -227,33 +215,51 @@ export default class App extends React.Component<*, StateType> {
         this._dropdownRef.alertWithType(
           'error',
           'Document reload failed',
-          `error message: ${err.message}`,
+          `error message: ${(err as any).message}`,
         );
       }
     }
-  }
+  };
 
-
-  onRef = (ref: ?PDFView) => {
+  onRef = (ref: PDFView) => {
     this._pdfRef = ref;
-  }
-
+  };
 
   render() {
     const { state } = this;
     const { activeButton } = state;
-    this._renderStarted = (new Date()).getTime();
+    this._renderStarted = new Date().getTime();
 
     return (
       <Fragment>
         <StatusBar barStyle="dark-content" />
         <SafeAreaView style={styles.container}>
           <View style={styles.tabs}>
-            <Button active={activeButton === 'url'} onPress={this.setUrl} title="Url" />
-            <Button active={activeButton === 'base64'} onPress={this.setBase64} title="Base64" />
-            <Button active={activeButton === 'file'} onPress={this.setFile} title="File" />
-            <Button active={activeButton === 'assets'} onPress={this.setFileAssets} title="Assets" />
-            <Button active={activeButton === 'post'} onPress={this.setUrlPost} title="Url Post" />
+            <Button
+              active={activeButton === 'url'}
+              onPress={this.setUrl}
+              title="Url"
+            />
+            <Button
+              active={activeButton === 'base64'}
+              onPress={this.setBase64}
+              title="Base64"
+            />
+            <Button
+              active={activeButton === 'file'}
+              onPress={this.setFile}
+              title="File"
+            />
+            <Button
+              active={activeButton === 'assets'}
+              onPress={this.setFileAssets}
+              title="Assets"
+            />
+            <Button
+              active={activeButton === 'post'}
+              onPress={this.setUrlPost}
+              title="Url Post"
+            />
           </View>
           <PdfContent
             resource={state.resource}
@@ -264,11 +270,25 @@ export default class App extends React.Component<*, StateType> {
             onScrolled={this.handleOnScrolled}
           />
           {state.multiple && state.resource && <HorisontalLine />}
-          {state.multiple && state.resource && <PdfContent resource={state.resource} />}
+          {state.multiple && state.resource && (
+            <PdfContent resource={state.resource} />
+          )}
           <View style={styles.tabs}>
-            <Button active={activeButton === 'errorData'} onPress={this.dataWithError} title="Error data" />
-            <Button active={activeButton === 'errorProtocol'} onPress={this.protocolWithError} title="Error protocol" />
-            <Button active={activeButton === 'reset'} onPress={this.resetData} title="Reset" />
+            <Button
+              active={activeButton === 'errorData'}
+              onPress={this.dataWithError}
+              title="Error data"
+            />
+            <Button
+              active={activeButton === 'errorProtocol'}
+              onPress={this.protocolWithError}
+              title="Error protocol"
+            />
+            <Button
+              active={activeButton === 'reset'}
+              onPress={this.resetData}
+              title="Reset"
+            />
             <Button onPress={this.multiplePDFs} title="Multiple" />
           </View>
           {state.canReload && (
@@ -285,9 +305,10 @@ export default class App extends React.Component<*, StateType> {
             textContent="Loading..."
             textStyle={styles.spinnerTextStyle}
           />
-          <DropdownAlert ref={(ref) => {
-            this._dropdownRef = ref;
-          }}
+          <DropdownAlert
+            ref={ref => {
+              this._dropdownRef = ref;
+            }}
           />
         </SafeAreaView>
       </Fragment>

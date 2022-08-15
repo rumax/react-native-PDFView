@@ -1,6 +1,4 @@
-/* @flow */
-/* eslint-disable react/prop-types */
-import { Platform, StyleSheet } from 'react-native';
+import { StyleSheet } from 'react-native';
 
 const cWhite = '#f9f9f9';
 const cLightBlue = '#5bc0de';
@@ -52,5 +50,5 @@ export default StyleSheet.create({
     padding: 8,
     backgroundColor: cLightBlue,
   },
-  horizontalLine: { height: 5, backgroundColor: cBlue }
+  horizontalLine: { height: 5, backgroundColor: cBlue },
 });

@@ -1,26 +1,27 @@
-/* @flow */
 import { Platform } from 'react-native';
 import type { UrlPropsType } from 'react-native-view-pdf';
 
 import base64Data from './base64.json';
 
-export type Resource = {|
-  resource: string,
-  resourceType: 'url' | 'base64' | 'file',
-  urlProps?: UrlPropsType,
-|};
+export type Resource = {
+  resource: string;
+  resourceType: 'url' | 'base64' | 'file';
+  urlProps?: UrlPropsType;
+};
 
-const resources: {[key: string]: Resource } = {
+const resources: { [key: string]: Resource } = {
   fileAssets: {
     resource: Platform.OS === 'ios' ? 'test-pdf.pdf' : 'assets-pdf.pdf',
     resourceType: 'file',
   },
   file: {
-    resource: `${Platform.OS === 'ios' ? '' : '/sdcard/Download/'}downloadedDocument.pdf`,
+    resource: `${
+      Platform.OS === 'ios' ? '' : '/sdcard/Download/'
+    }downloadedDocument.pdf`,
     resourceType: 'file',
   },
   url: {
-    resource: 'http://www.africau.edu/images/default/sample.pdf',
+    resource: 'https://www.clickdimensions.com/links/TestPDFfile.pdf',
     resourceType: 'url',
   },
   urlPost: {
@@ -32,7 +33,7 @@ const resources: {[key: string]: Resource } = {
       headers: {
         'Accept-Language': 'en-us,en;q=0.5',
         'Accept-encoding': 'application/pdf',
-        'Referer': 'http://localhost/',
+        Referer: 'http://localhost/',
       },
       body: 'Request PDF body',
     },
