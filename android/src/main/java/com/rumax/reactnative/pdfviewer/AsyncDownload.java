@@ -78,7 +78,14 @@ class AsyncDownload extends AsyncTask<Void, Void, Void> {
     @Override
     protected Void doInBackground(Void... params) {
         Uri uri = Uri.parse(this.url);
-        if (uri.getScheme().equalsIgnoreCase(CONTENT)) {
+        String scheme = uri.getScheme();
+
+        if (this.url.equalsIgnoreCase("") || scheme == null) {
+            exception = new IOException("Invalid or empty url provided");
+            return null;
+        }
+
+        if (scheme.equalsIgnoreCase(CONTENT)) {
             return handleContentUri(uri);
         }
 
