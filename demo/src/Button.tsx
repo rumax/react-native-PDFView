@@ -1,20 +1,19 @@
-/* @flow */
 import React from 'react';
 import {
+  StyleProp,
   Text,
   TouchableOpacity,
   View,
+  ViewStyle,
 } from 'react-native';
-
-import type { ViewStyleProp } from 'react-native/Libraries/StyleSheet/StyleSheet';
 
 import styles from './styles';
 
 type PropsType = {
-  active?: boolean,
-  title: string,
-  onPress: Function,
-  style?: ViewStyleProp,
+  active?: boolean;
+  title: string;
+  onPress: () => void;
+  style?: StyleProp<ViewStyle>;
 };
 
 export default (props: PropsType) => {
@@ -27,7 +26,9 @@ export default (props: PropsType) => {
   }
 
   return (
-    <TouchableOpacity style={[styles.tabButton, props.style]} onPress={props.onPress}>
+    <TouchableOpacity
+      style={[styles.tabButton, props.style]}
+      onPress={props.onPress}>
       <Text>{props.title}</Text>
     </TouchableOpacity>
   );
